@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tags + Bootstrap 5 - Vanilla Smart Select</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Vanilla Smart Select CSS -->
+  <link rel="stylesheet" href="../dist/vanilla-smart-select.css">
+</head>
+<body>
+  <div class="container py-5">
+    <h1 class="mb-4">🏷️ Tags - Criar Opções Dinamicamente</h1>
+
+    <div class="alert alert-info mb-4" role="alert">
+      <strong>💡 Como usar:</strong> Digite um valor que não existe na lista e pressione <kbd>Enter</kbd> ou clique na opção <strong>"Criar tag: ..."</strong>
+    </div>
+
+    <!-- Exemplo 1: Tags de Email -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h2 class="card-title h5">1. 📧 Tags de Email (Multi-Select)</h2>
+        <p class="text-muted">Adicione múltiplos endereços de email. Digite um email e pressione Enter para criar uma nova tag.</p>
+
+        <div class="mb-3">
+          <label for="emails" class="form-label">Endereços de email:</label>
+          <select id="emails" class="form-select" multiple>
+            <option value="john@example.com">john@example.com</option>
+            <option value="jane@example.com">jane@example.com</option>
+            <option value="bob@example.com">bob@example.com</option>
+          </select>
+        </div>
+
+        <div class="alert alert-primary" role="alert">
+          <strong>Recursos:</strong>
+          <ul class="mb-0 mt-2">
+            <li><strong>Criação dinâmica:</strong> Digite qualquer email e pressione Enter</li>
+            <li><strong>Multi-select:</strong> Adicione vários emails de uma vez</li>
+            <li><strong>Validação opcional:</strong> Pode validar formato de email</li>
+          </ul>
+        </div>
+
+        <div class="card mt-3 d-none" id="emails-result">
+          <div class="card-header bg-success text-white">
+            <strong>📬 Emails Selecionados:</strong>
+          </div>
+          <div class="card-body">
+            <pre class="mb-0" id="emails-data" style="background: #f8f9fa; padding: 15px; border-radius: 4px;"></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Exemplo 2: Tags de Categorias -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h2 class="card-title h5">2. 🏷️ Tags de Categorias</h2>
+        <p class="text-muted">Selecione categorias existentes ou crie novas digitando e pressionando Enter.</p>
+
+        <div class="mb-3">
+          <label for="categories" class="form-label">Categorias:</label>
+          <select id="categories" class="form-select" multiple>
+            <option value="tecnologia" selected>Tecnologia</option>
+            <option value="esportes">Esportes</option>
+            <option value="musica">Música</option>
+          </select>
+        </div>
+
+        <div class="alert alert-primary" role="alert">
+          <strong>Recursos:</strong>
+          <ul class="mb-0 mt-2">
+            <li><strong>Criação dinâmica:</strong> Crie novas categorias digitando e pressionando Enter</li>
+            <li><strong>Opções pré-definidas:</strong> Pode ter categorias iniciais no select</li>
+            <li><strong>Flexibilidade total:</strong> Usuário adiciona suas próprias categorias</li>
+          </ul>
+        </div>
+
+        <div class="card mt-3 d-none" id="categories-result">
+          <div class="card-header bg-info text-white">
+            <strong>📂 Categorias Selecionadas:</strong>
+          </div>
+          <div class="card-body">
+            <pre class="mb-0" id="categories-data" style="background: #f8f9fa; padding: 15px; border-radius: 4px;"></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Exemplo 3: Tags com Validação -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h2 class="card-title h5">3. 🔖 Tags Personalizadas com Validação</h2>
+        <p class="text-muted">Tags que só aceitam valores alfanuméricos (sem espaços ou caracteres especiais).</p>
+
+        <div class="alert alert-warning" role="alert">
+          <strong>⚠️ Regras:</strong> Apenas letras, números e hífens. Sem espaços ou caracteres especiais.
+        </div>
+
+        <div class="mb-3">
+          <label for="custom-tags" class="form-label">Tags personalizadas:</label>
+          <select id="custom-tags" class="form-select" multiple>
+            <option value="javascript">javascript</option>
+            <option value="python">python</option>
+          </select>
+        </div>
+
+        <div class="card mt-3 d-none" id="custom-result">
+          <div class="card-header bg-primary text-white">
+            <strong>🏷️ Tags Criadas:</strong>
+          </div>
+          <div class="card-body">
+            <pre class="mb-0" id="custom-data" style="background: #f8f9fa; padding: 15px; border-radius: 4px;"></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Exemplo 4: Mentions (Menções) -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h2 class="card-title h5">4. 🎯 Mentions - Menções de Usuários</h2>
+        <p class="text-muted">Crie menções de usuários como em redes sociais (ex: @usuario)</p>
+
+        <div class="mb-3">
+          <label for="mentions" class="form-label">Mencionar usuários:</label>
+          <select id="mentions" class="form-select" multiple>
+            <option value="@john">@john</option>
+            <option value="@jane">@jane</option>
+            <option value="@bob">@bob</option>
+          </select>
+        </div>
+
+        <div class="alert alert-primary" role="alert">
+          <strong>Recursos:</strong>
+          <ul class="mb-0 mt-2">
+            <li><strong>Prefixo automático:</strong> Adiciona "@" automaticamente</li>
+            <li><strong>Formato de menção:</strong> Tags no formato @usuario</li>
+            <li><strong>Social-like:</strong> Similar a Twitter, Instagram, etc</li>
+          </ul>
+        </div>
+
+        <div class="card mt-3 d-none" id="mentions-result">
+          <div class="card-header bg-warning text-dark">
+            <strong>👥 Usuários Mencionados:</strong>
+          </div>
+          <div class="card-body">
+            <pre class="mb-0" id="mentions-data" style="background: #f8f9fa; padding: 15px; border-radius: 4px;"></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Bootstrap 5 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Vanilla Smart Select JS -->
+  <script src="../dist/vanilla-smart-select.js"></script>
+
+  <script>
+    // Exemplo 1: Tags de Email
+    const emailsSelect = new VanillaSmartSelect('#emails', {
+      placeholder: 'Digite um email e pressione Enter...',
+      tags: true,
+      multiple: true,
+      searchable: true,
+      tokenSeparators: [',', ' '],
+      createTag: (params) => {
+        const term = params.term.trim();
+
+        // Validação básica de email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailRegex.test(term)) {
+          return null; // Não permite criar a tag se não for email válido
+        }
+
+        return {
+          id: term.toLowerCase(),
+          text: term.toLowerCase(),
+          newTag: true
+        };
+      },
+      templateResult: (item) => {
+        if (item.newTag) {
+          const div = document.createElement('div');
+          div.style.fontWeight = '500';
+          div.innerHTML = `➕ Adicionar email: <strong>${item.text}</strong>`;
+          return div;
+        }
+        const div = document.createElement('div');
+        div.innerHTML = `📧 ${item.text}`;
+        return div;
+      }
+    });
+
+    document.getElementById('emails').addEventListener('vs:change', (e) => {
+      const result = document.getElementById('emails-result');
+      const data = document.getElementById('emails-data');
+      result.classList.remove('d-none');
+      data.textContent = JSON.stringify(emailsSelect.val(), null, 2);
+    });
+
+    // Exemplo 2: Categorias
+    const categoriesSelect = new VanillaSmartSelect('#categories', {
+      placeholder: 'Selecione ou crie categorias...',
+      tags: true,
+      multiple: true,
+      searchable: true,
+      templateResult: (item) => {
+        if (item.newTag) {
+          const div = document.createElement('div');
+          div.style.fontWeight = '500';
+          div.innerHTML = `✨ Criar nova categoria: "${item.text}"`;
+          return div;
+        }
+        const div = document.createElement('div');
+        div.innerHTML = `🏷️ ${item.text}`;
+        return div;
+      }
+    });
+
+    document.getElementById('categories').addEventListener('vs:change', (e) => {
+      const result = document.getElementById('categories-result');
+      const data = document.getElementById('categories-data');
+      result.classList.remove('d-none');
+      data.textContent = JSON.stringify(categoriesSelect.val(), null, 2);
+    });
+
+    // Exemplo 3: Tags com Validação
+    const customTagsSelect = new VanillaSmartSelect('#custom-tags', {
+      placeholder: 'Digite tags alfanuméricas...',
+      tags: true,
+      multiple: true,
+      searchable: true,
+      createTag: (params) => {
+        const term = params.term.trim();
+
+        // Validação: apenas alfanuméricos e hífen
+        if (!/^[a-zA-Z0-9-]+$/.test(term)) {
+          return null; // Não permite criar a tag
+        }
+
+        return {
+          id: term.toLowerCase(),
+          text: term.toLowerCase(),
+          newTag: true
+        };
+      },
+      templateResult: (item) => {
+        if (item.newTag) {
+          const div = document.createElement('div');
+          div.style.fontWeight = '500';
+          div.innerHTML = `
+            <span style="font-size: 18px;">+</span> Criar tag: <strong>${item.text}</strong>
+            <div style="font-size: 11px; margin-top: 4px; color: #fff;">Apenas letras, números e hífens</div>
+          `;
+          return div;
+        }
+        const div = document.createElement('div');
+        div.innerHTML = `🔖 ${item.text}`;
+        return div;
+      }
+    });
+
+    document.getElementById('custom-tags').addEventListener('vs:change', (e) => {
+      const result = document.getElementById('custom-result');
+      const data = document.getElementById('custom-data');
+      result.classList.remove('d-none');
+      data.textContent = JSON.stringify(customTagsSelect.val(), null, 2);
+    });
+
+    // Exemplo 4: Mentions
+    const mentionsSelect = new VanillaSmartSelect('#mentions', {
+      placeholder: 'Digite @ e o nome do usuário...',
+      tags: true,
+      multiple: true,
+      searchable: true,
+      createTag: (params) => {
+        let term = params.term.trim();
+
+        // Adiciona @ se não tiver
+        if (!term.startsWith('@')) {
+          term = '@' + term;
+        }
+
+        // Remove espaços e caracteres especiais
+        term = term.replace(/[^@a-zA-Z0-9_]/g, '');
+
+        if (term.length <= 1) return null;
+
+        return {
+          id: term,
+          text: term,
+          newTag: true
+        };
+      },
+      templateResult: (item) => {
+        const div = document.createElement('div');
+        div.className = 'd-flex align-items-center gap-2';
+        div.innerHTML = `
+          <span class="badge bg-primary">👤</span>
+          <span>${item.text}</span>
+          ${item.newTag ? '<span class="badge bg-success ms-auto">Novo</span>' : ''}
+        `;
+        return div;
+      }
+    });
+
+    document.getElementById('mentions').addEventListener('vs:change', (e) => {
+      const result = document.getElementById('mentions-result');
+      const data = document.getElementById('mentions-data');
+      result.classList.remove('d-none');
+      data.textContent = JSON.stringify(mentionsSelect.val(), null, 2);
+    });
+
+    console.log('✓ Exemplos de Tags inicializados!');
+  </script>
+</body>
+</html>

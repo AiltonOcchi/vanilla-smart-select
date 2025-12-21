@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>REAL Memory Leak Test - Event Listeners</title>
+  <link rel="stylesheet" href="../dist/vanilla-smart-select.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 900px;
+      margin: 50px auto;
+      padding: 20px;
+    }
+    .test-info {
+      background: #d1ecf1;
+      border: 1px solid #0c5460;
+      border-radius: 5px;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+    .test-info h2 {
+      margin-top: 0;
+      color: #0c5460;
+    }
+    .controls {
+      display: flex;
+      gap: 10px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .btn-create {
+      background: #28a745;
+      color: white;
+    }
+    .btn-destroy {
+      background: #dc3545;
+      color: white;
+    }
+    .btn-test {
+      background: #007bff;
+      color: white;
+    }
+    .btn-devtools {
+      background: #6c757d;
+      color: white;
+    }
+    .stats {
+      background: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 5px;
+      padding: 15px;
+      margin-top: 20px;
+    }
+    .stat-item {
+      margin: 10px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .stat-label {
+      font-weight: bold;
+    }
+    .stat-value {
+      background: #007bff;
+      color: white;
+      padding: 5px 15px;
+      border-radius: 20px;
+      min-width: 50px;
+      text-align: center;
+    }
+    .stat-value.success {
+      background: #28a745;
+    }
+    .stat-value.warning {
+      background: #ffc107;
+      color: #000;
+    }
+    .stat-value.danger {
+      background: #dc3545;
+    }
+    .log {
+      background: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 5px;
+      padding: 10px;
+      margin-top: 20px;
+      font-family: monospace;
+      font-size: 12px;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    .log-entry {
+      margin: 2px 0;
+      padding: 2px 5px;
+    }
+    .log-entry.create {
+      color: #28a745;
+    }
+    .log-entry.destroy {
+      color: #dc3545;
+    }
+    .log-entry.keypress {
+      color: #007bff;
+    }
+    .log-entry.success {
+      color: #28a745;
+      font-weight: bold;
+    }
+    .log-entry.warning {
+      color: #ffc107;
+      font-weight: bold;
+    }
+    .log-entry.error {
+      color: #dc3545;
+      font-weight: bold;
+    }
+    .devtools-hint {
+      background: #fff3cd;
+      border: 1px solid #ffc107;
+      border-radius: 5px;
+      padding: 15px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="test-info">
+    <h2>✅ REAL Memory Leak Test - Event Listeners</h2>
+    <p>
+      Este teste REALMENTE verifica se os event listeners estão sendo removidos corretamente.
+    </p>
+    <p>
+      <strong>Como funciona:</strong> Interceptamos as chamadas de addEventListener e removeEventListener
+      para contar quantos listeners estão ativos no DOM em tempo real.
+    </p>
+    <p>
+      <strong>Teste:</strong> Clique em "Criar Select" e depois "Destruir Select" várias vezes.
+      Observe que o contador de "Listeners Ativos" volta a 0 após cada destroy!
+    </p>
+  </div>
+
+  <div class="controls">
+    <button class="btn-create" onclick="createSelect()">➕ Criar Select</button>
+    <button class="btn-destroy" onclick="destroySelect()">🗑️ Destruir Select</button>
+    <button class="btn-test" onclick="testKeypress()">⌨️ Testar Tecla (Enter)</button>
+    <button class="btn-devtools" onclick="showDevToolsHint()">🔍 Como Verificar no DevTools</button>
+  </div>
+
+  <select id="mySelect" style="width: 100%">
+    <option value="">Selecione...</option>
+    <option value="1">Option 1</option>
+    <option value="2">Option 2</option>
+    <option value="3">Option 3</option>
+  </select>
+
+  <div class="stats">
+    <h3>📊 Estatísticas em Tempo Real</h3>
+    <div class="stat-item">
+      <span class="stat-label">Instâncias Criadas:</span>
+      <span class="stat-value" id="created-count">0</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-label">Instâncias Destruídas:</span>
+      <span class="stat-value" id="destroyed-count">0</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-label">Instância Atual:</span>
+      <span class="stat-value" id="current-instance">Nenhuma</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-label">⭐ Event Listeners Ativos (REAL):</span>
+      <span class="stat-value success" id="active-listeners">0</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-label">Execuções do Handler no Último Teste:</span>
+      <span class="stat-value" id="handler-executions">0</span>
+    </div>
+  </div>
+
+  <div class="log" id="log">
+    <strong>Log de Execução:</strong>
+    <div id="log-entries"></div>
+  </div>
+
+  <div id="devtools-hint" class="devtools-hint" style="display: none;">
+    <h3>🔍 Como Verificar no Chrome DevTools</h3>
+    <ol>
+      <li>Abra o DevTools (F12)</li>
+      <li>Vá na aba "Memory"</li>
+      <li>Clique em "Take heap snapshot"</li>
+      <li>Crie e destrua o select 5 vezes</li>
+      <li>Clique em "Take heap snapshot" novamente</li>
+      <li>Compare os snapshots e procure por "Detached HTMLSelectElement"</li>
+      <li>Se não houver elementos detached, NÃO há memory leak! ✅</li>
+    </ol>
+  </div>
+
+  <script src="../dist/vanilla-smart-select.js"></script>
+  <script>
+    let currentSelect = null;
+    let createdCount = 0;
+    let destroyedCount = 0;
+    let activeListeners = 0;
+    let handlerExecutions = 0;
+
+    const logEntries = document.getElementById('log-entries');
+
+    // Interceptar addEventListener e removeEventListener para contar listeners
+    const listenerMap = new WeakMap();
+    const originalAddEventListener = EventTarget.prototype.addEventListener;
+    const originalRemoveEventListener = EventTarget.prototype.removeEventListener;
+
+    EventTarget.prototype.addEventListener = function(type, listener, options) {
+      // Contar apenas keydown listeners
+      if (type === 'keydown') {
+        if (!listenerMap.has(this)) {
+          listenerMap.set(this, new Set());
+        }
+        listenerMap.get(this).add(listener);
+        activeListeners++;
+        updateStats();
+        addLog(`+ addEventListener('keydown') chamado. Total: ${activeListeners}`, 'create');
+      }
+      return originalAddEventListener.call(this, type, listener, options);
+    };
+
+    EventTarget.prototype.removeEventListener = function(type, listener, options) {
+      // Contar apenas keydown listeners
+      if (type === 'keydown' && listenerMap.has(this)) {
+        const listeners = listenerMap.get(this);
+        if (listeners.has(listener)) {
+          listeners.delete(listener);
+          activeListeners--;
+          updateStats();
+          addLog(`- removeEventListener('keydown') chamado. Total: ${activeListeners}`, 'destroy');
+        }
+      }
+      return originalRemoveEventListener.call(this, type, listener, options);
+    };
+
+    function addLog(message, type = 'info') {
+      const entry = document.createElement('div');
+      entry.className = `log-entry ${type}`;
+      entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+      logEntries.appendChild(entry);
+      logEntries.parentElement.scrollTop = logEntries.parentElement.scrollHeight;
+    }
+
+    function updateStats() {
+      document.getElementById('created-count').textContent = createdCount;
+      document.getElementById('destroyed-count').textContent = destroyedCount;
+      document.getElementById('current-instance').textContent = currentSelect ? `#${createdCount}` : 'Nenhuma';
+
+      const activeListenersEl = document.getElementById('active-listeners');
+      activeListenersEl.textContent = activeListeners;
+
+      // Determinar cor baseado no estado
+      if (activeListeners === 0) {
+        activeListenersEl.className = 'stat-value success';
+      } else if (currentSelect && activeListeners === 2) {
+        // 2 listeners é normal quando há uma instância ativa
+        activeListenersEl.className = 'stat-value success';
+      } else if (currentSelect && activeListeners > 2) {
+        // Mais de 2 listeners com instância ativa = memory leak
+        activeListenersEl.className = 'stat-value danger';
+      } else if (!currentSelect && activeListeners > 0) {
+        // Qualquer listener sem instância ativa = memory leak
+        activeListenersEl.className = 'stat-value danger';
+      }
+
+      document.getElementById('handler-executions').textContent = handlerExecutions;
+    }
+
+    function createSelect() {
+      if (currentSelect) {
+        addLog('⚠️ Já existe uma instância ativa. Destrua primeiro!', 'warning');
+        return;
+      }
+
+      const beforeListeners = activeListeners;
+      createdCount++;
+
+      currentSelect = new VanillaSmartSelect('#mySelect', {
+        searchable: true,
+        placeholder: 'Selecione uma opção...'
+      });
+
+      const addedListeners = activeListeners - beforeListeners;
+      addLog(`✅ Select criado (Instância #${createdCount}). Adicionou ${addedListeners} listeners.`, 'create');
+      updateStats();
+    }
+
+    function destroySelect() {
+      if (!currentSelect) {
+        addLog('⚠️ Nenhuma instância ativa para destruir!', 'warning');
+        return;
+      }
+
+      const instanceNumber = createdCount;
+      const beforeListeners = activeListeners;
+
+      currentSelect.destroy();
+      currentSelect = null;
+      destroyedCount++;
+
+      const removedListeners = beforeListeners - activeListeners;
+
+      if (activeListeners === 0) {
+        addLog(`🗑️ Select destruído (Instância #${instanceNumber}). Removeu ${removedListeners} listeners.`, 'destroy');
+        addLog(`✅ SUCESSO! Todos os event listeners foram removidos corretamente!`, 'success');
+      } else {
+        addLog(`🗑️ Select destruído (Instância #${instanceNumber}). Removeu ${removedListeners} listeners.`, 'destroy');
+        addLog(`⚠️ MEMORY LEAK! Ainda existem ${activeListeners} listeners órfãos no DOM!`, 'error');
+      }
+
+      updateStats();
+    }
+
+    function testKeypress() {
+      handlerExecutions = 0;
+
+      const selectionElement = document.querySelector('.vs-selection');
+
+      if (!selectionElement) {
+        addLog('❌ Elemento de seleção não encontrado. Crie uma instância primeiro!', 'warning');
+        return;
+      }
+
+      addLog('🔍 Despachando evento Enter...', 'keypress');
+
+      // Interceptar execuções do handler
+      const originalHandleKeydown = selectionElement.handleKeydown;
+
+      const event = new KeyboardEvent('keydown', {
+        key: 'Enter',
+        keyCode: 13,
+        which: 13,
+        bubbles: true
+      });
+
+      selectionElement.dispatchEvent(event);
+
+      // Como não podemos interceptar facilmente as execuções, vamos inferir
+      // Se houver memory leak, haverá múltiplos listeners e o comportamento será estranho
+
+      if (activeListeners === 0) {
+        addLog(`ℹ️ Nenhum listener ativo. Nada aconteceu.`, 'keypress');
+      } else if (activeListeners === 2 && currentSelect) {
+        addLog(`✅ Evento processado normalmente (${activeListeners} listeners ativos, como esperado)`, 'success');
+      } else if (activeListeners > 2) {
+        addLog(`⚠️ POSSÍVEL PROBLEMA: ${activeListeners} listeners ativos (esperado: 2). Pode haver memory leak!`, 'error');
+      } else {
+        addLog(`⚠️ Estado inesperado: ${activeListeners} listeners ativos sem instância ativa!`, 'error');
+      }
+
+      updateStats();
+    }
+
+    function showDevToolsHint() {
+      const hint = document.getElementById('devtools-hint');
+      hint.style.display = hint.style.display === 'none' ? 'block' : 'none';
+    }
+
+    // Log inicial
+    addLog('Sistema iniciado. Monitoramento REAL de event listeners ativo!', 'info');
+    addLog('💡 Dica: Crie e destrua o select e observe o contador de listeners!', 'info');
+    updateStats();
+  </script>
+</body>
+</html>

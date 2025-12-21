@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vanilla Smart Select - Validação Avançada (Opcional)</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    .example {
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+    }
+    h1 {
+      color: #333;
+      margin-top: 0;
+    }
+    h2 {
+      color: #666;
+      font-size: 18px;
+      margin-top: 0;
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: #555;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .note {
+      background: #fff3cd;
+      border: 1px solid #ffc107;
+      padding: 12px;
+      border-radius: 4px;
+      margin-top: 20px;
+    }
+    .result {
+      padding: 15px;
+      border-radius: 4px;
+      margin-top: 15px;
+      display: none;
+    }
+    .result.success {
+      background: #d4edda;
+      border: 1px solid #28a745;
+      color: #155724;
+    }
+    .result.error {
+      background: #f8d7da;
+      border: 1px solid #dc3545;
+      color: #721c24;
+    }
+  </style>
+  <link rel="stylesheet" href="../dist/vanilla-smart-select.css">
+</head>
+<body>
+  <h1>Validação Avançada (Opcional)</h1>
+
+  <div class="example">
+    <h2>Caso de Uso: Formulário com Validação Customizada Simples</h2>
+    <p style="color: #666;">
+      Quando você precisa de validação customizada, use o helper opcional.
+      Apenas 5 linhas de código!
+    </p>
+
+    <form id="customForm">
+      <div class="form-group">
+        <label for="department">Departamento: *</label>
+        <select id="department" required>
+          <option value="">Selecione...</option>
+          <option value="ti">TI</option>
+          <option value="rh">RH</option>
+          <option value="vendas">Vendas</option>
+          <option value="marketing">Marketing</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="level">Nível: *</label>
+        <select id="level" required>
+          <option value="">Selecione...</option>
+          <option value="junior">Júnior</option>
+          <option value="pleno">Pleno</option>
+          <option value="senior">Sênior</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="shift">Turno:</label>
+        <select id="shift">
+          <option value="">Selecione...</option>
+          <option value="morning">Manhã</option>
+          <option value="afternoon">Tarde</option>
+          <option value="night">Noite</option>
+        </select>
+      </div>
+
+      <button type="submit" style="padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: 500;">
+        Enviar
+      </button>
+    </form>
+
+    <div id="result" class="result"></div>
+
+    <div class="note" style="margin-top: 20px; background: #e7f3ff; border-color: #007bff;">
+      <strong>JavaScript necessário (apenas 5 linhas!):</strong>
+      <pre style="background: #f8f9fa; padding: 10px; border-radius: 4px; overflow-x: auto;"><code>import { onValidSubmit } from './utils/validation.js';
+
+// Apenas isso!
+onValidSubmit('#customForm', (e, form) => {
+  const data = new FormData(form);
+  console.log('Formulário válido!', Object.fromEntries(data));
+  // Seu código aqui (AJAX, etc)
+});</code></pre>
+    </div>
+  </div>
+
+  <div class="example">
+    <h2>Resumo: Por que é simples?</h2>
+    <div style="background: #d4edda; border: 1px solid #28a745; padding: 15px; border-radius: 4px;">
+      <h3 style="margin-top: 0; color: #155724;">✓ Validação HTML5 funciona automaticamente:</h3>
+      <ol style="color: #155724;">
+        <li><strong>Select original sempre sincronizado</strong> - você não precisa fazer nada</li>
+        <li><strong>Atributo <code>required</code></strong> - funciona nativamente</li>
+        <li><strong>Borda vermelha automática</strong> - feedback visual sem código</li>
+        <li><strong>form.checkValidity()</strong> - valida todos os campos de uma vez</li>
+        <li><strong>Escala perfeitamente</strong> - 10 ou 100 campos, mesmo código</li>
+      </ol>
+    </div>
+
+    <div style="background: #fff3cd; border: 1px solid #ffc107; padding: 15px; border-radius: 4px; margin-top: 15px;">
+      <h3 style="margin-top: 0; color: #856404;">Quando usar helpers customizados:</h3>
+      <ul style="color: #856404;">
+        <li>Validação customizada complexa (ex: validar CPF, CEP, etc)</li>
+        <li>Mensagens de erro customizadas</li>
+        <li>Validação dependente entre campos</li>
+        <li>Integração com bibliotecas de validação (Yup, Joi, etc)</li>
+      </ul>
+      <p style="color: #856404; margin-bottom: 0;">
+        <strong>Mas na maioria dos casos, a validação HTML5 nativa é suficiente!</strong>
+      </p>
+    </div>
+  </div>
+
+  <script type="module">
+    import VanillaSmartSelect from '../dist/vanilla-smart-select.esm.js';
+
+    // Inicializa os selects
+    new VanillaSmartSelect('#department', { searchable: true });
+    new VanillaSmartSelect('#level', { searchable: true });
+    new VanillaSmartSelect('#shift', { searchable: true });
+
+    // Validação customizada simples (helper opcional)
+    const form = document.getElementById('customForm');
+    const resultDiv = document.getElementById('result');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      if (form.checkValidity()) {
+        // Válido - processar
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData);
+
+        resultDiv.className = 'result success';
+        resultDiv.style.display = 'block';
+        resultDiv.innerHTML = `
+          <strong>✓ Formulário Válido!</strong><br>
+          Dados: ${JSON.stringify(data, null, 2)}
+        `;
+
+        console.log('Dados válidos:', data);
+      } else {
+        // Inválido - mostrar erro
+        form.reportValidity(); // Mensagem nativa do navegador
+
+        resultDiv.className = 'result error';
+        resultDiv.style.display = 'block';
+        resultDiv.innerHTML = '<strong>✗ Erro!</strong> Preencha todos os campos obrigatórios.';
+      }
+    });
+
+    console.log('✓ Validation example ready!');
+  </script>
+</body>
+</html>

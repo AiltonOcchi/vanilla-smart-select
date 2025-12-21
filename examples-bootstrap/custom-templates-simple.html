@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom Templates Simples + Bootstrap 5 - Vanilla Smart Select</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Vanilla Smart Select CSS -->
+  <link rel="stylesheet" href="../dist/vanilla-smart-select.css">
+
+  <style>
+    /* Custom styles for templates */
+    .country-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .country-flag {
+      font-size: 24px;
+    }
+
+    .country-name {
+      font-weight: 500;
+      flex: 1;
+    }
+
+    .user-option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .user-avatar-emoji {
+      font-size: 32px;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .product-option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .product-icon {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+
+    .status-option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .category-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container py-5">
+    <h1 class="mb-4">🎨 Custom Templates - Exemplos Simples</h1>
+
+    <div class="alert alert-info mb-4" role="alert">
+      <strong>✨ Sem dependências externas!</strong> Templates personalizados usando apenas emojis e CSS, sem carregar imagens externas.
+    </div>
+
+    <!-- Exemplo 1: Países -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h2 class="card-title h5">1. 🌍 Países com Flags e Códigos</h2>
+        <p class="text-muted">Emojis de bandeiras nativas + badges com códigos de país.</p>
+
+        <div class="mb-3">
+          <label for="countries" class="form-label">Selecione um país:</label>
+          <select id="countries" class="form-select"></select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Exemplo 2: Usuários -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h2 class="card-title h5">2. 👥 Usuários com Avatares Emoji</h2>
+        <p class="text-muted">Avatares coloridos com gradientes + informações de cargo.</p>
+
+        <div class="mb-3">
+          <label for="users" class="form-label">Selecione um usuário:</label>
+          <select id="users" class="form-select"></select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Exemplo 3: Produtos -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h2 class="card-title h5">3. 🛍️ Produtos com Ícones e Preços</h2>
+        <p class="text-muted">Ícones emoji + nome, categoria e preço formatado.</p>
+
+        <div class="mb-3">
+          <label for="products" class="form-label">Selecione um produto:</label>
+          <select id="products" class="form-select"></select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Exemplo 4: Tasks -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h2 class="card-title h5">4. 📋 Tasks com Status (Multi-Select)</h2>
+        <p class="text-muted">Multi-select com ícones de status e badges coloridos.</p>
+
+        <div class="mb-3">
+          <label for="tasks" class="form-label">Selecione as tasks (max 4):</label>
+          <select id="tasks" class="form-select" multiple></select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Exemplo 5: Categorias -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h2 class="card-title h5">5. 📁 Categorias com Contadores</h2>
+        <p class="text-muted">Template simplificado na seleção, detalhado no dropdown.</p>
+
+        <div class="mb-3">
+          <label for="categories" class="form-label">Selecione uma categoria:</label>
+          <select id="categories" class="form-select"></select>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Bootstrap 5 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Vanilla Smart Select JS -->
+  <script src="../dist/vanilla-smart-select.js"></script>
+
+  <script>
+    // Exemplo 1: Países
+    const countriesData = [
+      { id: 'us', text: 'United States', flag: '🇺🇸', code: 'US' },
+      { id: 'br', text: 'Brazil', flag: '🇧🇷', code: 'BR' },
+      { id: 'uk', text: 'United Kingdom', flag: '🇬🇧', code: 'UK' },
+      { id: 'fr', text: 'France', flag: '🇫🇷', code: 'FR' },
+      { id: 'de', text: 'Germany', flag: '🇩🇪', code: 'DE' },
+      { id: 'jp', text: 'Japan', flag: '🇯🇵', code: 'JP' },
+      { id: 'ca', text: 'Canada', flag: '🇨🇦', code: 'CA' },
+      { id: 'au', text: 'Australia', flag: '🇦🇺', code: 'AU' },
+      { id: 'it', text: 'Italy', flag: '🇮🇹', code: 'IT' },
+      { id: 'es', text: 'Spain', flag: '🇪🇸', code: 'ES' }
+    ];
+
+    new VanillaSmartSelect('#countries', {
+      data: countriesData,
+      placeholder: 'Selecione um país...',
+      allowClear: true,
+      templateResult: (item) => {
+        const div = document.createElement('div');
+        div.className = 'country-option';
+        div.innerHTML = `
+          <span class="country-flag">${item.flag}</span>
+          <span class="country-name">${item.text}</span>
+          <span class="badge bg-secondary">${item.code}</span>
+        `;
+        return div;
+      },
+      templateSelection: (item) => {
+        return `${item.flag} ${item.text}`;
+      }
+    });
+
+    // Exemplo 2: Usuários com Emoji Avatars
+    const usersData = [
+      { id: 1, text: 'Ana Silva', role: 'Gerente de Projetos', emoji: '👩‍💼' },
+      { id: 2, text: 'Carlos Santos', role: 'Desenvolvedor Senior', emoji: '👨‍💻' },
+      { id: 3, text: 'Maria Oliveira', role: 'Designer UX/UI', emoji: '👩‍🎨' },
+      { id: 4, text: 'João Costa', role: 'Analista de Dados', emoji: '👨‍🔬' },
+      { id: 5, text: 'Paula Ferreira', role: 'Product Manager', emoji: '👩‍🚀' },
+      { id: 6, text: 'Roberto Lima', role: 'Tech Lead', emoji: '👨‍🏫' }
+    ];
+
+    new VanillaSmartSelect('#users', {
+      data: usersData,
+      placeholder: 'Selecione um usuário...',
+      allowClear: true,
+      templateResult: (item) => {
+        const div = document.createElement('div');
+        div.className = 'user-option';
+        div.innerHTML = `
+          <div class="user-avatar-emoji">${item.emoji}</div>
+          <div>
+            <div class="fw-bold">${item.text}</div>
+            <small class="text-muted">${item.role}</small>
+          </div>
+        `;
+        return div;
+      },
+      templateSelection: (item) => {
+        return `${item.emoji} ${item.text}`;
+      }
+    });
+
+    // Exemplo 3: Produtos
+    const productsData = [
+      { id: 1, text: 'Notebook Pro', category: 'Eletrônicos', price: 4299.90, icon: '💻', color: '#007bff' },
+      { id: 2, text: 'Mouse Wireless', category: 'Periféricos', price: 89.90, icon: '🖱️', color: '#28a745' },
+      { id: 3, text: 'Teclado Mecânico', category: 'Periféricos', price: 349.90, icon: '⌨️', color: '#17a2b8' },
+      { id: 4, text: 'Monitor 4K 27"', category: 'Eletrônicos', price: 1899.90, icon: '🖥️', color: '#6f42c1' },
+      { id: 5, text: 'Webcam HD', category: 'Acessórios', price: 299.90, icon: '📹', color: '#fd7e14' },
+      { id: 6, text: 'Headset Gamer', category: 'Áudio', price: 459.90, icon: '🎧', color: '#e83e8c' },
+      { id: 7, text: 'Cadeira Gamer', category: 'Móveis', price: 1299.90, icon: '🪑', color: '#20c997' },
+      { id: 8, text: 'SSD 1TB', category: 'Armazenamento', price: 549.90, icon: '💾', color: '#6c757d', disabled: true }
+    ];
+
+    new VanillaSmartSelect('#products', {
+      data: productsData,
+      placeholder: 'Selecione um produto...',
+      allowClear: true,
+      templateResult: (item) => {
+        const div = document.createElement('div');
+        div.className = 'product-option';
+        div.innerHTML = `
+          <div class="product-icon" style="background: ${item.color}20; color: ${item.color}">
+            ${item.icon}
+          </div>
+          <div class="flex-fill">
+            <div class="fw-bold">${item.text}</div>
+            <small class="text-muted">${item.category}</small>
+          </div>
+          <div class="text-primary fw-bold">R$ ${item.price.toFixed(2).replace('.', ',')}</div>
+        `;
+        return div;
+      },
+      templateSelection: (item) => {
+        return `${item.icon} ${item.text} - R$ ${item.price.toFixed(2).replace('.', ',')}`;
+      }
+    });
+
+    // Exemplo 4: Tasks com Status
+    const tasksData = [
+      { id: 1, text: 'Atualizar documentação', status: 'active', statusText: 'Em andamento', icon: '📝' },
+      { id: 2, text: 'Corrigir bug #123', status: 'active', statusText: 'Em andamento', icon: '🐛' },
+      { id: 3, text: 'Revisar pull request', status: 'pending', statusText: 'Pendente', icon: '👀' },
+      { id: 4, text: 'Deploy em produção', status: 'pending', statusText: 'Pendente', icon: '🚀' },
+      { id: 5, text: 'Implementar feature X', status: 'completed', statusText: 'Concluído', icon: '✅' },
+      { id: 6, text: 'Refatorar código legado', status: 'active', statusText: 'Em andamento', icon: '🔧' },
+      { id: 7, text: 'Reunião cancelada', status: 'cancelled', statusText: 'Cancelado', icon: '❌' }
+    ];
+
+    const statusColors = {
+      active: 'success',
+      pending: 'warning',
+      completed: 'info',
+      cancelled: 'danger'
+    };
+
+    new VanillaSmartSelect('#tasks', {
+      data: tasksData,
+      placeholder: 'Selecione as tasks...',
+      multiple: true,
+      maximumSelectionLength: 4,
+      templateResult: (item) => {
+        const div = document.createElement('div');
+        div.className = 'status-option';
+        div.innerHTML = `
+          <span style="font-size: 20px;">${item.icon}</span>
+          <span class="flex-fill">${item.text}</span>
+          <span class="badge bg-${statusColors[item.status]}">${item.statusText}</span>
+        `;
+        return div;
+      },
+      templateSelection: (item) => {
+        return `${item.icon} ${item.text}`;
+      }
+    });
+
+    // Exemplo 5: Categorias com Contadores
+    const categoriesData = [
+      { id: 1, text: 'Documentos', icon: '📄', count: 127 },
+      { id: 2, text: 'Imagens', icon: '🖼️', count: 543 },
+      { id: 3, text: 'Vídeos', icon: '🎬', count: 89 },
+      { id: 4, text: 'Músicas', icon: '🎵', count: 234 },
+      { id: 5, text: 'Planilhas', icon: '📊', count: 67 },
+      { id: 6, text: 'Apresentações', icon: '📽️', count: 45 },
+      { id: 7, text: 'Arquivos compactados', icon: '📦', count: 23 }
+    ];
+
+    new VanillaSmartSelect('#categories', {
+      data: categoriesData,
+      placeholder: 'Selecione uma categoria...',
+      allowClear: true,
+      templateResult: (item) => {
+        const div = document.createElement('div');
+        div.className = 'category-option';
+        div.innerHTML = `
+          <span style="font-size: 24px;">${item.icon}</span>
+          <div class="flex-fill">
+            <span class="fw-bold">${item.text}</span>
+            <span class="badge bg-secondary ms-2">${item.count} itens</span>
+          </div>
+        `;
+        return div;
+      },
+      templateSelection: (item) => {
+        return `${item.icon} ${item.text}`;
+      }
+    });
+
+    console.log('✓ Custom Templates Simples inicializado!');
+  </script>
+</body>
+</html>

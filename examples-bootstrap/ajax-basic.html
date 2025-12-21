@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AJAX Básico + Bootstrap 5 - Vanilla Smart Select</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Vanilla Smart Select CSS -->
+  <link rel="stylesheet" href="../dist/vanilla-smart-select.css">
+</head>
+<body>
+  <div class="container py-5">
+    <h1 class="mb-4">AJAX Básico + Bootstrap 5</h1>
+
+    <div class="alert alert-info mb-4" role="alert">
+      <strong>✓ Carregamento Dinâmico!</strong> Exemplos de integração com APIs usando AJAX/Fetch para carregar dados remotos
+    </div>
+
+    <!-- Exemplo 1: REST Countries API -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h2 class="card-title h5">1. 🌍 REST Countries API</h2>
+        <p class="text-muted">Busca de países em tempo real usando a API pública REST Countries</p>
+
+        <div class="mb-3">
+          <label for="countries" class="form-label">Buscar país:</label>
+          <select id="countries" class="form-select"></select>
+        </div>
+
+        <div class="alert alert-primary" role="alert">
+          <strong>Recursos:</strong>
+          <ul class="mb-0 mt-2">
+            <li><strong>Busca em tempo real:</strong> Digite para buscar países dinamicamente</li>
+            <li><strong>Templates customizados:</strong> Mostra bandeira, capital e informações extras</li>
+            <li><strong>API pública:</strong> Usa a API REST Countries v3.1</li>
+          </ul>
+        </div>
+
+        <div class="card mt-3 d-none" id="country-result">
+          <div class="card-header bg-success text-white">
+            <strong>🎉 País Selecionado:</strong>
+          </div>
+          <div class="card-body">
+            <pre class="mb-0" id="country-data" style="background: #f8f9fa; padding: 15px; border-radius: 4px; max-height: 300px; overflow: auto;"></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Exemplo 2: ViaCEP -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h2 class="card-title h5">2. 📮 ViaCEP - Busca de CEP</h2>
+        <p class="text-muted">Busca de endereços brasileiros por CEP usando a API ViaCEP</p>
+
+        <div class="alert alert-warning" role="alert">
+          <strong>💡 Dica:</strong> Digite um CEP válido com 8 dígitos<br>
+          <small>Exemplos: 01310-100 (Av. Paulista), 20040-020 (Centro RJ), 30130-010 (BH)</small>
+        </div>
+
+        <div class="mb-3">
+          <label for="cep" class="form-label">Digite o CEP:</label>
+          <select id="cep" class="form-select"></select>
+        </div>
+
+        <div class="card mt-3 d-none" id="cep-result">
+          <div class="card-header bg-info text-white">
+            <strong>📍 Endereço Encontrado:</strong>
+          </div>
+          <div class="card-body">
+            <pre class="mb-0" id="cep-data" style="background: #f8f9fa; padding: 15px; border-radius: 4px;"></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Exemplo 3: TMDB Simulado -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h2 class="card-title h5">3. 🎬 Busca de Filmes (Simulado)</h2>
+        <p class="text-muted">Exemplo de busca de filmes com dados locais para demonstração</p>
+
+        <div class="mb-3">
+          <label for="movies" class="form-label">Buscar filme:</label>
+          <select id="movies" class="form-select"></select>
+        </div>
+
+        <div class="alert alert-primary" role="alert">
+          <strong>Recursos:</strong>
+          <ul class="mb-0 mt-2">
+            <li><strong>Simulação de API:</strong> Dados locais simulando uma API de filmes</li>
+            <li><strong>Templates ricos:</strong> Mostra pôster, ano e avaliação</li>
+            <li><strong>Delay configurável:</strong> Simula latência de rede real</li>
+          </ul>
+        </div>
+
+        <div class="card mt-3 d-none" id="movie-result">
+          <div class="card-header bg-primary text-white">
+            <strong>🎥 Filme Selecionado:</strong>
+          </div>
+          <div class="card-body">
+            <pre class="mb-0" id="movie-data" style="background: #f8f9fa; padding: 15px; border-radius: 4px;"></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Bootstrap 5 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Vanilla Smart Select JS -->
+  <script src="../dist/vanilla-smart-select.js"></script>
+
+  <script>
+    // Exemplo 1: REST Countries API
+    const countriesSelect = new VanillaSmartSelect('#countries', {
+      placeholder: 'Digite para buscar países...',
+      allowClear: true,
+      ajax: {
+        url: 'https://restcountries.com/v3.1/name',
+        delay: 300,
+        transport: (params, config) => {
+          const searchTerm = params.term || 'brazil';
+          const url = `${config.url}/${encodeURIComponent(searchTerm)}`;
+          const abortController = new AbortController();
+
+          const fetchPromise = fetch(url, { signal: abortController.signal })
+            .then(response => {
+              if (!response.ok) {
+                if (response.status === 404) return [];
+                throw new Error(`HTTP error! status: ${response.status}`);
+              }
+              return response.json();
+            });
+
+          fetchPromise.abort = () => abortController.abort();
+          return fetchPromise;
+        },
+        processResults: (data) => {
+          if (!Array.isArray(data)) return { results: [] };
+
+          const results = data.map(country => ({
+            id: country.cca3,
+            text: country.name.common,
+            flag: country.flag,
+            capital: country.capital ? country.capital[0] : 'N/A',
+            population: country.population.toLocaleString('pt-BR'),
+            region: country.region
+          }));
+
+          return { results };
+        }
+      },
+      templateResult: (item) => {
+        const div = document.createElement('div');
+        div.className = 'd-flex align-items-center gap-2';
+        div.innerHTML = `
+          <span style="font-size: 24px;">${item.flag || '🌍'}</span>
+          <div class="flex-fill">
+            <div class="fw-bold">${item.text}</div>
+            <small class="text-muted">Capital: ${item.capital} | Pop: ${item.population}</small>
+          </div>
+        `;
+        return div;
+      },
+      templateSelection: (item) => `${item.flag || '🌍'} ${item.text}`
+    });
+
+    document.getElementById('countries').addEventListener('vs:select', (e) => {
+      document.getElementById('country-result').classList.remove('d-none');
+      document.getElementById('country-data').textContent = JSON.stringify(e.detail.data, null, 2);
+    });
+
+    // Exemplo 2: ViaCEP
+    const cepSelect = new VanillaSmartSelect('#cep', {
+      placeholder: 'Digite um CEP (ex: 01310-100)...',
+      allowClear: true,
+      ajax: {
+        url: 'https://viacep.com.br/ws',
+        delay: 400,
+        transport: (params, config) => {
+          const cep = (params.term || '').replace(/\D/g, '');
+          if (cep.length < 8) return Promise.resolve([]);
+
+          const url = `${config.url}/${cep}/json/`;
+          const abortController = new AbortController();
+
+          const fetchPromise = fetch(url, { signal: abortController.signal })
+            .then(response => response.json())
+            .then(data => {
+              if (data.erro) return [];
+              return [data];
+            });
+
+          fetchPromise.abort = () => abortController.abort();
+          return fetchPromise;
+        },
+        processResults: (data) => {
+          if (!Array.isArray(data) || data.length === 0) {
+            return { results: [] };
+          }
+
+          const results = data.map(address => ({
+            id: address.cep,
+            text: `${address.cep} - ${address.logradouro}, ${address.bairro}`,
+            logradouro: address.logradouro,
+            bairro: address.bairro,
+            cidade: address.localidade,
+            uf: address.uf,
+            cep: address.cep
+          }));
+
+          return { results };
+        }
+      },
+      templateResult: (item) => {
+        const div = document.createElement('div');
+        div.innerHTML = `
+          <div class="fw-bold">📮 ${item.cep}</div>
+          <small class="text-muted">${item.logradouro}, ${item.bairro} - ${item.cidade}/${item.uf}</small>
+        `;
+        return div;
+      }
+    });
+
+    document.getElementById('cep').addEventListener('vs:select', (e) => {
+      document.getElementById('cep-result').classList.remove('d-none');
+      document.getElementById('cep-data').textContent = JSON.stringify(e.detail.data, null, 2);
+    });
+
+    // Exemplo 3: Filmes Simulados
+    const moviesData = [
+      { id: 1, title: 'Matrix', year: 1999, rating: 8.7 },
+      { id: 2, title: 'Matrix Reloaded', year: 2003, rating: 7.2 },
+      { id: 3, title: 'Matrix Revolutions', year: 2003, rating: 6.8 },
+      { id: 4, title: 'Inception', year: 2010, rating: 8.8 },
+      { id: 5, title: 'Interstellar', year: 2014, rating: 8.6 }
+    ];
+
+    const moviesSelect = new VanillaSmartSelect('#movies', {
+      placeholder: 'Digite para buscar filmes...',
+      allowClear: true,
+      ajax: {
+        delay: 300,
+        transport: (params) => {
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              const term = (params.term || '').toLowerCase();
+              const filtered = moviesData.filter(movie =>
+                movie.title.toLowerCase().includes(term)
+              );
+              resolve(filtered);
+            }, 500); // Simula latência
+          });
+        },
+        processResults: (data) => {
+          const results = data.map(movie => ({
+            id: movie.id,
+            text: movie.title,
+            year: movie.year,
+            rating: movie.rating
+          }));
+          return { results };
+        }
+      },
+      templateResult: (item) => {
+        const div = document.createElement('div');
+        div.innerHTML = `
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <div class="fw-bold">🎬 ${item.text}</div>
+              <small class="text-muted">Ano: ${item.year}</small>
+            </div>
+            <span class="badge bg-warning text-dark">⭐ ${item.rating}</span>
+          </div>
+        `;
+        return div;
+      }
+    });
+
+    document.getElementById('movies').addEventListener('vs:select', (e) => {
+      document.getElementById('movie-result').classList.remove('d-none');
+      document.getElementById('movie-data').textContent = JSON.stringify(e.detail.data, null, 2);
+    });
+
+    console.log('✓ Exemplos AJAX inicializados!');
+  </script>
+</body>
+</html>

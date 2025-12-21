@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Programática + Bootstrap 5 - Vanilla Smart Select</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Vanilla Smart Select CSS -->
+  <link rel="stylesheet" href="../dist/vanilla-smart-select.css">
+</head>
+<body>
+  <div class="container py-5">
+    <h1 class="mb-4">🔧 API Programática Completa</h1>
+
+    <!-- Exemplo 1: Single Select -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h2 class="card-title h5">1. Single Select - API Básica</h2>
+        <div class="mb-3">
+          <label for="fruits" class="form-label">Frutas:</label>
+          <select id="fruits" class="form-select">
+            <option value="">Selecione uma fruta...</option>
+            <option value="apple">Maçã</option>
+            <option value="banana">Banana</option>
+            <option value="orange">Laranja</option>
+            <option value="grape">Uva</option>
+          </select>
+        </div>
+
+        <div class="d-flex gap-2 flex-wrap mb-3">
+          <button class="btn btn-primary" onclick="fruitsAPI.val('banana')">Selecionar Banana</button>
+          <button class="btn btn-primary" onclick="fruitsAPI.select('apple')">Selecionar Maçã (API)</button>
+          <button class="btn btn-primary" onclick="fruitsAPI.clear()">Limpar</button>
+          <button class="btn btn-secondary" onclick="showFruitsValue()">Mostrar Valor</button>
+          <button class="btn btn-secondary" onclick="showFruitsSelected()">Mostrar Selecionado</button>
+        </div>
+
+        <div id="fruits-output" class="bg-light border rounded p-3 font-monospace small">Click nos botões para testar...</div>
+
+        <div class="alert alert-info mt-3" role="alert">
+          <strong>Métodos Demonstrados:</strong><br>
+          <code>val(value)</code> - Define valor por ID<br>
+          <code>select(id)</code> - Seleciona item por ID<br>
+          <code>clear()</code> - Limpa seleção<br>
+          <code>val()</code> - Obtém valor atual<br>
+          <code>getSelected()</code> - Obtém item completo com dados
+        </div>
+      </div>
+    </div>
+
+    <!-- Exemplo 2: Multi-Select -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h2 class="card-title h5">2. Multi-Select - Adicionar/Remover Seleção</h2>
+        <div class="mb-3">
+          <label for="languages" class="form-label">Linguagens de Programação:</label>
+          <select id="languages" class="form-select" multiple>
+            <option value="js">JavaScript</option>
+            <option value="py">Python</option>
+            <option value="java">Java</option>
+            <option value="cpp">C++</option>
+            <option value="rust">Rust</option>
+          </select>
+        </div>
+
+        <div class="d-flex gap-2 flex-wrap mb-3">
+          <button class="btn btn-primary" onclick="languagesAPI.select('js')">Adicionar JavaScript</button>
+          <button class="btn btn-primary" onclick="languagesAPI.select('py')">Adicionar Python</button>
+          <button class="btn btn-primary" onclick="languagesAPI.unselect('js')">Remover JavaScript</button>
+          <button class="btn btn-primary" onclick="languagesAPI.clear()">Limpar Tudo</button>
+          <button class="btn btn-secondary" onclick="showLanguagesSelected()">Mostrar Selecionados</button>
+        </div>
+
+        <div id="languages-output" class="bg-light border rounded p-3 font-monospace small">Click nos botões para testar...</div>
+
+        <div class="alert alert-info mt-3" role="alert">
+          <strong>Métodos Multi-Select:</strong><br>
+          <code>select(id)</code> - Adiciona à seleção (multi-select)<br>
+          <code>unselect(id)</code> - Remove da seleção<br>
+          <code>getSelected()</code> - Retorna array de itens selecionados
+        </div>
+      </div>
+    </div>
+
+    <!-- Exemplo 3: Manipulação Dinâmica -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h2 class="card-title h5">3. Manipulação Dinâmica de Opções</h2>
+        <div class="mb-3">
+          <label for="dynamic" class="form-label">Opções Dinâmicas:</label>
+          <select id="dynamic" class="form-select">
+            <option value="">Selecione...</option>
+            <option value="opt1">Opção 1</option>
+            <option value="opt2">Opção 2</option>
+          </select>
+        </div>
+
+        <div class="d-flex gap-2 flex-wrap mb-3">
+          <button class="btn btn-primary" onclick="addNewOption()">Adicionar Opção</button>
+          <button class="btn btn-danger" onclick="removeOption('opt2')">Remover Opção 2</button>
+          <button class="btn btn-secondary" onclick="showDynamicData()">Mostrar Dados</button>
+        </div>
+
+        <div id="dynamic-output" class="bg-light border rounded p-3 font-monospace small">Click nos botões para testar...</div>
+
+        <div class="alert alert-info mt-3" role="alert">
+          <strong>Métodos de Manipulação:</strong><br>
+          <code>addOption(option)</code> - Adiciona nova opção dinamicamente<br>
+          <code>removeOption(id)</code> - Remove opção por ID<br>
+          <code>data()</code> - Obtém todos os dados<br>
+          <code>data(newData)</code> - Define novos dados
+        </div>
+      </div>
+    </div>
+
+    <!-- Exemplo 4: Controle de Estado -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h2 class="card-title h5">4. Controle de Estado</h2>
+
+        <div class="d-flex gap-2 flex-wrap mb-3">
+          <button class="btn btn-primary" onclick="stateAPI.open()">Abrir Dropdown</button>
+          <button class="btn btn-primary" onclick="stateAPI.close()">Fechar Dropdown</button>
+          <button class="btn btn-primary" onclick="stateAPI.toggle()">Alternar</button>
+          <button class="btn btn-primary" onclick="stateAPI.focus()">Focar</button>
+          <button class="btn btn-danger" onclick="stateAPI.disable()">Desabilitar</button>
+          <button class="btn btn-secondary" onclick="stateAPI.enable()">Habilitar</button>
+          <button class="btn btn-secondary" onclick="showStateInfo()">Mostrar Estado</button>
+        </div>
+
+        <div class="mb-3">
+          <label for="state" class="form-label">Estado do Select:</label>
+          <select id="state" class="form-select">
+            <option value="">Selecione...</option>
+            <option value="1">Item 1</option>
+            <option value="2">Item 2</option>
+            <option value="3">Item 3</option>
+          </select>
+        </div>
+
+        <div id="state-output" class="bg-light border rounded p-3 font-monospace small">Click nos botões para testar...</div>
+
+        <div class="alert alert-info mt-3" role="alert">
+          <strong>Métodos de Controle:</strong><br>
+          <code>open()</code> - Abre dropdown<br>
+          <code>close()</code> - Fecha dropdown<br>
+          <code>toggle()</code> - Alterna aberto/fechado<br>
+          <code>focus()</code> - Foca no select<br>
+          <code>enable()</code> / <code>disable()</code> - Habilita/desabilita<br>
+          <code>isOpen()</code> - Verifica se está aberto
+        </div>
+      </div>
+    </div>
+
+    <!-- Resumo da API -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h2 class="card-title h5">5. Resumo Completo da API</h2>
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead class="table-light">
+              <tr>
+                <th>Método</th>
+                <th>Descrição</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><code>val(value?)</code></td><td>Get/set valor por ID</td></tr>
+              <tr><td><code>select(id)</code> ⭐</td><td>Seleciona item por ID</td></tr>
+              <tr><td><code>unselect(id)</code> ⭐</td><td>Remove seleção (multi-select)</td></tr>
+              <tr><td><code>getSelected()</code> ⭐</td><td>Obtém item(s) selecionado(s) completo(s)</td></tr>
+              <tr><td><code>clear()</code></td><td>Limpa seleção</td></tr>
+              <tr><td><code>data(data?)</code></td><td>Get/set todos os dados</td></tr>
+              <tr><td><code>addOption(option)</code> ⭐</td><td>Adiciona opção dinamicamente</td></tr>
+              <tr><td><code>removeOption(id)</code> ⭐</td><td>Remove opção por ID</td></tr>
+              <tr><td><code>open()</code></td><td>Abre dropdown</td></tr>
+              <tr><td><code>close()</code></td><td>Fecha dropdown</td></tr>
+              <tr><td><code>toggle()</code></td><td>Alterna dropdown</td></tr>
+              <tr><td><code>enable()</code></td><td>Habilita select</td></tr>
+              <tr><td><code>disable()</code></td><td>Desabilita select</td></tr>
+              <tr><td><code>focus()</code></td><td>Foca no select</td></tr>
+              <tr><td><code>isOpen()</code></td><td>Verifica se está aberto</td></tr>
+              <tr><td><code>checkValidity()</code></td><td>Valida HTML5</td></tr>
+              <tr><td><code>reportValidity()</code></td><td>Valida e mostra mensagem</td></tr>
+              <tr><td><code>setCustomValidity(msg)</code></td><td>Define mensagem de validação customizada</td></tr>
+              <tr><td><code>validationMessage()</code></td><td>Obtém mensagem de validação</td></tr>
+              <tr><td><code>willValidate()</code></td><td>Verifica se será validado</td></tr>
+              <tr><td><code>destroy()</code></td><td>Destroi instância</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="text-muted"><strong>⭐ = Novo!</strong> Métodos adicionados na API Programática Completa</p>
+        <div class="alert alert-success">
+          <strong>✅ Correções recentes:</strong><br>
+          • <code>clear()</code> - Agora atualiza a UI corretamente<br>
+          • <code>open()</code> / <code>close()</code> / <code>toggle()</code> - Agora funcionam quando chamados programaticamente<br>
+          • Dropdown não fecha mais imediatamente após abertura programática
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Bootstrap 5 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Vanilla Smart Select JS -->
+  <script src="../dist/vanilla-smart-select.js"></script>
+
+  <script>
+    // Exemplo 1: Fruits (Single Select)
+    const fruitsAPI = new VanillaSmartSelect('#fruits', { searchable: true });
+
+    function showFruitsValue() {
+      const value = fruitsAPI.val();
+      document.getElementById('fruits-output').textContent =
+        `Valor atual: ${value || 'null'}`;
+    }
+
+    function showFruitsSelected() {
+      const selected = fruitsAPI.getSelected();
+      document.getElementById('fruits-output').textContent =
+        `Item selecionado:\n${JSON.stringify(selected, null, 2)}`;
+    }
+
+    // Exemplo 2: Languages (Multi-Select)
+    const languagesAPI = new VanillaSmartSelect('#languages', { searchable: true });
+
+    function showLanguagesSelected() {
+      const selected = languagesAPI.getSelected();
+      document.getElementById('languages-output').textContent =
+        `Itens selecionados (${selected.length}):\n${JSON.stringify(selected, null, 2)}`;
+    }
+
+    // Exemplo 3: Dynamic Options
+    const dynamicAPI = new VanillaSmartSelect('#dynamic', { searchable: true });
+    let optionCounter = 3;
+
+    function addNewOption() {
+      const newOption = {
+        id: `opt${optionCounter}`,
+        text: `Opção ${optionCounter}`,
+        selected: false
+      };
+      dynamicAPI.addOption(newOption);
+      document.getElementById('dynamic-output').textContent =
+        `Opção adicionada: ${newOption.text}`;
+      optionCounter++;
+    }
+
+    function removeOption(id) {
+      dynamicAPI.removeOption(id);
+      document.getElementById('dynamic-output').textContent =
+        `Opção removida: ${id}`;
+    }
+
+    function showDynamicData() {
+      const data = dynamicAPI.data();
+      document.getElementById('dynamic-output').textContent =
+        `Dados atuais:\n${JSON.stringify(data, null, 2)}`;
+    }
+
+    // Exemplo 4: State Control
+    const stateAPI = new VanillaSmartSelect('#state', { searchable: true });
+
+    function showStateInfo() {
+      const isOpen = stateAPI.isOpen();
+      const value = stateAPI.val();
+      const selected = stateAPI.getSelected();
+
+      document.getElementById('state-output').textContent =
+        `Estado atual:\n` +
+        `- Aberto: ${isOpen}\n` +
+        `- Valor: ${value || 'null'}\n` +
+        `- Selecionado: ${JSON.stringify(selected, null, 2)}`;
+    }
+
+    console.log('✓ API Programática Completa inicializada!');
+  </script>
+</body>
+</html>

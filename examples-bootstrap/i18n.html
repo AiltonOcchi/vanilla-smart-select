@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Internacionalização (i18n) + Bootstrap 5 - Vanilla Smart Select</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Vanilla Smart Select CSS -->
+  <link rel="stylesheet" href="../dist/vanilla-smart-select.css">
+</head>
+<body>
+  <div class="container py-5">
+    <h1 class="mb-4">🌍 Internacionalização (i18n)</h1>
+
+    <!-- Exemplo 1: Detecção Automática -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h2 class="card-title h5">1. Detecção Automática de Idioma</h2>
+        <p class="text-muted">
+          O VanillaSmartSelect detecta automaticamente o idioma do navegador e usa as traduções correspondentes.
+        </p>
+
+        <div class="mb-3">
+          <label for="auto" class="form-label">Selecione uma fruta:</label>
+          <select id="auto" class="form-select" multiple>
+            <option value="apple">Maçã</option>
+            <option value="banana">Banana</option>
+            <option value="orange">Laranja</option>
+            <option value="grape">Uva</option>
+            <option value="strawberry">Morango</option>
+          </select>
+        </div>
+
+        <div class="alert alert-success" role="alert">
+          <strong>✓ Idioma detectado:</strong> <span id="detected-lang"></span><br>
+          <strong>Teste:</strong> Tente buscar (digite no campo), selecione múltiplos itens e observe as mensagens em seu idioma.
+        </div>
+      </div>
+    </div>
+
+    <!-- Exemplo 2: Trocar Idioma Dinamicamente -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h2 class="card-title h5">2. Trocar Idioma Dinamicamente</h2>
+        <p class="text-muted">
+          Você pode trocar o idioma em tempo de execução sem recriar o select.
+        </p>
+
+        <div class="d-flex gap-2 flex-wrap mb-3">
+          <button id="btn-en" onclick="changeLanguage('en')" class="btn btn-primary">🇺🇸 English</button>
+          <button id="btn-pt" onclick="changeLanguage('pt-BR')" class="btn btn-success">🇧🇷 Português</button>
+          <button id="btn-es" onclick="changeLanguage('es')" class="btn btn-primary">🇪🇸 Español</button>
+        </div>
+
+        <div class="mb-3">
+          <label for="dynamic" class="form-label">Linguagens de Programação:</label>
+          <select id="dynamic" class="form-select" multiple>
+            <option value="js">JavaScript</option>
+            <option value="py">Python</option>
+            <option value="java">Java</option>
+            <option value="cpp">C++</option>
+            <option value="rust">Rust</option>
+            <option value="go">Go</option>
+          </select>
+        </div>
+
+        <div class="alert alert-info" role="alert">
+          <strong>Instruções:</strong><br>
+          1. Clique nos botões acima para trocar o idioma<br>
+          2. Digite no campo de busca para ver a mensagem "Buscando..." / "Searching..." / "Buscando..."<br>
+          3. Busque algo que não existe para ver "Nenhum resultado" / "No results" / "No se encontraron"
+        </div>
+      </div>
+    </div>
+
+    <!-- Exemplo 3: Personalizar Mensagens -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h2 class="card-title h5">3. Personalizar Mensagens Específicas</h2>
+        <p class="text-muted">
+          Você pode sobrescrever mensagens específicas mantendo as outras traduções.
+        </p>
+
+        <div class="mb-3">
+          <label for="custom" class="form-label">Selecione até 2 itens:</label>
+          <select id="custom" class="form-select" multiple>
+            <option value="red">Vermelho</option>
+            <option value="blue">Azul</option>
+            <option value="green">Verde</option>
+            <option value="yellow">Amarelo</option>
+            <option value="purple">Roxo</option>
+          </select>
+        </div>
+
+        <div class="alert alert-info" role="alert">
+          <strong>Mensagem customizada:</strong> A mensagem de limite máximo foi personalizada.<br>
+          <strong>Teste:</strong> Tente selecionar mais de 2 itens.
+        </div>
+      </div>
+    </div>
+
+    <!-- Exemplo 4: Idiomas Disponíveis -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h2 class="card-title h5">4. Idiomas Disponíveis</h2>
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead class="table-light">
+              <tr>
+                <th>Idioma</th>
+                <th>Código</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>🇺🇸 English</td>
+                <td><code>en</code></td>
+                <td><span class="text-success">✓ Disponível</span></td>
+              </tr>
+              <tr>
+                <td>🇧🇷 Português (Brasil)</td>
+                <td><code>pt-BR</code></td>
+                <td><span class="text-success">✓ Disponível</span></td>
+              </tr>
+              <tr>
+                <td>🇪🇸 Español</td>
+                <td><code>es</code></td>
+                <td><span class="text-success">✓ Disponível</span></td>
+              </tr>
+              <tr>
+                <td>🇫🇷 Français</td>
+                <td><code>fr</code></td>
+                <td><span class="text-muted">Fase 2</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Exemplo 5: Exemplo de Uso da API -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h2 class="card-title h5">5. Exemplo de Uso da API</h2>
+
+        <h3 class="h6 mt-4">Detecção automática:</h3>
+        <pre class="bg-light p-3 rounded" style="overflow-x: auto;"><code>// Detecta idioma do navegador automaticamente
+const select = new VanillaSmartSelect('#mySelect', {
+  searchable: true
+});</code></pre>
+
+        <h3 class="h6 mt-4">Definir idioma específico:</h3>
+        <pre class="bg-light p-3 rounded" style="overflow-x: auto;"><code>// Português do Brasil
+const select = new VanillaSmartSelect('#mySelect', {
+  language: 'pt-BR'
+});
+
+// Espanhol
+const select = new VanillaSmartSelect('#mySelect', {
+  language: 'es'
+});</code></pre>
+
+        <h3 class="h6 mt-4">Personalizar mensagens:</h3>
+        <pre class="bg-light p-3 rounded" style="overflow-x: auto;"><code>const select = new VanillaSmartSelect('#mySelect', {
+  language: {
+    noResults: 'Ops! Nada encontrado :(',
+    maximumSelected: (args) =>
+      `Você atingiu o limite de ${args.maximum} itens!`
+  }
+});</code></pre>
+
+        <h3 class="h6 mt-4">Trocar idioma dinamicamente:</h3>
+        <pre class="bg-light p-3 rounded mb-0" style="overflow-x: auto;"><code>// Importar sistema i18n
+import { getLanguage } from './i18n/index.js';
+
+// Trocar para espanhol
+select.updateLanguage(getLanguage('es'));</code></pre>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Bootstrap 5 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Vanilla Smart Select JS -->
+  <script src="../dist/vanilla-smart-select.js"></script>
+
+  <script type="module">
+    // Import para poder usar getLanguage
+    import { getLanguage, detectBrowserLanguage } from '../dist/vanilla-smart-select.esm.js';
+
+    const VanillaSmartSelectClass = VanillaSmartSelect.default || VanillaSmartSelect;
+
+    // Example 1: Auto-detect language
+    const autoSelect = new VanillaSmartSelectClass('#auto', {
+      searchable: true,
+      maximumSelectionLength: 3
+    });
+
+    // Show detected language
+    const detectedLang = detectBrowserLanguage();
+    document.getElementById('detected-lang').textContent = detectedLang;
+
+    // Example 2: Dynamic language switching
+    let currentLang = 'pt-BR';
+    const dynamicSelect = new VanillaSmartSelectClass('#dynamic', {
+      searchable: true,
+      language: getLanguage('pt-BR')
+    });
+
+    window.changeLanguage = function(lang) {
+      currentLang = lang;
+
+      // Update button styles
+      document.querySelectorAll('.d-flex.gap-2 button').forEach(btn => {
+        btn.classList.remove('btn-success');
+        btn.classList.add('btn-primary');
+      });
+      const activeBtn = document.getElementById(`btn-${lang === 'pt-BR' ? 'pt' : lang}`);
+      activeBtn.classList.remove('btn-primary');
+      activeBtn.classList.add('btn-success');
+
+      // Change language using the new updateLanguage method
+      dynamicSelect.updateLanguage(getLanguage(lang));
+
+      console.log(`Language changed to: ${lang}`);
+    };
+
+    // Example 3: Custom messages
+    const customSelect = new VanillaSmartSelectClass('#custom', {
+      searchable: true,
+      maximumSelectionLength: 2,
+      language: {
+        ...getLanguage('pt-BR'),
+        maximumSelected: (args) => `🚫 Ops! Limite de ${args.maximum} ${args.maximum === 1 ? 'item' : 'itens'} atingido!`
+      }
+    });
+
+    console.log('✓ i18n examples ready!');
+    console.log('Available languages:', ['en', 'pt-BR', 'es']);
+    console.log('Browser language detected:', detectedLang);
+  </script>
+</body>
+</html>

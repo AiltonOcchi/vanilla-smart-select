@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Validação Avançada + Bootstrap 5 - Vanilla Smart Select</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Vanilla Smart Select CSS -->
+  <link rel="stylesheet" href="../dist/vanilla-smart-select.css">
+</head>
+<body>
+  <div class="container py-5">
+    <h1 class="mb-4">✅ Validação Avançada (Opcional)</h1>
+
+    <!-- Formulário com Validação -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h2 class="card-title h5">Caso de Uso: Formulário com Validação Customizada Simples</h2>
+        <p class="text-muted">
+          Quando você precisa de validação customizada, use o helper opcional.
+          Apenas 5 linhas de código!
+        </p>
+
+        <form id="customForm">
+          <div class="mb-3">
+            <label for="department" class="form-label">Departamento: *</label>
+            <select id="department" class="form-select" required>
+              <option value="">Selecione...</option>
+              <option value="ti">TI</option>
+              <option value="rh">RH</option>
+              <option value="vendas">Vendas</option>
+              <option value="marketing">Marketing</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="level" class="form-label">Nível: *</label>
+            <select id="level" class="form-select" required>
+              <option value="">Selecione...</option>
+              <option value="junior">Júnior</option>
+              <option value="pleno">Pleno</option>
+              <option value="senior">Sênior</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="shift" class="form-label">Turno:</label>
+            <select id="shift" class="form-select">
+              <option value="">Selecione...</option>
+              <option value="morning">Manhã</option>
+              <option value="afternoon">Tarde</option>
+              <option value="night">Noite</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn-primary fw-semibold">
+            Enviar
+          </button>
+        </form>
+
+        <div id="result" style="display: none;"></div>
+
+        <div class="alert alert-info mt-4" role="alert">
+          <strong>JavaScript necessário (apenas 5 linhas!):</strong>
+          <pre class="bg-light p-3 rounded mt-2 mb-0" style="overflow-x: auto;"><code>import { onValidSubmit } from './utils/validation.js';
+
+// Apenas isso!
+onValidSubmit('#customForm', (e, form) => {
+  const data = new FormData(form);
+  console.log('Formulário válido!', Object.fromEntries(data));
+  // Seu código aqui (AJAX, etc)
+});</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Resumo -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h2 class="card-title h5">Resumo: Por que é simples?</h2>
+
+        <div class="alert alert-success" role="alert">
+          <h3 class="h6 alert-heading">✓ Validação HTML5 funciona automaticamente:</h3>
+          <ol class="mb-0">
+            <li><strong>Select original sempre sincronizado</strong> - você não precisa fazer nada</li>
+            <li><strong>Atributo <code>required</code></strong> - funciona nativamente</li>
+            <li><strong>Borda vermelha automática</strong> - feedback visual sem código</li>
+            <li><strong>form.checkValidity()</strong> - valida todos os campos de uma vez</li>
+            <li><strong>Escala perfeitamente</strong> - 10 ou 100 campos, mesmo código</li>
+          </ol>
+        </div>
+
+        <div class="alert alert-warning" role="alert">
+          <h3 class="h6 alert-heading">Quando usar helpers customizados:</h3>
+          <ul class="mb-2">
+            <li>Validação customizada complexa (ex: validar CPF, CEP, etc)</li>
+            <li>Mensagens de erro customizadas</li>
+            <li>Validação dependente entre campos</li>
+            <li>Integração com bibliotecas de validação (Yup, Joi, etc)</li>
+          </ul>
+          <p class="mb-0">
+            <strong>Mas na maioria dos casos, a validação HTML5 nativa é suficiente!</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Bootstrap 5 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Vanilla Smart Select JS -->
+  <script src="../dist/vanilla-smart-select.js"></script>
+
+  <script type="module">
+    import VanillaSmartSelect from '../dist/vanilla-smart-select.esm.js';
+
+    // Inicializa os selects
+    new VanillaSmartSelect('#department', { searchable: true });
+    new VanillaSmartSelect('#level', { searchable: true });
+    new VanillaSmartSelect('#shift', { searchable: true });
+
+    // Validação customizada simples (helper opcional)
+    const form = document.getElementById('customForm');
+    const resultDiv = document.getElementById('result');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      if (form.checkValidity()) {
+        // Válido - processar
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData);
+
+        resultDiv.className = 'alert alert-success mt-3';
+        resultDiv.style.display = 'block';
+        resultDiv.innerHTML = `
+          <strong>✓ Formulário Válido!</strong><br>
+          Dados: <pre class="mb-0 mt-2">${JSON.stringify(data, null, 2)}</pre>
+        `;
+
+        console.log('Dados válidos:', data);
+      } else {
+        // Inválido - mostrar erro
+        form.reportValidity(); // Mensagem nativa do navegador
+
+        resultDiv.className = 'alert alert-danger mt-3';
+        resultDiv.style.display = 'block';
+        resultDiv.innerHTML = '<strong>✗ Erro!</strong> Preencha todos os campos obrigatórios.';
+      }
+    });
+
+    console.log('✓ Validation example ready!');
+  </script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+/**
+ * Vanilla-Smart-Select Core Styles
+ * Structural styles required for functionality
+ */
+
+/* Screen reader only - visually hidden but accessible */
+.vs-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Hide select until transformed to prevent flash of unstyled content */
+select[data-vs-initializing] {
+  visibility: hidden !important;
+  position: absolute !important;
+  height: 0 !important;
+  width: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Container */
+.vs-container {
+  position: relative;
+  box-sizing: border-box;
+  display: inline-block;
+}
+
+.vs-container *,
+.vs-container *::before,
+.vs-container *::after {
+  box-sizing: border-box;
+}
+
+/* Selection container */
+.vs-selection {
+  display: block;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+}
+
+.vs-container--disabled .vs-selection {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Dropdown */
+.vs-dropdown {
+  position: fixed;
+  z-index: 9999;
+  overflow: hidden;
+  display: none;
+}
+
+.vs-dropdown--open {
+  display: block;
+}
+
+/* Results container */
+.vs-results {
+  overflow-y: auto;
+  max-height: 300px;
+}
+
+/* Result items */
+.vs-result {
+  cursor: pointer;
+  user-select: none;
+}
+
+.vs-result--disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Tag creation option */
+.vs-result--tag {
+  font-style: italic;
+  border-top: 1px solid #e0e0e0;
+  margin-top: 4px;
+  padding-top: 8px;
+}
+
+/* Search box */
+.vs-search {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Loading state */
+.vs-results--loading {
+  text-align: center;
+  padding: 10px;
+}
+
+/* AJAX Loading message */
+.vs-results__loading {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+}
+
+/* AJAX Error message */
+.vs-results__error {
+  padding: 15px;
+  margin: 10px;
+  border-radius: 4px;
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+/* Selection limit message */
+.vs-results__limit-message {
+  padding: 12px 15px;
+  margin: 10px;
+  border-radius: 4px;
+  background-color: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeaa7;
+}
+
+/* Loading more (pagination) */
+.vs-results__loading-more {
+  text-align: center;
+  padding: 12px;
+  color: #666;
+  font-size: 13px;
+  font-style: italic;
+  border-top: 1px solid #e0e0e0;
+  margin-top: 8px;
+}
+
+/* No results */
+.vs-results--no-results {
+  text-align: center;
+  padding: 10px;
+}
+
+/* Focus states */
+.vs-selection:focus {
+  outline: none;
+}
+
+/* Multiple select */
+.vs-selection--multiple {
+  min-height: 36px;
+}
+
+.vs-selection__choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.vs-selection__choice {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.vs-selection__choice__remove {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pagination / Infinite Scroll - Vanilla Smart Select</title>
+  <link rel="stylesheet" href="../dist/vanilla-smart-select.min.css">
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+      line-height: 1.6;
+    }
+
+    h1 {
+      color: #333;
+      border-bottom: 2px solid: #007bff;
+      padding-bottom: 10px;
+    }
+
+    h2 {
+      color: #555;
+      margin-top: 40px;
+      margin-bottom: 20px;
+    }
+
+    .example {
+      margin-bottom: 40px;
+      padding: 20px;
+      background: #f8f9fa;
+      border-radius: 8px;
+    }
+
+    .example p {
+      color: #666;
+      margin-bottom: 15px;
+    }
+
+    select {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      background: white;
+      border-radius: 4px;
+      border-left: 4px solid #007bff;
+    }
+
+    .result h3 {
+      margin-top: 0;
+      color: #007bff;
+      font-size: 14px;
+    }
+
+    .result pre {
+      background: #f8f9fa;
+      padding: 10px;
+      border-radius: 4px;
+      overflow-x: auto;
+      font-size: 12px;
+      margin: 0;
+    }
+
+    .info-box {
+      background: #e7f3ff;
+      border-left: 4px solid #2196F3;
+      padding: 12px 16px;
+      margin: 15px 0;
+      border-radius: 4px;
+    }
+
+    .info-box strong {
+      color: #1976D2;
+    }
+
+    /* Custom styles for GitHub repos */
+    .repo-option {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 4px 0;
+    }
+
+    .repo-icon {
+      font-size: 24px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .repo-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .repo-name {
+      font-weight: 500;
+      color: #333;
+      margin-bottom: 4px;
+    }
+
+    .repo-description {
+      font-size: 12px;
+      color: #666;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .repo-stats {
+      display: flex;
+      gap: 12px;
+      margin-top: 6px;
+      font-size: 11px;
+      color: #888;
+    }
+
+    .repo-stat {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Loading spinner for loading more */
+    .vs-results__loading-more::before {
+      content: '';
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border: 2px solid #007bff;
+      border-right-color: transparent;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <h1>📜 Pagination / Infinite Scroll</h1>
+  <p>Demonstração de infinite scroll automático ao rolar a lista de resultados.</p>
+
+  <div class="info-box">
+    <strong>💡 Como funciona:</strong> Role a lista de resultados até o final para carregar automaticamente a próxima página. A paginação é transparente e os resultados são acumulados.
+  </div>
+
+  <div class="example">
+    <h2>1. 📦 GitHub Repositories - Infinite Scroll</h2>
+    <p>Busque repositórios do GitHub. Role até o final para carregar mais resultados automaticamente.</p>
+    <p><strong>Dica:</strong> Digite "javascript", "react", "vue", etc.</p>
+    <select id="github-repos"></select>
+
+    <div class="result" id="repo-result" style="display: none;">
+      <h3>Repositório Selecionado:</h3>
+      <pre id="repo-data"></pre>
+    </div>
+  </div>
+
+  <div class="example">
+    <h2>2. 👤 GitHub Users - Infinite Scroll</h2>
+    <p>Busque usuários do GitHub com paginação automática.</p>
+    <p><strong>Dica:</strong> Digite qualquer nome de usuário.</p>
+    <select id="github-users"></select>
+
+    <div class="result" id="user-result" style="display: none;">
+      <h3>Usuário Selecionado:</h3>
+      <pre id="user-data"></pre>
+    </div>
+  </div>
+
+  <div class="example">
+    <h2>3. 🎬 Simulação de API Paginada</h2>
+    <p>Exemplo simulado com dados locais para demonstrar o conceito de paginação.</p>
+    <select id="simulated"></select>
+
+    <div class="result" id="simulated-result" style="display: none;">
+      <h3>Item Selecionado:</h3>
+      <pre id="simulated-data"></pre>
+    </div>
+  </div>
+
+  <script src="../dist/vanilla-smart-select.min.js"></script>
+  <script>
+    // Example 1: GitHub Repositories with Infinite Scroll
+    const reposSelect = new VanillaSmartSelect('#github-repos', {
+      placeholder: 'Digite para buscar repositórios...',
+      allowClear: true,
+      ajax: {
+        url: 'https://api.github.com/search/repositories',
+        delay: 400,
+        data: (params) => ({
+          q: params.term || 'javascript',
+          page: params.page || 1,
+          per_page: 10
+        }),
+        processResults: (data, params) => {
+          const results = data.items.map(repo => ({
+            id: repo.id,
+            text: repo.full_name,
+            name: repo.name,
+            full_name: repo.full_name,
+            description: repo.description || 'No description',
+            stars: repo.stargazers_count,
+            forks: repo.forks_count,
+            language: repo.language || 'Unknown',
+            url: repo.html_url
+          }));
+
+          return {
+            results: results,
+            pagination: {
+              more: data.items.length >= 10 // GitHub returns up to 100 results per query
+            }
+          };
+        }
+      },
+      templateResult: (item) => {
+        const div = document.createElement('div');
+        div.className = 'repo-option';
+        div.innerHTML = `
+          <div class="repo-icon">📦</div>
+          <div class="repo-info">
+            <div class="repo-name">${item.full_name}</div>
+            <div class="repo-description">${item.description}</div>
+            <div class="repo-stats">
+              <span class="repo-stat">⭐ ${item.stars.toLocaleString()}</span>
+              <span class="repo-stat">🍴 ${item.forks.toLocaleString()}</span>
+              <span class="repo-stat">💻 ${item.language}</span>
+            </div>
+          </div>
+        `;
+        return div;
+      },
+      templateSelection: (item) => {
+        return `📦 ${item.full_name}`;
+      }
+    });
+
+    document.getElementById('github-repos').addEventListener('vs:select', (e) => {
+      const resultDiv = document.getElementById('repo-result');
+      const dataDiv = document.getElementById('repo-data');
+      resultDiv.style.display = 'block';
+      dataDiv.textContent = JSON.stringify(e.detail.data, null, 2);
+    });
+
+    // Example 2: GitHub Users with Infinite Scroll
+    const usersSelect = new VanillaSmartSelect('#github-users', {
+      placeholder: 'Digite para buscar usuários...',
+      allowClear: true,
+      ajax: {
+        url: 'https://api.github.com/search/users',
+        delay: 400,
+        data: (params) => ({
+          q: params.term || 'john',
+          page: params.page || 1,
+          per_page: 15
+        }),
+        processResults: (data) => {
+          const results = data.items.map(user => ({
+            id: user.id,
+            text: user.login,
+            login: user.login,
+            avatar: user.avatar_url,
+            url: user.html_url,
+            type: user.type
+          }));
+
+          return {
+            results: results,
+            pagination: {
+              more: data.items.length >= 15
+            }
+          };
+        }
+      },
+      templateResult: (item) => {
+        const div = document.createElement('div');
+        div.style.display = 'flex';
+        div.style.alignItems = 'center';
+        div.style.gap = '10px';
+        div.innerHTML = `
+          <img src="${item.avatar}" style="width: 32px; height: 32px; border-radius: 50%;" />
+          <div>
+            <div style="font-weight: 500;">${item.login}</div>
+            <div style="font-size: 11px; color: #666;">${item.type}</div>
+          </div>
+        `;
+        return div;
+      },
+      templateSelection: (item) => {
+        return item.login;
+      }
+    });
+
+    document.getElementById('github-users').addEventListener('vs:select', (e) => {
+      const resultDiv = document.getElementById('user-result');
+      const dataDiv = document.getElementById('user-data');
+      resultDiv.style.display = 'block';
+      dataDiv.textContent = JSON.stringify(e.detail.data, null, 2);
+    });
+
+    // Example 3: Simulated Paginated API
+    // Generate 100 items
+    const allItems = Array.from({ length: 100 }, (_, i) => ({
+      id: i + 1,
+      text: `Item ${i + 1}`,
+      category: ['Electronics', 'Books', 'Clothing', 'Food'][i % 4],
+      price: (Math.random() * 1000).toFixed(2)
+    }));
+
+    const simulatedSelect = new VanillaSmartSelect('#simulated', {
+      placeholder: 'Buscar items (simulado)...',
+      allowClear: true,
+      ajax: {
+        url: '', // Not used
+        delay: 300,
+        transport: (params) => {
+          // Simulate API delay
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              const term = (params.term || '').toLowerCase();
+              const page = params.page || 1;
+              const perPage = 10;
+
+              // Filter by search term
+              let filtered = allItems.filter(item =>
+                item.text.toLowerCase().includes(term) ||
+                item.category.toLowerCase().includes(term)
+              );
+
+              // Paginate
+              const start = (page - 1) * perPage;
+              const end = start + perPage;
+              const pageItems = filtered.slice(start, end);
+
+              resolve({
+                items: pageItems,
+                total: filtered.length
+              });
+            }, 500); // Simulate network delay
+          });
+        },
+        processResults: (data, params) => {
+          const page = params.page || 1;
+          const perPage = 10;
+          const hasMore = (page * perPage) < data.total;
+
+          return {
+            results: data.items,
+            pagination: { more: hasMore }
+          };
+        }
+      },
+      templateResult: (item) => {
+        const div = document.createElement('div');
+        div.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <div style="font-weight: 500;">${item.text}</div>
+              <div style="font-size: 11px; color: #666;">${item.category}</div>
+            </div>
+            <div style="color: #007bff; font-weight: 600;">$${item.price}</div>
+          </div>
+        `;
+        return div;
+      },
+      templateSelection: (item) => {
+        return `${item.text} - $${item.price}`;
+      }
+    });
+
+    document.getElementById('simulated').addEventListener('vs:select', (e) => {
+      const resultDiv = document.getElementById('simulated-result');
+      const dataDiv = document.getElementById('simulated-data');
+      resultDiv.style.display = 'block';
+      dataDiv.textContent = JSON.stringify(e.detail.data, null, 2);
+    });
+
+    // Log events
+    document.querySelectorAll('select').forEach(select => {
+      select.addEventListener('vs:ajaxLoading', (e) => {
+        console.log('🔄 Loading page:', e.detail.params.page);
+      });
+
+      select.addEventListener('vs:ajaxSuccess', (e) => {
+        console.log('✅ Loaded', e.detail.results.results.length, 'items. Has more:', e.detail.results.pagination.more);
+      });
+    });
+  </script>
+</body>
+</html>

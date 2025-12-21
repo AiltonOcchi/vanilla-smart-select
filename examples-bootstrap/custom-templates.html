@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom Templates + Bootstrap 5 - Vanilla Smart Select</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Vanilla Smart Select CSS -->
+  <link rel="stylesheet" href="../dist/vanilla-smart-select.css">
+</head>
+<body>
+  <div class="container py-5">
+    <h1 class="mb-4">🎨 Templates Customizados</h1>
+
+    <div class="alert alert-info mb-4" role="alert">
+      <strong>✨ Personalização Total!</strong> Crie templates ricos com HTML, CSS e Bootstrap para exibir dados complexos
+    </div>
+
+    <!-- Exemplo 1: Usuários com Avatar -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h2 class="card-title h5">1. 👥 Usuários com Avatar e Email</h2>
+        <p class="text-muted">Template personalizado mostrando avatar, nome e email de usuários</p>
+
+        <div class="mb-3">
+          <label for="users" class="form-label">Selecione um usuário:</label>
+          <select id="users" class="form-select">
+            <option value="">Escolha...</option>
+            <option value="1" data-name="João Silva" data-email="joao@example.com" data-avatar="https://i.pravatar.cc/150?img=1">João Silva</option>
+            <option value="2" data-name="Maria Santos" data-email="maria@example.com" data-avatar="https://i.pravatar.cc/150?img=5">Maria Santos</option>
+            <option value="3" data-name="Pedro Oliveira" data-email="pedro@example.com" data-avatar="https://i.pravatar.cc/150?img=12">Pedro Oliveira</option>
+            <option value="4" data-name="Ana Costa" data-email="ana@example.com" data-avatar="https://i.pravatar.cc/150?img=9">Ana Costa</option>
+          </select>
+        </div>
+
+        <div class="alert alert-primary" role="alert">
+          <strong>Recursos:</strong>
+          <ul class="mb-0 mt-2">
+            <li><strong>Avatar circular:</strong> Imagens de perfil com bordas arredondadas</li>
+            <li><strong>Dados extras:</strong> Nome e email visíveis no dropdown</li>
+            <li><strong>Layout flexível:</strong> Usa Flexbox do Bootstrap</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Exemplo 2: Países com Bandeiras -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h2 class="card-title h5">2. 🌎 Países com Bandeiras e Capitais</h2>
+        <p class="text-muted">Template mostrando emoji de bandeira, nome do país e capital</p>
+
+        <div class="mb-3">
+          <label for="countries" class="form-label">Selecione um país:</label>
+          <select id="countries" class="form-select">
+            <option value="">Escolha...</option>
+            <option value="br" data-flag="🇧🇷" data-capital="Brasília" data-continent="América do Sul">Brasil</option>
+            <option value="us" data-flag="🇺🇸" data-capital="Washington" data-continent="América do Norte">Estados Unidos</option>
+            <option value="fr" data-flag="🇫🇷" data-capital="Paris" data-continent="Europa">França</option>
+            <option value="jp" data-flag="🇯🇵" data-capital="Tóquio" data-continent="Ásia">Japão</option>
+            <option value="au" data-flag="🇦🇺" data-capital="Canberra" data-continent="Oceania">Austrália</option>
+          </select>
+        </div>
+
+        <div class="alert alert-primary" role="alert">
+          <strong>Recursos:</strong>
+          <ul class="mb-0 mt-2">
+            <li><strong>Emojis de bandeiras:</strong> Representação visual dos países</li>
+            <li><strong>Informações extras:</strong> Capital e continente</li>
+            <li><strong>Badges coloridos:</strong> Tags de categoria</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Exemplo 3: Produtos com Imagens -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h2 class="card-title h5">3. 🛍️ Produtos com Imagens e Preços</h2>
+        <p class="text-muted">Template e-commerce mostrando foto do produto, nome, preço e avaliação</p>
+
+        <div class="mb-3">
+          <label for="products" class="form-label">Selecione um produto:</label>
+          <select id="products" class="form-select">
+            <option value="">Escolha...</option>
+            <option value="1" data-name="Smartphone XYZ" data-price="1999.90" data-rating="4.5" data-image="https://picsum.photos/id/160/50/50">Smartphone XYZ</option>
+            <option value="2" data-name="Notebook Pro" data-price="3499.00" data-rating="4.8" data-image="https://picsum.photos/id/0/50/50">Notebook Pro</option>
+            <option value="3" data-name="Fone Bluetooth" data-price="299.90" data-rating="4.3" data-image="https://picsum.photos/id/119/50/50">Fone Bluetooth</option>
+            <option value="4" data-name="Smartwatch" data-price="899.00" data-rating="4.6" data-image="https://picsum.photos/id/180/50/50">Smartwatch</option>
+          </select>
+        </div>
+
+        <div class="alert alert-primary" role="alert">
+          <strong>Recursos:</strong>
+          <ul class="mb-0 mt-2">
+            <li><strong>Imagens de produtos:</strong> Miniaturas visíveis no dropdown</li>
+            <li><strong>Preço formatado:</strong> R$ com separador de milhares</li>
+            <li><strong>Avaliações:</strong> Estrelas e rating numérico</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Exemplo 4: Status e Badges -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h2 class="card-title h5">4. 📊 Status com Badges e Ícones</h2>
+        <p class="text-muted">Template mostrando status de tarefas com badges coloridos do Bootstrap</p>
+
+        <div class="mb-3">
+          <label for="status" class="form-label">Status da tarefa:</label>
+          <select id="status" class="form-select">
+            <option value="">Escolha...</option>
+            <option value="pending" data-icon="⏳" data-color="warning">Pendente</option>
+            <option value="progress" data-icon="⚙️" data-color="info">Em Progresso</option>
+            <option value="review" data-icon="👀" data-color="primary">Em Revisão</option>
+            <option value="completed" data-icon="✅" data-color="success">Concluído</option>
+            <option value="cancelled" data-icon="❌" data-color="danger">Cancelado</option>
+          </select>
+        </div>
+
+        <div class="alert alert-primary" role="alert">
+          <strong>Recursos:</strong>
+          <ul class="mb-0 mt-2">
+            <li><strong>Badges coloridos:</strong> Cores do Bootstrap (success, danger, warning, etc)</li>
+            <li><strong>Ícones visuais:</strong> Emojis para identificação rápida</li>
+            <li><strong>Estados semânticos:</strong> Cores com significado</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Bootstrap 5 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Vanilla Smart Select JS -->
+  <script src="../dist/vanilla-smart-select.js"></script>
+
+  <script>
+    // Exemplo 1: Usuários com Avatar
+    const usersSelect = new VanillaSmartSelect('#users', {
+      searchable: true,
+      placeholder: 'Buscar usuário...',
+      templateResult: (item) => {
+        if (!item.element) return item.text;
+
+        const name = item.element.dataset.name;
+        const email = item.element.dataset.email;
+        const avatar = item.element.dataset.avatar;
+
+        const div = document.createElement('div');
+        div.className = 'd-flex align-items-center gap-3';
+        div.innerHTML = `
+          <img src="${avatar}" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">
+          <div class="flex-fill">
+            <div class="fw-bold">${name}</div>
+            <small class="text-muted">${email}</small>
+          </div>
+        `;
+        return div;
+      },
+      templateSelection: (item) => {
+        if (!item.element) return item.text;
+        const name = item.element.dataset.name;
+        const avatar = item.element.dataset.avatar;
+        // Se não tiver os dados (opção vazia/placeholder), retorna apenas o texto
+        if (!name || !avatar) return item.text;
+        return `<img src="${avatar}" class="rounded-circle me-2" style="width: 24px; height: 24px;"> ${name}`;
+      }
+    });
+
+    // Exemplo 2: Países
+    const countriesSelect = new VanillaSmartSelect('#countries', {
+      searchable: true,
+      placeholder: 'Buscar país...',
+      templateResult: (item) => {
+        if (!item.element) return item.text;
+
+        const flag = item.element.dataset.flag;
+        const capital = item.element.dataset.capital;
+        const continent = item.element.dataset.continent;
+
+        const div = document.createElement('div');
+        div.className = 'd-flex align-items-center gap-2';
+        div.innerHTML = `
+          <span style="font-size: 32px;">${flag}</span>
+          <div class="flex-fill">
+            <div class="fw-bold">${item.text}</div>
+            <small class="text-muted">Capital: ${capital}</small>
+          </div>
+          <span class="badge bg-secondary">${continent}</span>
+        `;
+        return div;
+      },
+      templateSelection: (item) => {
+        if (!item.element) return item.text;
+        const flag = item.element.dataset.flag;
+        if (!flag) return item.text;
+        return `${flag} ${item.text}`;
+      }
+    });
+
+    // Exemplo 3: Produtos
+    const productsSelect = new VanillaSmartSelect('#products', {
+      searchable: true,
+      placeholder: 'Buscar produto...',
+      templateResult: (item) => {
+        if (!item.element) return item.text;
+
+        const name = item.element.dataset.name;
+        const price = parseFloat(item.element.dataset.price);
+        const rating = parseFloat(item.element.dataset.rating);
+        const image = item.element.dataset.image;
+
+        const stars = '⭐'.repeat(Math.floor(rating));
+
+        const div = document.createElement('div');
+        div.className = 'd-flex align-items-center gap-3';
+        div.innerHTML = `
+          <img src="${image}" style="width: 50px; height: 50px; border-radius: 8px; object-fit: cover;">
+          <div class="flex-fill">
+            <div class="fw-bold">${name}</div>
+            <small class="text-muted">R$ ${price.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</small>
+          </div>
+          <div class="text-end">
+            <div>${stars}</div>
+            <small class="text-muted">${rating}</small>
+          </div>
+        `;
+        return div;
+      },
+      templateSelection: (item) => {
+        if (!item.element) return item.text;
+        const name = item.element.dataset.name;
+        const price = item.element.dataset.price;
+        if (!name || !price) return item.text;
+        return `${name} - R$ ${parseFloat(price).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+      }
+    });
+
+    // Exemplo 4: Status
+    const statusSelect = new VanillaSmartSelect('#status', {
+      searchable: true,
+      placeholder: 'Selecione um status...',
+      templateResult: (item) => {
+        if (!item.element) return item.text;
+
+        const icon = item.element.dataset.icon;
+        const color = item.element.dataset.color;
+
+        const div = document.createElement('div');
+        div.className = 'd-flex align-items-center gap-2';
+        div.innerHTML = `
+          <span style="font-size: 24px;">${icon}</span>
+          <span class="flex-fill">${item.text}</span>
+          <span class="badge bg-${color}">${item.text}</span>
+        `;
+        return div;
+      },
+      templateSelection: (item) => {
+        if (!item.element) return item.text;
+        const icon = item.element.dataset.icon;
+        const color = item.element.dataset.color;
+        if (!icon || !color) return item.text;
+        return `<span class="badge bg-${color}">${icon} ${item.text}</span>`;
+      }
+    });
+
+    console.log('✓ Templates customizados inicializados!');
+  </script>
+</body>
+</html>

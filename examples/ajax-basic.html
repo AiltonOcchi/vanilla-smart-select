@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AJAX Básico - Vanilla Smart Select</title>
+  <link rel="stylesheet" href="../dist/vanilla-smart-select.min.css">
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+      line-height: 1.6;
+    }
+
+    h1 {
+      color: #333;
+      border-bottom: 2px solid #007bff;
+      padding-bottom: 10px;
+    }
+
+    h2 {
+      color: #555;
+      margin-top: 40px;
+      margin-bottom: 20px;
+    }
+
+    .example {
+      margin-bottom: 40px;
+      padding: 20px;
+      background: #f8f9fa;
+      border-radius: 8px;
+    }
+
+    .example p {
+      color: #666;
+      margin-bottom: 15px;
+    }
+
+    select {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      background: white;
+      border-radius: 4px;
+      border-left: 4px solid #007bff;
+    }
+
+    .result h3 {
+      margin-top: 0;
+      color: #007bff;
+    }
+
+    .result pre {
+      background: #f8f9fa;
+      padding: 10px;
+      border-radius: 4px;
+      overflow-x: auto;
+    }
+
+    /* Loading spinner styles */
+    .vs-results__loading {
+      padding: 20px;
+      text-align: center;
+      color: #666;
+    }
+
+    .vs-results__loading::before {
+      content: '';
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid #007bff;
+      border-right-color: transparent;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .vs-results__error {
+      padding: 15px;
+      background: #f8d7da;
+      color: #721c24;
+      border-radius: 4px;
+      margin: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>AJAX Básico - Vanilla Smart Select</h1>
+  <p>Exemplos de integração com APIs usando AJAX/Fetch para carregar dados remotos dinamicamente.</p>
+
+  <div class="example">
+    <h2>1. 🌍 REST Countries API</h2>
+    <p>Busca de países em tempo real usando a API pública REST Countries.</p>
+    <select id="countries"></select>
+
+    <div class="result" id="country-result" style="display: none;">
+      <h3>País Selecionado:</h3>
+      <pre id="country-data"></pre>
+    </div>
+  </div>
+
+  <div class="example">
+    <h2>2. 📮 ViaCEP - Busca de CEP</h2>
+    <p>Busca de endereços brasileiros por CEP usando a API ViaCEP.</p>
+    <p><strong>Dica:</strong> Digite um CEP válido, por exemplo: 01310-100, 20040-020, 30130-010</p>
+    <select id="cep"></select>
+
+    <div class="result" id="cep-result" style="display: none;">
+      <h3>Endereço Encontrado:</h3>
+      <pre id="cep-data"></pre>
+    </div>
+  </div>
+
+  <div class="example">
+    <h2>3. 🎬 The Movie Database (TMDB) - Simulado</h2>
+    <p>Exemplo de busca de filmes (simulado com dados locais para demonstração).</p>
+    <select id="movies"></select>
+
+    <div class="result" id="movie-result" style="display: none;">
+      <h3>Filme Selecionado:</h3>
+      <pre id="movie-data"></pre>
+    </div>
+  </div>
+
+  <script src="../dist/vanilla-smart-select.min.js"></script>
+  <script>
+    // Example 1: REST Countries API
+    const countriesSelect = new VanillaSmartSelect('#countries', {
+      placeholder: 'Digite para buscar países...',
+      allowClear: true,
+      ajax: {
+        url: 'https://restcountries.com/v3.1/name',
+        delay: 300,
+        data: (params) => {
+          // Return search term - REST Countries API expects the search term in the URL
+          return { term: params.term };
+        },
+        transport: (params, config) => {
+          // Custom transport to build the correct URL
+          const searchTerm = params.term || 'brazil';
+          const url = `${config.url}/${encodeURIComponent(searchTerm)}`;
+
+          const abortController = new AbortController();
+
+          const fetchPromise = fetch(url, {
+            signal: abortController.signal
+          })
+            .then(response => {
+              if (!response.ok) {
+                if (response.status === 404) {
+                  // No countries found
+                  return [];
+                }
+                throw new Error(`HTTP error! status: ${response.status}`);
+              }
+              return response.json();
+            });
+
+          fetchPromise.abort = () => abortController.abort();
+          return fetchPromise;
+        },
+        processResults: (data) => {
+          // Transform REST Countries API response to our format
+          if (!Array.isArray(data)) {
+            return { results: [] };
+          }
+
+          const results = data.map(country => ({
+            id: country.cca3,
+            text: country.name.common,
+            flag: country.flag,
+            capital: country.capital ? country.capital[0] : 'N/A',
+            population: country.population,
+            region: country.region
+          }));
+
+          return { results };
+        }
+      },
+      templateResult: (item) => {
+        const div = document.createElement('div');
+        div.style.display = 'flex';
+        div.style.alignItems = 'center';
+        div.style.gap = '10px';
+        div.innerHTML = `
+          <span style="font-size: 24px;">${item.flag || '🌍'}</span>
+          <div style="flex: 1;">
+            <div style="font-weight: 500;">${item.text}</div>
+            ${item.capital ? `<div style="font-size: 12px; color: #666;">Capital: ${item.capital}</div>` : ''}
+          </div>
+        `;
+        return div;
+      },
+      templateSelection: (item) => {
+        return `${item.flag || '🌍'} ${item.text}`;
+      }
+    });
+
+    // Listen to selection
+    document.getElementById('countries').addEventListener('vs:select', (e) => {
+      const resultDiv = document.getElementById('country-result');
+      const dataDiv = document.getElementById('country-data');
+      resultDiv.style.display = 'block';
+      dataDiv.textContent = JSON.stringify(e.detail.data, null, 2);
+    });
+
+    // Example 2: ViaCEP API
+    const cepSelect = new VanillaSmartSelect('#cep', {
+      placeholder: 'Digite um CEP para buscar...',
+      allowClear: true,
+      ajax: {
+        url: 'https://viacep.com.br/ws',
+        delay: 400,
+        transport: (params, config) => {
+          // ViaCEP expects CEP in the URL format: /ws/{CEP}/json/
+          const cep = (params.term || '').replace(/\D/g, ''); // Remove non-digits
+
+          if (cep.length < 8) {
+            // Return empty results if CEP is too short
+            return Promise.resolve([]);
+          }
+
+          const url = `${config.url}/${cep}/json/`;
+          const abortController = new AbortController();
+
+          const fetchPromise = fetch(url, {
+            signal: abortController.signal
+          })
+            .then(response => {
+              if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+              }
+              return response.json();
+            })
+            .then(data => {
+              // ViaCEP returns an object with error property if not found
+              if (data.erro) {
+                return [];
+              }
+              // Return as array
+              return [data];
+            });
+
+          fetchPromise.abort = () => abortController.abort();
+          return fetchPromise;
+        },
+        processResults: (data) => {
+          if (!Array.isArray(data) || data.length === 0) {
+            return { results: [] };
+          }
+
+          const results = data.map(address => ({
+            id: address.cep,
+            text: `${address.cep} - ${address.logradouro}, ${address.bairro}`,
+            cep: address.cep,
+            logradouro: address.logradouro,
+            bairro: address.bairro,
+            localidade: address.localidade,
+            uf: address.uf
+          }));
+
+          return { results };
+        }
+      },
+      templateResult: (item) => {
+        const div = document.createElement('div');
+        div.innerHTML = `
+          <div style="font-weight: 500;">📮 ${item.cep}</div>
+          <div style="font-size: 13px; color: #666; margin-top: 4px;">
+            ${item.logradouro}<br>
+            ${item.bairro} - ${item.localidade}/${item.uf}
+          </div>
+        `;
+        return div;
+      },
+      templateSelection: (item) => {
+        return `📮 ${item.cep}`;
+      }
+    });
+
+    // Listen to CEP selection
+    document.getElementById('cep').addEventListener('vs:select', (e) => {
+      const resultDiv = document.getElementById('cep-result');
+      const dataDiv = document.getElementById('cep-data');
+      resultDiv.style.display = 'block';
+      dataDiv.textContent = JSON.stringify(e.detail.data, null, 2);
+    });
+
+    // Example 3: Simulated Movie Search (Local Data)
+    const moviesDatabase = [
+      { id: 1, title: 'The Shawshank Redemption', year: 1994, genre: 'Drama', rating: 9.3 },
+      { id: 2, title: 'The Godfather', year: 1972, genre: 'Crime', rating: 9.2 },
+      { id: 3, title: 'The Dark Knight', year: 2008, genre: 'Action', rating: 9.0 },
+      { id: 4, title: 'Pulp Fiction', year: 1994, genre: 'Crime', rating: 8.9 },
+      { id: 5, title: 'Forrest Gump', year: 1994, genre: 'Drama', rating: 8.8 },
+      { id: 6, title: 'Inception', year: 2010, genre: 'Sci-Fi', rating: 8.8 },
+      { id: 7, title: 'The Matrix', year: 1999, genre: 'Sci-Fi', rating: 8.7 },
+      { id: 8, title: 'Interstellar', year: 2014, genre: 'Sci-Fi', rating: 8.6 },
+      { id: 9, title: 'The Lord of the Rings', year: 2001, genre: 'Fantasy', rating: 8.9 },
+      { id: 10, title: 'Star Wars', year: 1977, genre: 'Sci-Fi', rating: 8.6 }
+    ];
+
+    const moviesSelect = new VanillaSmartSelect('#movies', {
+      placeholder: 'Digite para buscar filmes...',
+      allowClear: true,
+      ajax: {
+        url: '', // Not used, we have custom transport
+        delay: 300,
+        transport: (params) => {
+          // Simulate API delay
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              const term = (params.term || '').toLowerCase();
+              const filtered = moviesDatabase.filter(movie =>
+                movie.title.toLowerCase().includes(term)
+              );
+              resolve(filtered);
+            }, 500); // Simulate network delay
+          });
+        },
+        processResults: (data) => {
+          const results = data.map(movie => ({
+            id: movie.id,
+            text: movie.title,
+            year: movie.year,
+            genre: movie.genre,
+            rating: movie.rating
+          }));
+
+          return { results };
+        }
+      },
+      templateResult: (item) => {
+        const div = document.createElement('div');
+        div.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <div style="font-weight: 500;">🎬 ${item.text}</div>
+              <div style="font-size: 12px; color: #666; margin-top: 2px;">
+                ${item.year} • ${item.genre}
+              </div>
+            </div>
+            <div style="background: #ffc107; color: #000; padding: 4px 8px; border-radius: 4px; font-weight: 600; font-size: 12px;">
+              ⭐ ${item.rating}
+            </div>
+          </div>
+        `;
+        return div;
+      },
+      templateSelection: (item) => {
+        return `🎬 ${item.text} (${item.year})`;
+      }
+    });
+
+    // Listen to movie selection
+    document.getElementById('movies').addEventListener('vs:select', (e) => {
+      const resultDiv = document.getElementById('movie-result');
+      const dataDiv = document.getElementById('movie-data');
+      resultDiv.style.display = 'block';
+      dataDiv.textContent = JSON.stringify(e.detail.data, null, 2);
+    });
+
+    // Log AJAX events for debugging
+    document.querySelectorAll('select').forEach(select => {
+      select.addEventListener('vs:ajaxLoading', (e) => {
+        console.log('🔄 AJAX Loading:', e.detail);
+      });
+
+      select.addEventListener('vs:ajaxSuccess', (e) => {
+        console.log('✅ AJAX Success:', e.detail);
+      });
+
+      select.addEventListener('vs:ajaxError', (e) => {
+        console.error('❌ AJAX Error:', e.detail);
+      });
+    });
+  </script>
+</body>
+</html>

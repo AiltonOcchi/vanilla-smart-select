@@ -1,0 +1,75 @@
+{
+  "name": "vanilla-smart-select",
+  "version": "1.0.1",
+  "description": "Modern JavaScript dropdown enhancement library without jQuery dependencies",
+  "type": "module",
+  "main": "dist/vanilla-smart-select.cjs.js",
+  "module": "dist/vanilla-smart-select.esm.js",
+  "browser": "dist/vanilla-smart-select.js",
+  "style": "dist/vanilla-smart-select.css",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "lint": "eslint src/**/*.js",
+    "format": "prettier --write \"src/**/*.js\"",
+    "serve": "http-server -p 8080",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "select",
+    "dropdown",
+    "autocomplete",
+    "vanilla-js",
+    "no-jquery",
+    "combobox",
+    "multiselect",
+    "search",
+    "accessible",
+    "ajax",
+    "i18n",
+    "tags",
+    "custom-templates",
+    "zero-dependencies"
+  ],
+  "author": "Ailton Occhi <ailton.occhi@hotmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AiltonOcchi/vanilla-smart-select.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AiltonOcchi/vanilla-smart-select/issues"
+  },
+  "homepage": "https://github.com/AiltonOcchi/vanilla-smart-select#readme",
+  "devDependencies": {
+    "@babel/core": "^7.23.0",
+    "@babel/preset-env": "^7.23.0",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-terser": "^0.4.4",
+    "autoprefixer": "^10.4.16",
+    "eslint": "^9.39.2",
+    "http-server": "^14.1.1",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "postcss": "^8.4.31",
+    "prettier": "^3.0.3",
+    "rollup": "^4.1.4",
+    "rollup-plugin-postcss": "^4.0.2"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "> 1%",
+    "not dead"
+  ],
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

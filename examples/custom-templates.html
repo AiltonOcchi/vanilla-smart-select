@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom Templates - Vanilla Smart Select</title>
+  <link rel="stylesheet" href="../dist/vanilla-smart-select.min.css">
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+      line-height: 1.6;
+    }
+
+    h1 {
+      color: #333;
+      border-bottom: 2px solid #007bff;
+      padding-bottom: 10px;
+    }
+
+    h2 {
+      color: #555;
+      margin-top: 40px;
+      margin-bottom: 20px;
+    }
+
+    .example {
+      margin-bottom: 40px;
+      padding: 20px;
+      background: #f8f9fa;
+      border-radius: 8px;
+    }
+
+    .example p {
+      color: #666;
+      margin-bottom: 15px;
+    }
+
+    select {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
+    /* Custom styles for templates */
+    .user-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .user-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .user-name {
+      font-weight: 500;
+      color: #333;
+    }
+
+    .user-email {
+      font-size: 12px;
+      color: #666;
+    }
+
+    .country-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .country-flag {
+      font-size: 20px;
+    }
+
+    .country-name {
+      font-weight: 500;
+    }
+
+    .product-option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .product-image {
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+
+    .product-info {
+      flex: 1;
+    }
+
+    .product-name {
+      font-weight: 500;
+      color: #333;
+    }
+
+    .product-price {
+      font-size: 14px;
+      color: #007bff;
+      font-weight: bold;
+    }
+
+    .product-stock {
+      font-size: 12px;
+      color: #666;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .status-active {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .status-inactive {
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    .status-pending {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .icon {
+      display: inline-block;
+      margin-right: 8px;
+    }
+
+    .tag-badge {
+      display: inline-block;
+      padding: 2px 6px;
+      margin-left: 6px;
+      background: #007bff;
+      color: white;
+      border-radius: 3px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <h1>Custom Templates Examples</h1>
+  <p>Demonstração de templates personalizados com <code>templateResult</code> e <code>templateSelection</code>.</p>
+
+  <div class="example">
+    <h2>1. Template com Ícones e Flags</h2>
+    <p>Template usando emojis de bandeiras para países.</p>
+    <select id="countries"></select>
+  </div>
+
+  <div class="example">
+    <h2>2. Template com Avatar e Informações</h2>
+    <p>Template com imagem de avatar e informações do usuário.</p>
+    <select id="users"></select>
+  </div>
+
+  <div class="example">
+    <h2>3. Template com Badges de Status</h2>
+    <p>Template com badges coloridos indicando status.</p>
+    <select id="tasks" multiple></select>
+  </div>
+
+  <div class="example">
+    <h2>4. Template com Imagens de Produto</h2>
+    <p>Template com imagem, nome, preço e estoque do produto.</p>
+    <select id="products"></select>
+  </div>
+
+  <div class="example">
+    <h2>5. Templates Diferentes para Resultado e Seleção</h2>
+    <p>Template completo na lista (templateResult) e simplificado na seleção (templateSelection).</p>
+    <select id="employees"></select>
+  </div>
+
+  <script src="../dist/vanilla-smart-select.min.js"></script>
+  <script>
+    // Example 1: Countries with Flags
+    const countriesData = [
+      { id: 'us', text: 'United States', flag: '🇺🇸', code: 'US' },
+      { id: 'br', text: 'Brazil', flag: '🇧🇷', code: 'BR' },
+      { id: 'uk', text: 'United Kingdom', flag: '🇬🇧', code: 'UK' },
+      { id: 'fr', text: 'France', flag: '🇫🇷', code: 'FR' },
+      { id: 'de', text: 'Germany', flag: '🇩🇪', code: 'DE' },
+      { id: 'jp', text: 'Japan', flag: '🇯🇵', code: 'JP' },
+      { id: 'ca', text: 'Canada', flag: '🇨🇦', code: 'CA' },
+      { id: 'au', text: 'Australia', flag: '🇦🇺', code: 'AU' }
+    ];
+
+    new VanillaSmartSelect('#countries', {
+      data: countriesData,
+      placeholder: 'Select a country...',
+      templateResult: (item) => {
+        const div = document.createElement('div');
+        div.className = 'country-option';
+        div.innerHTML = `
+          <span class="country-flag">${item.flag}</span>
+          <span class="country-name">${item.text}</span>
+          <span class="tag-badge">${item.code}</span>
+        `;
+        return div;
+      },
+      templateSelection: (item) => {
+        return `${item.flag} ${item.text}`;
+      }
+    });
+
+    // Example 2: Users with Avatars
+    const usersData = [
+      {
+        id: 1,
+        text: 'John Doe',
+        email: 'john.doe@example.com',
+        avatar: 'https://ui-avatars.com/api/?name=John+Doe&background=007bff&color=fff&size=128'
+      },
+      {
+        id: 2,
+        text: 'Jane Smith',
+        email: 'jane.smith@example.com',
+        avatar: 'https://ui-avatars.com/api/?name=Jane+Smith&background=28a745&color=fff&size=128'
+      },
+      {
+        id: 3,
+        text: 'Bob Johnson',
+        email: 'bob.johnson@example.com',
+        avatar: 'https://ui-avatars.com/api/?name=Bob+Johnson&background=dc3545&color=fff&size=128'
+      },
+      {
+        id: 4,
+        text: 'Alice Williams',
+        email: 'alice.williams@example.com',
+        avatar: 'https://ui-avatars.com/api/?name=Alice+Williams&background=ffc107&color=000&size=128'
+      },
+      {
+        id: 5,
+        text: 'Charlie Brown',
+        email: 'charlie.brown@example.com',
+        avatar: 'https://ui-avatars.com/api/?name=Charlie+Brown&background=6f42c1&color=fff&size=128'
+      }
+    ];
+
+    new VanillaSmartSelect('#users', {
+      data: usersData,
+      placeholder: 'Select a user...',
+      templateResult: (item) => {
+        const div = document.createElement('div');
+        div.className = 'user-option';
+        div.innerHTML = `
+          <img src="${item.avatar}" alt="${item.text}" class="user-avatar">
+          <div class="user-info">
+            <div class="user-name">${item.text}</div>
+            <div class="user-email">${item.email}</div>
+          </div>
+        `;
+        return div;
+      },
+      templateSelection: (item) => {
+        const div = document.createElement('div');
+        div.style.display = 'flex';
+        div.style.alignItems = 'center';
+        div.style.gap = '8px';
+        div.innerHTML = `
+          <img src="${item.avatar}" alt="${item.text}" style="width: 24px; height: 24px; border-radius: 50%;">
+          <span>${item.text}</span>
+        `;
+        return div;
+      }
+    });
+
+    // Example 3: Tasks with Status Badges
+    const tasksData = [
+      { id: 1, text: 'Update documentation', status: 'active', statusText: 'Active' },
+      { id: 2, text: 'Fix bug #123', status: 'active', statusText: 'Active' },
+      { id: 3, text: 'Review pull request', status: 'pending', statusText: 'Pending' },
+      { id: 4, text: 'Deploy to production', status: 'pending', statusText: 'Pending' },
+      { id: 5, text: 'Archive old files', status: 'inactive', statusText: 'Inactive' },
+      { id: 6, text: 'Update dependencies', status: 'active', statusText: 'Active' }
+    ];
+
+    new VanillaSmartSelect('#tasks', {
+      data: tasksData,
+      placeholder: 'Select tasks...',
+      multiple: true,
+      maximumSelectionLength: 3,
+      templateResult: (item) => {
+        const div = document.createElement('div');
+        div.style.display = 'flex';
+        div.style.alignItems = 'center';
+        div.style.justifyContent = 'space-between';
+        div.innerHTML = `
+          <span>${item.text}</span>
+          <span class="status-badge status-${item.status}">${item.statusText}</span>
+        `;
+        return div;
+      },
+      templateSelection: (item) => {
+        return item.text;
+      }
+    });
+
+    // Example 4: Products with Images
+    const productsData = [
+      {
+        id: 1,
+        text: 'Laptop Pro 15"',
+        price: '$1,299.99',
+        stock: 'In stock',
+        emoji: '💻',
+        color: '#007bff'
+      },
+      {
+        id: 2,
+        text: 'Wireless Mouse',
+        price: '$29.99',
+        stock: 'In stock',
+        emoji: '🖱️',
+        color: '#28a745'
+      },
+      {
+        id: 3,
+        text: 'Mechanical Keyboard',
+        price: '$89.99',
+        stock: 'Low stock',
+        emoji: '⌨️',
+        color: '#ffc107'
+      },
+      {
+        id: 4,
+        text: '4K Monitor 27"',
+        price: '$399.99',
+        stock: 'In stock',
+        emoji: '🖥️',
+        color: '#17a2b8'
+      },
+      {
+        id: 5,
+        text: 'USB-C Hub',
+        price: '$49.99',
+        stock: 'Out of stock',
+        emoji: '🔌',
+        color: '#dc3545',
+        disabled: true
+      }
+    ];
+
+    new VanillaSmartSelect('#products', {
+      data: productsData,
+      placeholder: 'Select a product...',
+      allowClear: true,
+      templateResult: (item) => {
+        const div = document.createElement('div');
+        div.className = 'product-option';
+        div.innerHTML = `
+          <div class="product-image" style="background: ${item.color}20; display: flex; align-items: center; justify-content: center; font-size: 24px;">
+            ${item.emoji}
+          </div>
+          <div class="product-info">
+            <div class="product-name">${item.text}</div>
+            <div class="product-price">${item.price}</div>
+            <div class="product-stock">${item.stock}</div>
+          </div>
+        `;
+        return div;
+      },
+      templateSelection: (item) => {
+        return `${item.emoji} ${item.text} - ${item.price}`;
+      }
+    });
+
+    // Example 5: Different Templates for Result and Selection
+    const employeesData = [
+      {
+        id: 1,
+        text: 'Sarah Connor',
+        role: 'Engineering Manager',
+        department: 'Engineering',
+        avatar: 'https://ui-avatars.com/api/?name=Sarah+Connor&background=e83e8c&color=fff&size=128'
+      },
+      {
+        id: 2,
+        text: 'Kyle Reese',
+        role: 'Senior Developer',
+        department: 'Engineering',
+        avatar: 'https://ui-avatars.com/api/?name=Kyle+Reese&background=17a2b8&color=fff&size=128'
+      },
+      {
+        id: 3,
+        text: 'Miles Dyson',
+        role: 'Tech Lead',
+        department: 'Research',
+        avatar: 'https://ui-avatars.com/api/?name=Miles+Dyson&background=20c997&color=fff&size=128'
+      },
+      {
+        id: 4,
+        text: 'Peter Silberman',
+        role: 'Product Manager',
+        department: 'Product',
+        avatar: 'https://ui-avatars.com/api/?name=Peter+Silberman&background=fd7e14&color=fff&size=128'
+      }
+    ];
+
+    new VanillaSmartSelect('#employees', {
+      data: employeesData,
+      placeholder: 'Select an employee...',
+      allowClear: true,
+      // Detailed template for dropdown results
+      templateResult: (item) => {
+        const div = document.createElement('div');
+        div.className = 'user-option';
+        div.innerHTML = `
+          <img src="${item.avatar}" alt="${item.text}" class="user-avatar">
+          <div class="user-info">
+            <div class="user-name">${item.text}</div>
+            <div class="user-email">${item.role} • ${item.department}</div>
+          </div>
+        `;
+        return div;
+      },
+      // Simplified template for selected item (just name)
+      templateSelection: (item) => {
+        return item.text;
+      }
+    });
+
+    // Add some logging for demonstration
+    document.querySelectorAll('select').forEach(select => {
+      select.addEventListener('vs:select', (e) => {
+        console.log('Selected:', e.detail);
+      });
+
+      select.addEventListener('vs:change', (e) => {
+        console.log('Value changed:', e.detail);
+      });
+    });
+  </script>
+</body>
+</html>

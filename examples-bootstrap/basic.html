@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vanilla Smart Select + Bootstrap 5</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Vanilla Smart Select CSS -->
+  <link rel="stylesheet" href="../dist/vanilla-smart-select.css">
+</head>
+<body>
+  <div class="container py-5">
+    <h1 class="mb-4">Vanilla Smart Select + Bootstrap 5</h1>
+
+    <div class="alert alert-info mb-4" role="alert">
+      <strong>✓ Compatibilidade Testada!</strong> Vanilla Smart Select funciona perfeitamente com Bootstrap 5
+    </div>
+
+    <!-- Card 1: Single Select -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h2 class="card-title h5">1. Single Select com Busca</h2>
+        <div class="mb-3">
+          <label for="example1" class="form-label">Selecione uma fruta:</label>
+          <select id="example1" class="form-select">
+            <option value="">Selecione uma fruta...</option>
+            <option value="maca">Maçã</option>
+            <option value="banana">Banana</option>
+            <option value="laranja">Laranja</option>
+            <option value="uva">Uva</option>
+            <option value="morango">Morango</option>
+          </select>
+        </div>
+        <div class="alert alert-primary" role="alert">
+          <strong>Recursos:</strong>
+          <ul class="mb-0 mt-2">
+            <li><strong>Busca:</strong> Digite para filtrar (suporta acentos - ex: "acai" encontra "Açaí")</li>
+            <li><strong>Teclado:</strong> ↑↓ para navegar, Enter para selecionar, ESC para fechar</li>
+            <li><strong>Acessibilidade:</strong> Totalmente acessível com screen readers (ARIA completo)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2: Multi-Select -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h2 class="card-title h5">2. Multi-Select com Busca</h2>
+        <div class="mb-3">
+          <label for="example2" class="form-label">Selecione linguagens:</label>
+          <select id="example2" class="form-select" multiple>
+            <option value="js" selected>JavaScript</option>
+            <option value="ts">TypeScript</option>
+            <option value="py">Python</option>
+            <option value="java">Java</option>
+            <option value="rust">Rust</option>
+          </select>
+        </div>
+        <div class="alert alert-primary" role="alert">
+          <strong>Recursos:</strong>
+          <ul class="mb-0 mt-2">
+            <li><strong>Multi-seleção:</strong> Selecione múltiplos itens</li>
+            <li><strong>Remover:</strong> Clique no × para remover um item selecionado</li>
+            <li><strong>Busca:</strong> Digite para filtrar a lista</li>
+            <li><strong>Teclado:</strong> Tab dentro do dropdown é bloqueado - use Enter ou ESC</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3: Com Grupos -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h2 class="card-title h5">3. Select com Grupos (Optgroups)</h2>
+        <div class="mb-3">
+          <label for="example3" class="form-label">Selecione um país:</label>
+          <select id="example3" class="form-select">
+            <option value="">Selecione...</option>
+            <optgroup label="América do Sul">
+              <option value="br">Brasil</option>
+              <option value="ar">Argentina</option>
+              <option value="cl">Chile</option>
+            </optgroup>
+            <optgroup label="Europa">
+              <option value="pt">Portugal</option>
+              <option value="es">Espanha</option>
+              <option value="fr">França</option>
+            </optgroup>
+          </select>
+        </div>
+        <div class="alert alert-primary" role="alert">
+          <strong>Recursos:</strong>
+          <ul class="mb-0 mt-2">
+            <li><strong>Grupos:</strong> Opções organizadas por categoria</li>
+            <li><strong>Busca em grupos:</strong> Digite para buscar - mostra apenas grupos com resultados</li>
+            <li><strong>Navegação:</strong> Use Home/End para ir ao primeiro/último item</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 4: Com Botão Clear -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h2 class="card-title h5">4. Single Select com Clear Button (allowClear)</h2>
+        <div class="mb-3">
+          <label for="example4" class="form-label">Selecione uma cor:</label>
+          <select id="example4" class="form-select">
+            <option value="">Selecione...</option>
+            <option value="vermelho">Vermelho</option>
+            <option value="azul">Azul</option>
+            <option value="verde">Verde</option>
+          </select>
+        </div>
+        <div class="alert alert-primary" role="alert">
+          <strong>Recursos:</strong>
+          <ul class="mb-0 mt-2">
+            <li><strong>Clear Button:</strong> Botão "×" aparece quando há seleção - clique para limpar</li>
+            <li><strong>API Programática:</strong> Use <code>select.clear()</code> para limpar via código</li>
+            <li><strong>Evento:</strong> Escuta o evento <code>vs:clear</code> quando limpar</li>
+          </ul>
+        </div>
+        <div class="mt-3">
+          <button onclick="window.select4.clear()" class="btn btn-outline-primary">
+            Limpar Seleção (Programático)
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 5: Validação HTML5 -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h2 class="card-title h5">5. Validação HTML5 - Automática (Zero JavaScript)</h2>
+        <p class="text-muted">
+          A validação funciona automaticamente! Basta usar atributos HTML5 nativos como <code>required</code>.
+        </p>
+        <form id="form1">
+          <div class="mb-3">
+            <label for="example5" class="form-label">Departamento: *</label>
+            <select id="example5" class="form-select" required>
+              <option value="">Selecione...</option>
+              <option value="ti">TI</option>
+              <option value="rh">RH</option>
+              <option value="vendas">Vendas</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary">Enviar</button>
+          <button type="reset" class="btn btn-secondary">Limpar</button>
+        </form>
+        <div class="alert alert-success mt-3" role="alert">
+          <strong>✓ Validação 100% Automática - Sem JavaScript adicional!</strong>
+          <ul class="mb-0 mt-2">
+            <li><strong>Borda vermelha automática</strong> quando campo <code>required</code> está vazio</li>
+            <li><strong>Mensagem nativa do navegador</strong> ao tentar submeter formulário inválido</li>
+            <li><strong>Select original sempre sincronizado</strong> - funciona com qualquer biblioteca de validação</li>
+            <li><strong>API disponível se precisar:</strong> <code>checkValidity()</code>, <code>reportValidity()</code>, <code>setCustomValidity()</code></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 6: Atalhos de Teclado -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h2 class="card-title h5">6. Atalhos de Teclado</h2>
+        <p class="text-muted mb-3">Use o teclado para navegar rapidamente pelo dropdown</p>
+        <div class="table-responsive">
+          <table class="table table-hover mb-0">
+            <thead>
+              <tr>
+                <th style="width: 35%">Tecla</th>
+                <th>Ação</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <span class="badge bg-dark">Enter</span>
+                  <span class="badge bg-dark">Espaço</span>
+                </td>
+                <td>Abre o dropdown (quando fechado)</td>
+              </tr>
+              <tr>
+                <td>
+                  <span class="badge bg-primary">↑</span>
+                  <span class="badge bg-primary">↓</span>
+                </td>
+                <td>Navega entre as opções</td>
+              </tr>
+              <tr>
+                <td><span class="badge bg-info text-dark">Home</span></td>
+                <td>Vai para a primeira opção</td>
+              </tr>
+              <tr>
+                <td><span class="badge bg-info text-dark">End</span></td>
+                <td>Vai para a última opção</td>
+              </tr>
+              <tr>
+                <td><span class="badge bg-success">Enter</span></td>
+                <td>Seleciona a opção destacada (quando dropdown aberto)</td>
+              </tr>
+              <tr>
+                <td><span class="badge bg-danger">ESC</span></td>
+                <td>Fecha o dropdown sem selecionar</td>
+              </tr>
+              <tr>
+                <td><span class="badge bg-warning text-dark">Tab</span></td>
+                <td>Dropdown fechado: sai do campo | Dropdown aberto: bloqueado (use Enter/ESC)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Bootstrap 5 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Vanilla Smart Select JS -->
+  <script src="../dist/vanilla-smart-select.js"></script>
+
+  <script>
+    // Inicializar todos os selects
+    const select1 = new VanillaSmartSelect('#example1', {
+      searchable: true,
+      placeholder: 'Selecione uma fruta...'
+    });
+
+    const select2 = new VanillaSmartSelect('#example2', {
+      searchable: true,
+      multiple: true
+    });
+
+    const select3 = new VanillaSmartSelect('#example3', {
+      searchable: true
+    });
+
+    const select4 = new VanillaSmartSelect('#example4', {
+      searchable: true,
+      allowClear: true
+    });
+    window.select4 = select4;
+
+    const select5 = new VanillaSmartSelect('#example5', {
+      searchable: true
+    });
+
+    console.log('✓ Todos os selects inicializados!');
+  </script>
+</body>
+</html>

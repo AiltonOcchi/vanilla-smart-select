@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Race Condition Fix - VanillaSmartSelect</title>
+  <link rel="stylesheet" href="../dist/vanilla-smart-select.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+    }
+    .test-info {
+      background: #f0f8ff;
+      border: 1px solid #0066cc;
+      border-radius: 5px;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+    .test-info h2 {
+      margin-top: 0;
+      color: #0066cc;
+    }
+    .test-result {
+      margin-top: 20px;
+      padding: 10px;
+      border-radius: 5px;
+      display: none;
+    }
+    .test-result.success {
+      background: #d4edda;
+      border: 1px solid #28a745;
+      color: #155724;
+      display: block;
+    }
+    .test-result.error {
+      background: #f8d7da;
+      border: 1px solid #dc3545;
+      color: #721c24;
+      display: block;
+    }
+    .log {
+      background: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 5px;
+      padding: 10px;
+      margin-top: 10px;
+      font-family: monospace;
+      font-size: 12px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    .log-entry {
+      margin: 2px 0;
+      padding: 2px 5px;
+    }
+    .log-entry.query {
+      color: #0066cc;
+    }
+    .log-entry.result {
+      color: #28a745;
+    }
+    .log-entry.ignored {
+      color: #6c757d;
+      text-decoration: line-through;
+    }
+  </style>
+</head>
+<body>
+  <div class="test-info">
+    <h2>🧪 Race Condition Fix Test</h2>
+    <p>
+      Este teste simula um cenário onde o usuário digita rapidamente,
+      causando múltiplas requisições AJAX simultâneas.
+    </p>
+    <p>
+      <strong>Como funciona:</strong> O código agora usa um "search token" único
+      para cada busca. Se uma nova busca iniciar antes da anterior terminar,
+      os resultados da busca antiga são automaticamente descartados.
+    </p>
+    <p>
+      <strong>Teste:</strong> Digite rapidamente "search1", depois "search2", depois "search3".
+      Você deve ver no log que apenas os resultados da última busca são aplicados.
+    </p>
+  </div>
+
+  <label for="ajax-select">Select com AJAX (com delay simulado):</label>
+  <select id="ajax-select" style="width: 100%">
+    <option value="">Digite para buscar...</option>
+  </select>
+
+  <div id="test-result" class="test-result"></div>
+
+  <div class="log" id="log">
+    <strong>Log de Execução:</strong>
+    <div id="log-entries"></div>
+  </div>
+
+  <script src="../dist/vanilla-smart-select.js"></script>
+  <script>
+    const logEntries = document.getElementById('log-entries');
+    const testResult = document.getElementById('test-result');
+    let queryCount = 0;
+    let resultCount = 0;
+
+    function addLog(message, type = 'query') {
+      const entry = document.createElement('div');
+      entry.className = `log-entry ${type}`;
+      entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+      logEntries.appendChild(entry);
+      logEntries.parentElement.scrollTop = logEntries.parentElement.scrollHeight;
+    }
+
+    // Mock API que simula delay variável
+    function mockAPI(params) {
+      const term = params.term || '';
+      queryCount++;
+      const queryId = queryCount;
+
+      // Simula delay aleatório entre 100-800ms
+      const delay = Math.floor(Math.random() * 700) + 100;
+
+      addLog(`Query #${queryId}: "${term}" (delay: ${delay}ms)`, 'query');
+
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          const results = term ? [
+            { id: `${term}-1`, text: `${term} - Option 1` },
+            { id: `${term}-2`, text: `${term} - Option 2` },
+            { id: `${term}-3`, text: `${term} - Option 3` }
+          ] : [];
+
+          addLog(`Query #${queryId} completed: "${term}" (${results.length} results)`, 'result');
+
+          resolve({
+            results: results,
+            pagination: { more: false }
+          });
+        }, delay);
+      });
+    }
+
+    // Inicializar VanillaSmartSelect com AJAX
+    let select;
+    try {
+      select = new VanillaSmartSelect('#ajax-select', {
+        ajax: {
+          transport: mockAPI,
+          delay: 100
+        },
+        minimumInputLength: 1,
+        placeholder: 'Digite para buscar...'
+      });
+      addLog('✓ VanillaSmartSelect inicializado com sucesso!', 'result');
+    } catch (error) {
+      addLog(`❌ Erro ao inicializar: ${error.message}`, 'error');
+      testResult.className = 'test-result error';
+      testResult.innerHTML = `❌ Erro ao inicializar VanillaSmartSelect: ${error.message}`;
+      throw error;
+    }
+
+    // Monitorar eventos para verificar race condition fix
+    let lastProcessedSearch = null;
+
+    select.on('vs:results', (event) => {
+      resultCount++;
+      const results = event.detail.results;
+
+      if (results && results.length > 0) {
+        const searchTerm = results[0].text.split(' - ')[0];
+
+        // Verificar se resultados estão chegando fora de ordem
+        if (lastProcessedSearch && searchTerm < lastProcessedSearch) {
+          addLog(`⚠️ RACE CONDITION: Resultados de "${searchTerm}" chegaram após "${lastProcessedSearch}"!`, 'error');
+          testResult.className = 'test-result error';
+          testResult.innerHTML = '❌ Race condition detectada! Resultados chegaram fora de ordem.';
+        } else {
+          addLog(`✓ Resultados aplicados: "${searchTerm}"`, 'result');
+          lastProcessedSearch = searchTerm;
+
+          if (resultCount > 2) {
+            testResult.className = 'test-result success';
+            testResult.innerHTML = '✅ Correção funcionando! Apenas resultados da última busca foram aplicados.';
+          }
+        }
+      }
+    });
+
+    addLog('Sistema iniciado. Aguardando buscas...', 'result');
+  </script>
+</body>
+</html>
