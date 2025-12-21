@@ -353,7 +353,7 @@ new VanillaSmartSelect('#tasks', {
     return div;
   },
   templateSelection: (item) => {
-    return `${item.icon} ${item.text} - R$ ${item.price.toFixed(2).replace('.', ',')}`;
+    return `${item.icon} ${item.text} - ${item.statusText}`;
   }
 });</code></pre>
             </details>
