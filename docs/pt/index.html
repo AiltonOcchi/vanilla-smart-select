@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Vanilla Smart Select - Biblioteca JavaScript leve e poderosa para transformar elementos select em dropdowns inteligentes com busca, AJAX, templates customizados e muito mais.">
+  <meta name="keywords" content="javascript, select, dropdown, autocomplete, ajax, vanilla js, sem dependências">
+  <meta name="author" content="Vanilla Smart Select">
+  <title>Vanilla Smart Select - Dropdown Inteligente em JavaScript Puro</title>
+
+  <!-- Docs Styles -->
+  <link rel="stylesheet" href="../css/docs.css">
+
+  <!-- Vanilla Smart Select -->
+  <link rel="stylesheet" href="../../dist/vanilla-smart-select.min.css">
+
+  <!-- Prism.js for code highlighting -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+</head>
+<body>
+  <div class="docs-container">
+    <!-- Sidebar -->
+    <aside class="docs-sidebar">
+      <div class="sidebar-header">
+        <a href="index.html" class="sidebar-logo">
+          <div class="sidebar-logo-icon">VS</div>
+          <div class="sidebar-logo-text">
+            <div class="sidebar-logo-title">Vanilla Smart Select</div>
+            <div class="sidebar-logo-subtitle">v1.0.1</div>
+          </div>
+        </a>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Introdução</div>
+          <ul class="nav-links">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="getting-started.html" class="nav-link">Getting Started</a></li>
+          </ul>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Recursos</div>
+          <ul class="nav-links">
+            <li><a href="api-reference.html" class="nav-link">API Reference</a></li>
+            <li><a href="configuration.html" class="nav-link">Configuração</a></li>
+            <li><a href="events.html" class="nav-link">Eventos</a></li>
+          </ul>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Exemplos</div>
+          <ul class="nav-links">
+            <li><a href="example-basic.html" class="nav-link">Básico</a></li>
+            <li><a href="example-api-programmatic.html" class="nav-link">API Programática</a></li>
+            <li><a href="example-ajax-basic.html" class="nav-link">AJAX Básico</a></li>
+            <li><a href="example-tags.html" class="nav-link">Tags</a></li>
+            <li><a href="example-pagination.html" class="nav-link">Paginação</a></li>
+            <li><a href="example-max-selection.html" class="nav-link">Limite de Seleção</a></li>
+            <li><a href="example-validation.html" class="nav-link">Validação Avançada</a></li>
+            <li><a href="example-templates.html" class="nav-link">Templates</a></li>
+            <li><a href="example-i18n.html" class="nav-link">i18n</a></li>
+            <li><a href="example-bootstrap.html" class="nav-link">Bootstrap</a></li>
+          </ul>
+        </div>
+
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="docs-main">
+      <!-- Top Bar -->
+      <header class="docs-topbar">
+        <button class="mobile-menu-toggle" aria-label="Toggle menu">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+        <h1 class="topbar-title">Vanilla Smart Select</h1>
+        <div class="topbar-actions">
+          <div class="language-switcher">
+            <a href="index.html" class="lang-link active">🇧🇷 PT</a>
+            <span class="lang-separator">|</span>
+            <a href="../en/index.html" class="lang-link">🇺🇸 EN</a>
+          </div>
+          <a href="https://github.com/ailtonocchi/vanilla-smart-select" class="topbar-btn" target="_blank" rel="noopener noreferrer">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+            </svg>
+            GitHub
+          </a>
+          <a href="getting-started.html" class="topbar-btn primary">
+            Começar Agora
+          </a>
+        </div>
+      </header>
+
+      <!-- Content -->
+      <div class="docs-content">
+        <!-- Hero Section -->
+        <section class="hero">
+          <div class="hero-content">
+            <h1>Vanilla Smart Select</h1>
+            <p>Transforme elementos <code>&lt;select&gt;</code> em dropdowns poderosos com busca em tempo real, AJAX, templates customizados e total acessibilidade. Tudo em JavaScript puro, sem dependências.</p>
+            <div class="hero-buttons">
+              <a href="getting-started.html" class="btn btn-primary">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"/>
+                </svg>
+                Quick Start
+              </a>
+              <a href="example-basic.html" class="btn btn-secondary">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                </svg>
+                Ver Exemplos
+              </a>
+              <a href="https://github.com/ailtonocchi/vanilla-smart-select" class="btn btn-secondary" target="_blank">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+                </svg>
+                GitHub
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <!-- Stats -->
+        <section class="stats-grid stats-section">
+          <div class="feature-card text-center">
+            <div class="stat-value">~15KB</div>
+            <div class="stat-label">Gzipped</div>
+          </div>
+          <div class="feature-card text-center">
+            <div class="stat-value">0</div>
+            <div class="stat-label">Dependências</div>
+          </div>
+          <div class="feature-card text-center">
+            <div class="stat-value">WCAG 2.1</div>
+            <div class="stat-label">Level AA</div>
+          </div>
+          <div class="feature-card text-center">
+            <div class="stat-value">40+</div>
+            <div class="stat-label">Configurações</div>
+          </div>
+        </section>
+
+        <!-- Quick Example -->
+        <section class="section-mb-lg">
+          <h2>Quick Start</h2>
+          <p>Transforme um elemento select comum em um dropdown poderoso com apenas 3 linhas de código:</p>
+
+          <div class="demo-container">
+            <div class="demo-title">Exemplo Básico</div>
+
+            <!-- HTML -->
+            <pre><code class="language-html">&lt;!-- 1. Inclua os arquivos CSS e JS --&gt;
+&lt;link rel="stylesheet" href="vanilla-smart-select.min.css"&gt;
+&lt;script src="vanilla-smart-select.min.js"&gt;&lt;/script&gt;
+
+&lt;!-- 2. Crie um elemento select --&gt;
+&lt;select id="my-select"&gt;
+  &lt;option value="1"&gt;Opção 1&lt;/option&gt;
+  &lt;option value="2"&gt;Opção 2&lt;/option&gt;
+  &lt;option value="3"&gt;Opção 3&lt;/option&gt;
+&lt;/select&gt;</code></pre>
+
+            <!-- JavaScript -->
+            <pre><code class="language-javascript">// 3. Inicialize o plugin
+const select = new VanillaSmartSelect('#my-select', {
+  placeholder: 'Selecione uma opção...',
+  searchable: true
+});</code></pre>
+
+            <!-- Live Demo -->
+            <div class="demo-divider">
+              <label for="demo-select" class="demo-label">Demo ao vivo:</label>
+              <select id="demo-select">
+                <option value="">Selecione...</option>
+                <option value="react">React</option>
+                <option value="vue">Vue.js</option>
+                <option value="angular">Angular</option>
+                <option value="svelte">Svelte</option>
+                <option value="vanilla">Vanilla JS</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+        <!-- Features Grid -->
+        <section class="section-mb-lg">
+          <h2>Recursos Principais</h2>
+          <div class="feature-grid">
+            <div class="feature-card">
+              <div class="feature-icon">🔍</div>
+              <h3>Busca em Tempo Real</h3>
+              <p>Filtragem instantânea com suporte a diacríticos. Encontre "Açaí" buscando "acai".</p>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon">🎨</div>
+              <h3>Templates Customizados</h3>
+              <p>Crie resultados ricos com HTML: avatares, ícones, badges, imagens e muito mais.</p>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon">🌐</div>
+              <h3>AJAX & Dados Remotos</h3>
+              <p>Carregue opções de APIs externas com debouncing, cache e paginação infinita.</p>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon">♿</div>
+              <h3>Totalmente Acessível</h3>
+              <p>WCAG 2.1 Level AA com suporte completo a ARIA e navegação por teclado.</p>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon">🏷️</div>
+              <h3>Tags Dinâmicas</h3>
+              <p>Permita que usuários criem novas opções dinamicamente enquanto digitam.</p>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon">📦</div>
+              <h3>Multi-Seleção</h3>
+              <p>Seleção múltipla com limite máximo e visualização em chips/tags.</p>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon">🌍</div>
+              <h3>Internacionalização</h3>
+              <p>Suporte nativo para múltiplos idiomas: EN, PT-BR, ES e customizável.</p>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon">⚡</div>
+              <h3>Alto Desempenho</h3>
+              <p>Otimizado para grandes listas com virtual scrolling e renderização eficiente.</p>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon">🎯</div>
+              <h3>Zero Dependências</h3>
+              <p>JavaScript puro moderno. Sem jQuery, sem frameworks. Apenas ~15KB gzipped.</p>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon">📱</div>
+              <h3>Mobile First</h3>
+              <p>Design responsivo otimizado para touch com suporte a todos os dispositivos.</p>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon">🔧</div>
+              <h3>API Completa</h3>
+              <p>Controle programático total: get/set valores, adicionar/remover opções e mais.</p>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon">🎭</div>
+              <h3>Bootstrap 5 Ready</h3>
+              <p>Integração perfeita com Bootstrap 5 sem conflitos de CSS.</p>
+            </div>
+          </div>
+        </section>
+        
+        <!-- Installation -->
+        <section class="section-mb-lg">
+          <h2>Instalação</h2>
+
+          <h3>NPM</h3>
+          <pre><code class="language-bash">npm install vanilla-smart-select</code></pre>
+
+          <h3>CDN</h3>
+          <pre><code class="language-html">&lt;link rel="stylesheet" href="https://unpkg.com/vanilla-smart-select/dist/vanilla-smart-select.min.css"&gt;
+&lt;script src="https://unpkg.com/vanilla-smart-select/dist/vanilla-smart-select.min.js"&gt;&lt;/script&gt;</code></pre>
+
+          <h3>ES Modules</h3>
+          <pre><code class="language-javascript">import VanillaSmartSelect from 'vanilla-smart-select';
+import 'vanilla-smart-select/dist/vanilla-smart-select.min.css';</code></pre>
+        </section>
+
+        <!-- Browser Support -->
+        <section class="section-mb-lg">
+          <h2>Compatibilidade de Navegadores</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Navegador</th>
+                <th>Versão</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Chrome / Edge</td>
+                <td>Últimas 2 versões</td>
+                <td><span class="badge badge-success">✓ Suportado</span></td>
+              </tr>
+              <tr>
+                <td>Firefox</td>
+                <td>Últimas 2 versões</td>
+                <td><span class="badge badge-success">✓ Suportado</span></td>
+              </tr>
+              <tr>
+                <td>Safari</td>
+                <td>Últimas 2 versões</td>
+                <td><span class="badge badge-success">✓ Suportado</span></td>
+              </tr>
+              <tr>
+                <td>Opera</td>
+                <td>Últimas 2 versões</td>
+                <td><span class="badge badge-success">✓ Suportado</span></td>
+              </tr>
+              <tr>
+                <td>Internet Explorer</td>
+                <td>Todas</td>
+                <td><span class="badge">✗ Não suportado</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- Next Steps -->
+        <section>
+          <h2>Próximos Passos</h2>
+          <div class="feature-grid">
+            <a href="getting-started.html" class="link-card feature-card">
+              <div class="feature-icon">🚀</div>
+              <h3>Getting Started</h3>
+              <p>Guia completo de instalação e primeiros passos.</p>
+            </a>
+
+            <a href="example-basic.html" class="link-card feature-card">
+              <div class="feature-icon">💡</div>
+              <h3>Exemplos</h3>
+              <p>10+ exemplos interativos prontos para usar.</p>
+            </a>
+
+            <a href="api-reference.html" class="link-card feature-card">
+              <div class="feature-icon">📖</div>
+              <h3>API Reference</h3>
+              <p>Documentação completa de métodos e propriedades.</p>
+            </a>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+  <script src="../../dist/vanilla-smart-select.min.js"></script>
+  <script src="../js/docs.js"></script>
+
+  <!-- Initialize demo -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const demoSelect = new VanillaSmartSelect('#demo-select', {
+        placeholder: 'Selecione um framework...',
+        searchable: true,
+        allowClear: true
+      });
+    });
+  </script>
+</body>
+</html>

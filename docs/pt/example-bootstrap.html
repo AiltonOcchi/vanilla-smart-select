@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Integração Bootstrap no Vanilla Smart Select">
+  <title>Bootstrap Integration - Vanilla Smart Select</title>
+  
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Docs CSS (sobrepõe alguns estilos do Bootstrap) -->
+  <link rel="stylesheet" href="../css/docs.css">
+  
+  <!-- Vanilla Smart Select CSS -->
+  <link rel="stylesheet" href="../../dist/vanilla-smart-select.min.css">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+</head>
+<body>
+  <div class="docs-container">
+    <aside class="docs-sidebar">
+      <div class="sidebar-header">
+        <a href="index.html" class="sidebar-logo">
+          <div class="sidebar-logo-icon">VS</div>
+          <div class="sidebar-logo-text">
+            <div class="sidebar-logo-title">Vanilla Smart Select</div>
+            <div class="sidebar-logo-subtitle">v1.0.1</div>
+          </div>
+        </a>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Introdução</div>
+          <ul class="nav-links">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="getting-started.html" class="nav-link">Getting Started</a></li>
+          </ul>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Recursos</div>
+          <ul class="nav-links">
+            <li><a href="api-reference.html" class="nav-link">API Reference</a></li>
+            <li><a href="configuration.html" class="nav-link">Configuração</a></li>
+            <li><a href="events.html" class="nav-link">Eventos</a></li>
+          </ul>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Exemplos</div>
+          <ul class="nav-links">
+            <li><a href="example-basic.html" class="nav-link">Básico</a></li>
+            <li><a href="example-api-programmatic.html" class="nav-link">API Programática</a></li>
+            <li><a href="example-ajax-basic.html" class="nav-link">AJAX Básico</a></li>
+            <li><a href="example-tags.html" class="nav-link">Tags</a></li>
+            <li><a href="example-pagination.html" class="nav-link">Paginação</a></li>
+            <li><a href="example-max-selection.html" class="nav-link">Limite de Seleção</a></li>
+            <li><a href="example-validation.html" class="nav-link">Validação Avançada</a></li>
+            <li><a href="example-templates.html" class="nav-link">Templates</a></li>
+            <li><a href="example-i18n.html" class="nav-link">i18n</a></li>
+            <li><a href="example-bootstrap.html" class="nav-link">Bootstrap</a></li>
+          </ul>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="docs-main">
+      <header class="docs-topbar">
+        <button class="mobile-menu-toggle" aria-label="Toggle menu">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+        <h1 class="topbar-title">Bootstrap Integration</h1>
+        <div class="topbar-actions">
+          <div class="language-switcher">
+            <a href="example-bootstrap.html" class="lang-link active">🇧🇷 PT</a>
+            <span class="lang-separator">|</span>
+            <a href="../en/example-bootstrap.html" class="lang-link">🇺🇸 EN</a>
+          </div>
+          <a href="https://github.com/ailtonocchi/vanilla-smart-select" class="topbar-btn" target="_blank" rel="noopener noreferrer">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+            </svg>
+            GitHub
+          </a>
+        </div>
+      </header>
+
+      <div class="docs-content">
+        <section class="section-mb-lg">
+          <p class="lead">
+            Vanilla Smart Select funciona perfeitamente com Bootstrap 5 sem conflitos de CSS. 
+            Todas as classes usam o prefixo <code>.vs-</code> para evitar colisões.
+          </p>
+        </section>
+
+                <!-- Compatibility Info -->
+        <section class="section-mb-lg">
+          <h2>Compatibilidade</h2>
+          
+          <div class="info-callout info-callout-success">
+            <strong>✅ Testado com Bootstrap:</strong>
+            <ul style="margin: 10px 0 0 0; padding-left: 20px;">
+              <li><strong>Bootstrap 5.3.x</strong> - Totalmente compatível</li>
+              <li><strong>Bootstrap 5.2.x</strong> - Totalmente compatível</li>
+              <li><strong>Bootstrap 5.1.x</strong> - Totalmente compatível</li>
+            </ul>
+          </div>
+
+          <div class="info-callout info-callout-info" style="margin-top: 20px;">
+            <strong>🎨 Classes Bootstrap Suportadas:</strong>
+            <ul style="margin: 10px 0 0 0; padding-left: 20px;">
+              <li><code>.form-select</code> - Estilização do select</li>
+              <li><code>.form-label</code> - Labels dos formulários</li>
+              <li><code>.form-control</code> - Alternativa ao form-select</li>
+              <li><code>.is-invalid</code> / <code>.is-valid</code> - Estados de validação</li>
+              <li><code>.invalid-feedback</code> - Mensagens de erro</li>
+              <li><code>.mb-3</code>, <code>.mt-3</code> - Espaçamentos</li>
+            </ul>
+          </div>
+
+          <div class="alert alert-success">
+            <strong>✅ Zero Conflitos:</strong> Todas as classes CSS do Vanilla Smart Select usam o prefixo <code>.vs-</code> para evitar conflitos com Bootstrap.
+          </div>
+        </section>
+
+ <!-- Best Practices -->
+        <section class="section-mb-lg">
+          <h2>Ordem de Inclusão dos Arquivos</h2>
+          
+          <div class="info-callout">
+            <strong>📋 Ordem Recomendada:</strong>
+            <ol style="margin: 10px 0 0 0; padding-left: 20px;">
+              <li><strong>Bootstrap CSS</strong> - Carregue primeiro</li>
+              <li><strong>Vanilla Smart Select CSS</strong> - Carregue depois</li>
+              <li><strong>Seu conteúdo HTML</strong></li>
+              <li><strong>Bootstrap JS</strong> (opcional - se usar componentes Bootstrap)</li>
+              <li><strong>Vanilla Smart Select JS</strong></li>
+              <li><strong>Seu código JavaScript</strong></li>
+            </ol>
+          </div>
+
+          <h3>Exemplo Completo</h3>
+          <pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="pt-BR"&gt;
+&lt;head&gt;
+  &lt;!-- Bootstrap CSS --&gt;
+  &lt;link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"&gt;
+  
+  &lt;!-- Vanilla Smart Select CSS --&gt;
+  &lt;link href="vanilla-smart-select.min.css" rel="stylesheet"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;!-- Seu conteúdo --&gt;
+  
+  &lt;!-- Bootstrap JS (opcional) --&gt;
+  &lt;script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"&gt;&lt;/script&gt;
+  
+  &lt;!-- Vanilla Smart Select JS --&gt;
+  &lt;script src="vanilla-smart-select.min.js"&gt;&lt;/script&gt;
+  
+  &lt;!-- Seu código --&gt;
+  &lt;script&gt;
+    new VanillaSmartSelect('#mySelect');
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        </section>
+
+
+        <!-- Grid System -->
+        <section class="section-mb-lg">
+          <h2>Grid System</h2>
+          <p>Use o grid system do Bootstrap normalmente com o Vanilla Smart Select:</p>
+
+          <div class="demo-container">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label for="grid-select1" class="form-label">Select 1</label>
+                  <select id="grid-select1" class="form-select">
+                    <option value="">Selecione...</option>
+                    <option value="frontend">🎨 Frontend</option>
+                    <option value="backend">⚙️ Backend</option>
+                    <option value="mobile">📱 Mobile</option>
+                    <option value="devops">🚀 DevOps</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label for="grid-select2" class="form-label">Select 2</label>
+                  <select id="grid-select2" class="form-select">
+                    <option value="">Selecione...</option>
+                    <option value="junior">Júnior</option>
+                    <option value="pleno">Pleno</option>
+                    <option value="senior">Sênior</option>
+                    <option value="lead">Lead</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label for="grid-select3" class="form-label">Select 3</label>
+                  <select id="grid-select3" class="form-select">
+                    <option value="">Selecione...</option>
+                    <option value="remoto">🏠 Remoto</option>
+                    <option value="presencial">🏢 Presencial</option>
+                    <option value="hibrido">🔄 Híbrido</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <details class="code-details">
+              <summary>Ver código</summary>
+              
+              <h3>HTML</h3>
+              <pre><code class="language-html">&lt;div class="row"&gt;
+  &lt;div class="col-md-4"&gt;
+    &lt;div class="mb-3"&gt;
+      &lt;label for="grid-select1" class="form-label"&gt;Select 1&lt;/label&gt;
+      &lt;select id="grid-select1" class="form-select"&gt;
+        &lt;option value=""&gt;Selecione...&lt;/option&gt;
+        &lt;option value="frontend"&gt;🎨 Frontend&lt;/option&gt;
+        &lt;option value="backend"&gt;⚙️ Backend&lt;/option&gt;
+        &lt;option value="mobile"&gt;📱 Mobile&lt;/option&gt;
+        &lt;option value="devops"&gt;🚀 DevOps&lt;/option&gt;
+      &lt;/select&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="col-md-4"&gt;
+    &lt;div class="mb-3"&gt;
+      &lt;label for="grid-select2" class="form-label"&gt;Select 2&lt;/label&gt;
+      &lt;select id="grid-select2" class="form-select"&gt;
+        &lt;option value=""&gt;Selecione...&lt;/option&gt;
+        &lt;option value="junior"&gt;Júnior&lt;/option&gt;
+        &lt;option value="pleno"&gt;Pleno&lt;/option&gt;
+        &lt;option value="senior"&gt;Sênior&lt;/option&gt;
+        &lt;option value="lead"&gt;Lead&lt;/option&gt;
+      &lt;/select&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="col-md-4"&gt;
+    &lt;div class="mb-3"&gt;
+      &lt;label for="grid-select3" class="form-label"&gt;Select 3&lt;/label&gt;
+      &lt;select id="grid-select3" class="form-select"&gt;
+        &lt;option value=""&gt;Selecione...&lt;/option&gt;
+        &lt;option value="remoto"&gt;🏠 Remoto&lt;/option&gt;
+        &lt;option value="presencial"&gt;🏢 Presencial&lt;/option&gt;
+        &lt;option value="hibrido"&gt;🔄 Híbrido&lt;/option&gt;
+      &lt;/select&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+              <h3>JavaScript</h3>
+              <pre><code class="language-javascript">new VanillaSmartSelect('#grid-select1', {
+  placeholder: 'Selecione uma área...'
+});
+
+new VanillaSmartSelect('#grid-select2', {
+  placeholder: 'Selecione o nível...'
+});
+
+new VanillaSmartSelect('#grid-select3', {
+  placeholder: 'Selecione o modelo...'
+});</code></pre>
+            </details>
+          </div>
+        </section>
+
+        <!-- Componentes Bootstrap -->
+        <section class="section-mb-lg">
+          <h2>Componentes Bootstrap</h2>
+          <p>Vanilla Smart Select funciona perfeitamente dentro de componentes Bootstrap como Cards, Modals, Tabs, etc:</p>
+          
+          <h3>Exemplo com Card</h3>
+          
+          <div class="demo-container">
+            <div class="card" style="max-width: 500px;">
+              <div class="card-header">
+                ⚙️ Configurações
+              </div>
+              <div class="card-body">
+                <div class="mb-3">
+                  <label for="category-select" class="form-label">Categoria</label>
+                  <select id="category-select" class="form-select">
+                    <option value="">Selecione...</option>
+                    <option value="tech">💻 Tecnologia</option>
+                    <option value="food">🍔 Alimentação</option>
+                    <option value="sports">⚽ Esportes</option>
+                    <option value="music">🎵 Música</option>
+                    <option value="travel">✈️ Viagens</option>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label for="priority-select" class="form-label">Prioridade</label>
+                  <select id="priority-select" class="form-select">
+                    <option value="">Selecione...</option>
+                    <option value="high">🔴 Alta</option>
+                    <option value="medium">🟡 Média</option>
+                    <option value="low">🟢 Baixa</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <details class="code-details">
+              <summary>Ver código</summary>
+              
+              <h4>HTML</h4>
+              <pre><code class="language-html">&lt;div class="card"&gt;
+  &lt;div class="card-header"&gt;
+    ⚙️ Configurações
+  &lt;/div&gt;
+  &lt;div class="card-body"&gt;
+    &lt;div class="mb-3"&gt;
+      &lt;label for="category-select" class="form-label"&gt;Categoria&lt;/label&gt;
+      &lt;select id="category-select" class="form-select"&gt;
+        &lt;option value=""&gt;Selecione...&lt;/option&gt;
+        &lt;option value="tech"&gt;💻 Tecnologia&lt;/option&gt;
+        &lt;option value="food"&gt;🍔 Alimentação&lt;/option&gt;
+        &lt;option value="sports"&gt;⚽ Esportes&lt;/option&gt;
+        &lt;option value="music"&gt;🎵 Música&lt;/option&gt;
+        &lt;option value="travel"&gt;✈️ Viagens&lt;/option&gt;
+      &lt;/select&gt;
+    &lt;/div&gt;
+    &lt;div class="mb-3"&gt;
+      &lt;label for="priority-select" class="form-label"&gt;Prioridade&lt;/label&gt;
+      &lt;select id="priority-select" class="form-select"&gt;
+        &lt;option value=""&gt;Selecione...&lt;/option&gt;
+        &lt;option value="high"&gt;🔴 Alta&lt;/option&gt;
+        &lt;option value="medium"&gt;🟡 Média&lt;/option&gt;
+        &lt;option value="low"&gt;🟢 Baixa&lt;/option&gt;
+      &lt;/select&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+              <h4>JavaScript</h4>
+              <pre><code class="language-javascript">new VanillaSmartSelect('#category-select', {
+  placeholder: 'Selecione uma categoria...'
+});
+
+new VanillaSmartSelect('#priority-select', {
+  placeholder: 'Selecione a prioridade...'
+});</code></pre>
+            </details>
+          </div>
+
+          <h3>Exemplo com Modal</h3>
+          
+          <div class="demo-container">
+            <!-- Botão para abrir modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#settingsModal">
+              Abrir Configurações
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="settingsModal" tabindex="-1" aria-labelledby="settingsModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="settingsModalLabel">Configurações</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="mb-3">
+                      <label for="modal-theme" class="form-label">Tema</label>
+                      <select id="modal-theme" class="form-select">
+                        <option value="">Selecione...</option>
+                        <option value="light">☀️ Claro</option>
+                        <option value="dark">🌙 Escuro</option>
+                        <option value="auto">🔄 Automático</option>
+                      </select>
+                    </div>
+                    <div class="mb-3">
+                      <label for="modal-language" class="form-label">Idioma</label>
+                      <select id="modal-language" class="form-select">
+                        <option value="">Selecione...</option>
+                        <option value="pt">🇧🇷 Português</option>
+                        <option value="en">🇺🇸 English</option>
+                        <option value="es">🇪🇸 Español</option>
+                        <option value="fr">🇫🇷 Français</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-primary">Salvar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <details class="code-details">
+              <summary>Ver código</summary>
+              
+              <h4>HTML</h4>
+              <pre><code class="language-html">&lt;!-- Botão para abrir modal --&gt;
+&lt;button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#settingsModal"&gt;
+  Abrir Configurações
+&lt;/button&gt;
+
+&lt;!-- Modal --&gt;
+&lt;div class="modal fade" id="settingsModal" tabindex="-1" aria-labelledby="settingsModalLabel" aria-hidden="true"&gt;
+  &lt;div class="modal-dialog"&gt;
+    &lt;div class="modal-content"&gt;
+      &lt;div class="modal-header"&gt;
+        &lt;h5 class="modal-title" id="settingsModalLabel"&gt;Configurações&lt;/h5&gt;
+        &lt;button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"&gt;&lt;/button&gt;
+      &lt;/div&gt;
+      &lt;div class="modal-body"&gt;
+        &lt;div class="mb-3"&gt;
+          &lt;label for="modal-theme" class="form-label"&gt;Tema&lt;/label&gt;
+          &lt;select id="modal-theme" class="form-select"&gt;
+            &lt;option value=""&gt;Selecione...&lt;/option&gt;
+            &lt;option value="light"&gt;☀️ Claro&lt;/option&gt;
+            &lt;option value="dark"&gt;🌙 Escuro&lt;/option&gt;
+            &lt;option value="auto"&gt;🔄 Automático&lt;/option&gt;
+          &lt;/select&gt;
+        &lt;/div&gt;
+        &lt;div class="mb-3"&gt;
+          &lt;label for="modal-language" class="form-label"&gt;Idioma&lt;/label&gt;
+          &lt;select id="modal-language" class="form-select"&gt;
+            &lt;option value=""&gt;Selecione...&lt;/option&gt;
+            &lt;option value="pt"&gt;🇧🇷 Português&lt;/option&gt;
+            &lt;option value="en"&gt;🇺🇸 English&lt;/option&gt;
+            &lt;option value="es"&gt;🇪🇸 Español&lt;/option&gt;
+            &lt;option value="fr"&gt;🇫🇷 Français&lt;/option&gt;
+          &lt;/select&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="modal-footer"&gt;
+        &lt;button type="button" class="btn btn-secondary" data-bs-dismiss="modal"&gt;Fechar&lt;/button&gt;
+        &lt;button type="button" class="btn btn-primary"&gt;Salvar&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+              <h4>JavaScript</h4>
+              <pre><code class="language-javascript">// Inicializar ANTES da modal abrir (show.bs.modal)
+const settingsModal = document.getElementById('settingsModal');
+let themeSelect, languageSelect;
+
+settingsModal.addEventListener('show.bs.modal', () =&gt; {
+  if (!themeSelect) {
+    themeSelect = new VanillaSmartSelect('#modal-theme', {
+      placeholder: 'Selecione o tema...'
+    });
+  }
+
+  if (!languageSelect) {
+    languageSelect = new VanillaSmartSelect('#modal-language', {
+      placeholder: 'Selecione o idioma...',
+      searchable: true
+    });
+  }
+});</code></pre>
+            </details>
+          </div>
+        </section>
+
+        <!-- Example 1: Single Select -->
+        <section class="section-mb-lg">
+          <h2>Single Select com Bootstrap</h2>
+          <p>Dropdown básico com busca e placeholder.</p>
+
+          <div class="demo-container">
+            <div class="mb-3">
+              <label for="fruits" class="form-label">Selecione uma fruta:</label>
+              <select id="fruits" class="form-select">
+                <option value="">Selecione uma fruta...</option>
+                <option value="maca">🍎 Maçã</option>
+                <option value="banana">🍌 Banana</option>
+                <option value="laranja">🍊 Laranja</option>
+                <option value="uva">🍇 Uva</option>
+                <option value="manga">🥭 Manga</option>
+              </select>
+            </div>
+
+            <div id="fruit-result" style="display: none; margin-top: 15px;" class="alert alert-success">
+              <strong>Fruta selecionada:</strong> <span id="fruit-value"></span>
+            </div>
+
+            <details class="code-details">
+              <summary>Ver código</summary>
+              
+              <h3>HTML</h3>
+              <pre><code class="language-html">&lt;div class="mb-3"&gt;
+  &lt;label for="fruits" class="form-label"&gt;Selecione uma fruta:&lt;/label&gt;
+  &lt;select id="fruits" class="form-select"&gt;
+    &lt;option value=""&gt;Selecione uma fruta...&lt;/option&gt;
+    &lt;option value="maca"&gt;🍎 Maçã&lt;/option&gt;
+    &lt;option value="banana"&gt;🍌 Banana&lt;/option&gt;
+    &lt;option value="laranja"&gt;🍊 Laranja&lt;/option&gt;
+    &lt;option value="uva"&gt;🍇 Uva&lt;/option&gt;
+    &lt;option value="manga"&gt;🥭 Manga&lt;/option&gt;
+  &lt;/select&gt;
+&lt;/div&gt;</code></pre>
+
+              <h3>JavaScript</h3>
+              <pre><code class="language-javascript">const select = new VanillaSmartSelect('#fruits', {
+  searchable: true,
+  placeholder: 'Selecione uma fruta...'
+});</code></pre>
+            </details>
+          </div>
+        </section>
+
+        <!-- Example 2: Multi-Select -->
+        <section class="section-mb-lg">
+          <h2>Multi-Select com Bootstrap</h2>
+          <p>Seleção múltipla com busca integrada ao Bootstrap.</p>
+
+          <div class="demo-container">
+            <div class="mb-3">
+              <label for="languages" class="form-label">Selecione linguagens de programação:</label>
+              <select id="languages" class="form-select" multiple>
+                <option value="js" selected>JavaScript</option>
+                <option value="ts">TypeScript</option>
+                <option value="py">Python</option>
+                <option value="java">Java</option>
+                <option value="rust">Rust</option>
+                <option value="go">Go</option>
+                <option value="php">PHP</option>
+              </select>
+            </div>
+
+            <div id="lang-result" style="display: none; margin-top: 15px;" class="alert alert-info">
+              <strong>Selecionadas:</strong> <span id="lang-values"></span>
+            </div>
+
+            <details class="code-details">
+              <summary>Ver código</summary>
+              
+              <h3>HTML</h3>
+              <pre><code class="language-html">&lt;div class="mb-3"&gt;
+  &lt;label for="languages" class="form-label"&gt;Selecione linguagens:&lt;/label&gt;
+  &lt;select id="languages" class="form-select" multiple&gt;
+    &lt;option value="js" selected&gt;JavaScript&lt;/option&gt;
+    &lt;option value="ts"&gt;TypeScript&lt;/option&gt;
+    &lt;option value="py"&gt;Python&lt;/option&gt;
+    &lt;option value="java"&gt;Java&lt;/option&gt;
+  &lt;/select&gt;
+&lt;/div&gt;</code></pre>
+
+              <h3>JavaScript</h3>
+              <pre><code class="language-javascript">const multiSelect = new VanillaSmartSelect('#languages', {
+  searchable: true,
+  multiple: true
+});</code></pre>
+            </details>
+          </div>
+        </section>
+
+        <!-- Example 3: Com Grupos -->
+        <section class="section-mb-lg">
+          <h2>Select com Optgroups</h2>
+          <p>Opções organizadas por grupos (optgroup) com Bootstrap.</p>
+
+          <div class="demo-container">
+            <div class="mb-3">
+              <label for="countries" class="form-label">Selecione um país:</label>
+              <select id="countries" class="form-select">
+                <option value="">Selecione...</option>
+                <optgroup label="América do Sul">
+                  <option value="br">🇧🇷 Brasil</option>
+                  <option value="ar">🇦🇷 Argentina</option>
+                  <option value="cl">🇨🇱 Chile</option>
+                  <option value="co">🇨🇴 Colômbia</option>
+                </optgroup>
+                <optgroup label="Europa">
+                  <option value="pt">🇵🇹 Portugal</option>
+                  <option value="es">🇪🇸 Espanha</option>
+                  <option value="fr">🇫🇷 França</option>
+                  <option value="it">🇮🇹 Itália</option>
+                </optgroup>
+                <optgroup label="América do Norte">
+                  <option value="us">🇺🇸 Estados Unidos</option>
+                  <option value="ca">🇨🇦 Canadá</option>
+                  <option value="mx">🇲🇽 México</option>
+                </optgroup>
+              </select>
+            </div>
+
+            <div id="country-result" style="display: none; margin-top: 15px;" class="alert alert-primary">
+              <strong>País selecionado:</strong> <span id="country-value"></span>
+            </div>
+
+            <details class="code-details">
+              <summary>Ver código</summary>
+              
+              <h3>HTML</h3>
+              <pre><code class="language-html">&lt;div class="mb-3"&gt;
+  &lt;label for="countries" class="form-label"&gt;Selecione um país:&lt;/label&gt;
+  &lt;select id="countries" class="form-select"&gt;
+    &lt;option value=""&gt;Selecione...&lt;/option&gt;
+    &lt;optgroup label="América do Sul"&gt;
+      &lt;option value="br"&gt;🇧🇷 Brasil&lt;/option&gt;
+      &lt;option value="ar"&gt;🇦🇷 Argentina&lt;/option&gt;
+    &lt;/optgroup&gt;
+    &lt;optgroup label="Europa"&gt;
+      &lt;option value="pt"&gt;🇵🇹 Portugal&lt;/option&gt;
+      &lt;option value="es"&gt;🇪🇸 Espanha&lt;/option&gt;
+    &lt;/optgroup&gt;
+  &lt;/select&gt;
+&lt;/div&gt;</code></pre>
+
+              <h3>JavaScript</h3>
+              <pre><code class="language-javascript">const countriesSelect = new VanillaSmartSelect('#countries', {
+  searchable: true
+});</code></pre>
+            </details>
+          </div>
+        </section>
+
+        <!-- Example 4: Validação Bootstrap -->
+        <section class="section-mb-lg">
+          <h2>Validação com Bootstrap Forms</h2>
+          <p>Integração perfeita com a validação de formulários do Bootstrap.</p>
+
+          <div class="demo-container">
+            <form id="bootstrap-form" class="needs-validation" novalidate>
+              <div class="mb-3">
+                <label for="department" class="form-label">Departamento: *</label>
+                <select id="department" class="form-select" required>
+                  <option value="">Selecione...</option>
+                  <option value="ti">💻 TI</option>
+                  <option value="rh">👥 RH</option>
+                  <option value="vendas">💰 Vendas</option>
+                  <option value="marketing">📢 Marketing</option>
+                </select>
+                <div class="invalid-feedback">
+                  Por favor, selecione um departamento.
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="role" class="form-label">Cargo: *</label>
+                <select id="role" class="form-select" required>
+                  <option value="">Selecione...</option>
+                  <option value="junior">Júnior</option>
+                  <option value="pleno">Pleno</option>
+                  <option value="senior">Sênior</option>
+                  <option value="lead">Lead</option>
+                </select>
+                <div class="invalid-feedback">
+                  Por favor, selecione um cargo.
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary">Enviar</button>
+              <button type="reset" class="btn btn-secondary">Limpar</button>
+            </form>
+
+            <div id="form-result" style="display: none; margin-top: 15px;" class="alert alert-success">
+              <strong>✓ Formulário válido!</strong>
+            </div>
+
+            <details class="code-details">
+              <summary>Ver código</summary>
+              
+              <h3>HTML</h3>
+              <pre><code class="language-html">&lt;form id="bootstrap-form" class="needs-validation" novalidate&gt;
+  &lt;div class="mb-3"&gt;
+    &lt;label for="department" class="form-label"&gt;Departamento: *&lt;/label&gt;
+    &lt;select id="department" class="form-select" required&gt;
+      &lt;option value=""&gt;Selecione...&lt;/option&gt;
+      &lt;option value="ti"&gt;💻 TI&lt;/option&gt;
+      &lt;option value="rh"&gt;👥 RH&lt;/option&gt;
+    &lt;/select&gt;
+    &lt;div class="invalid-feedback"&gt;
+      Por favor, selecione um departamento.
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;button type="submit" class="btn btn-primary"&gt;Enviar&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+
+              <h3>JavaScript</h3>
+              <pre><code class="language-javascript">// Inicializar selects
+new VanillaSmartSelect('#department');
+new VanillaSmartSelect('#role');
+
+// Validação Bootstrap
+const form = document.getElementById('bootstrap-form');
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  
+  if (form.checkValidity()) {
+    // Formulário válido
+    form.classList.add('was-validated');
+    console.log('Formulário enviado!');
+  } else {
+    // Mostrar erros
+    form.classList.add('was-validated');
+  }
+});</code></pre>
+            </details>
+          </div>
+        </section>
+
+        <!-- Example 5: Clear Button -->
+        <section class="section-mb-lg">
+          <h2>Clear Button com Bootstrap</h2>
+          <p>Botão de limpar integrado ao design do Bootstrap.</p>
+
+          <div class="demo-container">
+            <div class="mb-3">
+              <label for="colors" class="form-label">Selecione uma cor:</label>
+              <select id="colors" class="form-select">
+                <option value="">Selecione...</option>
+                <option value="vermelho">🔴 Vermelho</option>
+                <option value="azul">🔵 Azul</option>
+                <option value="verde">🟢 Verde</option>
+                <option value="amarelo">🟡 Amarelo</option>
+              </select>
+            </div>
+
+            <button id="clear-btn" class="btn btn-outline-secondary" disabled>
+              Limpar Seleção
+            </button>
+
+            <div id="color-result" style="display: none; margin-top: 15px;" class="alert alert-warning">
+              <strong>Cor selecionada:</strong> <span id="color-value"></span>
+            </div>
+
+            <details class="code-details">
+              <summary>Ver código</summary>
+              
+              <h3>HTML</h3>
+              <pre><code class="language-html">&lt;div class="mb-3"&gt;
+  &lt;label for="colors" class="form-label"&gt;Selecione uma cor:&lt;/label&gt;
+  &lt;select id="colors" class="form-select"&gt;
+    &lt;option value=""&gt;Selecione...&lt;/option&gt;
+    &lt;option value="vermelho"&gt;🔴 Vermelho&lt;/option&gt;
+    &lt;option value="azul"&gt;🔵 Azul&lt;/option&gt;
+  &lt;/select&gt;
+&lt;/div&gt;
+
+&lt;button id="clear-btn" class="btn btn-outline-secondary"&gt;
+  Limpar Seleção
+&lt;/button&gt;</code></pre>
+
+              <h3>JavaScript</h3>
+              <pre><code class="language-javascript">const colorSelect = new VanillaSmartSelect('#colors', {
+  searchable: true,
+  allowClear: true
+});
+
+// Limpar programaticamente
+document.getElementById('clear-btn').addEventListener('click', () => {
+  colorSelect.clear();
+});</code></pre>
+            </details>
+          </div>
+        </section>
+
+
+
+
+        <!-- Temas -->
+        <section class="section-mb-lg">
+          <h2>Temas</h2>
+          <p>Vanilla Smart Select se adapta automaticamente ao tema do Bootstrap:</p>
+          
+          <ul>
+            <li>✅ Respeita as variáveis CSS do Bootstrap quando disponíveis</li>
+            <li>✅ Classes <code>.form-select</code> e <code>.form-label</code> são preservadas</li>
+            <li>✅ Cores e espaçamentos seguem o padrão Bootstrap</li>
+            <li>✅ Funciona com temas personalizados do Bootstrap</li>
+            <li>✅ Suporta modo claro e escuro do Bootstrap</li>
+          </ul>
+
+          <div class="info-callout info-callout-info" style="margin-top: 20px;">
+            <strong>💡 Dica:</strong> Se você customizou as variáveis CSS do Bootstrap (como cores primárias), o Vanilla Smart Select automaticamente usará essas cores nos estados de foco e hover.
+          </div>
+        </section>
+
+        <!-- Problemas Conhecidos -->
+        <section class="section-mb-lg">
+          <h2>Problemas Conhecidos</h2>
+          <p>Nenhum problema de compatibilidade conhecido com Bootstrap 5. Se encontrar algum, por favor <a href="https://github.com/ailtonocchi/vanilla-smart-select/issues" target="_blank">abra uma issue</a>.</p>
+        </section>
+
+       
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+  
+  <!-- Bootstrap JS Bundle (necessário para Modal, Dropdown, etc) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <script src="../../dist/vanilla-smart-select.min.js"></script>
+  <script src="../js/docs.js"></script>
+
+  <script>
+    // Example 1: Single Select
+    const fruitsSelect = new VanillaSmartSelect('#fruits', {
+      searchable: true,
+      placeholder: 'Selecione uma fruta...'
+    });
+
+    document.getElementById('fruits').addEventListener('vs:select', (e) => {
+      const resultDiv = document.getElementById('fruit-result');
+      const valueSpan = document.getElementById('fruit-value');
+      resultDiv.style.display = 'block';
+      valueSpan.textContent = e.detail.data.text;
+    });
+
+    // Example 2: Multi-Select
+    const languagesSelect = new VanillaSmartSelect('#languages', {
+      searchable: true,
+      multiple: true
+    });
+
+    document.getElementById('languages').addEventListener('vs:select', (e) => {
+      const resultDiv = document.getElementById('lang-result');
+      const valuesSpan = document.getElementById('lang-values');
+      const selectElement = document.getElementById('languages');
+      const selected = Array.from(selectElement.selectedOptions).map(opt => opt.text);
+      resultDiv.style.display = 'block';
+      valuesSpan.textContent = selected.join(', ');
+    });
+
+    document.getElementById('languages').addEventListener('vs:unselect', (e) => {
+      const resultDiv = document.getElementById('lang-result');
+      const valuesSpan = document.getElementById('lang-values');
+      const selectElement = document.getElementById('languages');
+      const selected = Array.from(selectElement.selectedOptions).map(opt => opt.text);
+      if (selected.length > 0) {
+        valuesSpan.textContent = selected.join(', ');
+      } else {
+        resultDiv.style.display = 'none';
+      }
+    });
+
+    // Grid System Selects
+    new VanillaSmartSelect('#grid-select1', {
+      placeholder: 'Selecione uma área...'
+    });
+
+    new VanillaSmartSelect('#grid-select2', {
+      placeholder: 'Selecione o nível...'
+    });
+
+    new VanillaSmartSelect('#grid-select3', {
+      placeholder: 'Selecione o modelo...'
+    });
+
+    // Card Component
+    new VanillaSmartSelect('#category-select', {
+      placeholder: 'Selecione uma categoria...'
+    });
+
+    new VanillaSmartSelect('#priority-select', {
+      placeholder: 'Selecione a prioridade...'
+    });
+
+    // Modal Component - Inicializar ANTES da modal abrir
+    const settingsModal = document.getElementById('settingsModal');
+    let themeSelect, languageSelect;
+
+    settingsModal.addEventListener('show.bs.modal', function () {
+      // Verifica se já foi inicializado para não criar múltiplas instâncias
+      if (!themeSelect) {
+        themeSelect = new VanillaSmartSelect('#modal-theme', {
+          placeholder: 'Selecione o tema...'
+        });
+      }
+      
+      if (!languageSelect) {
+        languageSelect = new VanillaSmartSelect('#modal-language', {
+          placeholder: 'Selecione o idioma...',
+          searchable: true
+        });
+      }
+    });
+
+    // Example 3: Optgroups
+    const countriesSelect = new VanillaSmartSelect('#countries', {
+      searchable: true
+    });
+
+    document.getElementById('countries').addEventListener('vs:select', (e) => {
+      const resultDiv = document.getElementById('country-result');
+      const valueSpan = document.getElementById('country-value');
+      resultDiv.style.display = 'block';
+      valueSpan.textContent = e.detail.data.text;
+    });
+
+    // Example 4: Validação Bootstrap
+    new VanillaSmartSelect('#department');
+    new VanillaSmartSelect('#role');
+
+    const bootstrapForm = document.getElementById('bootstrap-form');
+    const formResult = document.getElementById('form-result');
+
+    bootstrapForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      if (bootstrapForm.checkValidity()) {
+        bootstrapForm.classList.add('was-validated');
+        formResult.style.display = 'block';
+        console.log('✓ Formulário válido!');
+      } else {
+        bootstrapForm.classList.add('was-validated');
+        formResult.style.display = 'none';
+      }
+    });
+
+    // Example 5: Clear Button
+    const colorSelect = new VanillaSmartSelect('#colors', {
+      searchable: true,
+      allowClear: true
+    });
+
+    const clearBtn = document.getElementById('clear-btn');
+    const colorResult = document.getElementById('color-result');
+    const colorValue = document.getElementById('color-value');
+
+    document.getElementById('colors').addEventListener('vs:select', (e) => {
+      clearBtn.disabled = false;
+      colorResult.style.display = 'block';
+      colorValue.textContent = e.detail.data.text;
+    });
+
+    document.getElementById('colors').addEventListener('vs:clear', () => {
+      clearBtn.disabled = true;
+      colorResult.style.display = 'none';
+    });
+
+    clearBtn.addEventListener('click', () => {
+      colorSelect.clear();
+    });
+
+    console.log('✓ Bootstrap examples ready!');
+  </script>
+</body>
+</html>

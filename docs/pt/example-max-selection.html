@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Limite de Seleção - VanillaSmartSelect v1.0.1</title>
+  <link rel="stylesheet" href="../css/docs.css">
+  <link rel="stylesheet" href="../../dist/vanilla-smart-select.min.css">
+  
+  <!-- Prism CSS for syntax highlighting -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+</head>
+<body>
+  <div class="docs-container">
+    <!-- Sidebar -->
+    <aside class="docs-sidebar">
+      <div class="sidebar-header">
+        <a href="index.html" class="sidebar-logo">
+          <div class="sidebar-logo-icon">VS</div>
+          <div class="sidebar-logo-text">
+            <div class="sidebar-logo-title">Vanilla Smart Select</div>
+            <div class="sidebar-logo-subtitle">v1.0.1</div>
+          </div>
+        </a>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Introdução</div>
+          <ul class="nav-links">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="getting-started.html" class="nav-link">Getting Started</a></li>
+          </ul>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Recursos</div>
+          <ul class="nav-links">
+            <li><a href="api-reference.html" class="nav-link">API Reference</a></li>
+            <li><a href="configuration.html" class="nav-link">Configuração</a></li>
+            <li><a href="events.html" class="nav-link">Eventos</a></li>
+          </ul>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Exemplos</div>
+          <ul class="nav-links">
+            <li><a href="example-basic.html" class="nav-link">Básico</a></li>
+            <li><a href="example-api-programmatic.html" class="nav-link">API Programática</a></li>
+            <li><a href="example-ajax-basic.html" class="nav-link">AJAX Básico</a></li>
+            <li><a href="example-tags.html" class="nav-link">Tags</a></li>
+            <li><a href="example-pagination.html" class="nav-link">Paginação</a></li>
+            <li><a href="example-max-selection.html" class="nav-link active">Limite de Seleção</a></li>
+            <li><a href="example-validation.html" class="nav-link">Validação Avançada</a></li>
+            <li><a href="example-templates.html" class="nav-link">Templates</a></li>
+            <li><a href="example-i18n.html" class="nav-link">i18n</a></li>
+            <li><a href="example-bootstrap.html" class="nav-link">Bootstrap</a></li>
+          </ul>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="docs-main">
+      <header class="docs-topbar">
+        <button class="mobile-menu-toggle" aria-label="Toggle menu">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+        <h1 class="topbar-title">Limite de Seleção</h1>
+        <div class="topbar-actions">
+          <div class="language-switcher">
+            <a href="example-max-selection.html" class="lang-link active">🇧🇷 PT</a>
+            <span class="lang-separator">|</span>
+            <a href="../en/example-max-selection.html" class="lang-link">🇺🇸 EN</a>
+          </div>
+          <a href="https://github.com/ailtonocchi/vanilla-smart-select" class="topbar-btn" target="_blank" rel="noopener noreferrer">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+            </svg>
+            GitHub
+          </a>
+        </div>
+      </header>
+
+      <!-- Content -->
+      <div class="docs-content">
+        <section class="section-mb-lg">
+          <p class="lead">
+            O recurso de limite de seleção permite controlar o número máximo de itens que podem ser selecionados 
+            em selects múltiplos. É útil para cenários onde você deseja limitar a quantidade de escolhas do usuário.
+          </p>
+        </section>
+
+        <!-- Example 1: Limit of 3 Items -->
+        <section class="section-mb-lg">
+          <h2>Limite de 3 Itens</h2>
+          <p>Neste exemplo, o usuário pode selecionar no máximo 3 habilidades. Após atingir o limite, 
+          não será possível adicionar mais itens até que algum seja removido.</p>
+          
+          <div class="demo-container">
+            <label for="skills" class="demo-label">Selecione até 3 habilidades:</label>
+            <select id="skills" multiple>
+              <option value="javascript">JavaScript</option>
+              <option value="python">Python</option>
+              <option value="java">Java</option>
+              <option value="csharp">C#</option>
+              <option value="php">PHP</option>
+              <option value="ruby">Ruby</option>
+              <option value="go">Go</option>
+              <option value="rust">Rust</option>
+              <option value="swift">Swift</option>
+              <option value="kotlin">Kotlin</option>
+            </select>
+            <details class="code-details">
+              <summary>Ver código</summary>
+              
+              <h3>HTML</h3>
+              <pre><code class="language-html">&lt;label for="skills"&gt;Selecione até 3 habilidades:&lt;/label&gt;
+&lt;select id="skills" multiple&gt;
+  &lt;option value="javascript"&gt;JavaScript&lt;/option&gt;
+  &lt;option value="python"&gt;Python&lt;/option&gt;
+  &lt;option value="java"&gt;Java&lt;/option&gt;
+  &lt;option value="csharp"&gt;C#&lt;/option&gt;
+  &lt;option value="php"&gt;PHP&lt;/option&gt;
+  &lt;option value="ruby"&gt;Ruby&lt;/option&gt;
+  &lt;option value="go"&gt;Go&lt;/option&gt;
+  &lt;option value="rust"&gt;Rust&lt;/option&gt;
+  &lt;option value="swift"&gt;Swift&lt;/option&gt;
+  &lt;option value="kotlin"&gt;Kotlin&lt;/option&gt;
+&lt;/select&gt;</code></pre>
+
+              <h3>JavaScript</h3>
+              <pre><code class="language-javascript">new VanillaSmartSelectClass('#skills', {
+  searchable: true,
+  maximumSelectionLength: 3
+});</code></pre>
+            </details>
+          </div>
+
+          <div class="info-callout info-callout-info">
+            <strong>💡 Dica:</strong> Quando o limite é atingido, uma mensagem é exibida automaticamente 
+            e os itens não selecionados ficam desabilitados temporariamente.
+          </div>
+        </section>
+
+        <!-- Example 2: Limit of 2 Items -->
+        <section class="section-mb-lg">
+          <h2>Limite de 2 Itens</h2>
+          <p>Exemplo com limite mais restritivo de apenas 2 frameworks. Útil quando você quer forçar o usuário 
+          a escolher suas principais preferências.</p>
+          
+          <div class="demo-container">
+            <label for="frameworks" class="demo-label">Selecione até 2 frameworks:</label>
+            <select id="frameworks" multiple>
+              <option value="react">React</option>
+              <option value="vue">Vue.js</option>
+              <option value="angular">Angular</option>
+              <option value="svelte">Svelte</option>
+              <option value="ember">Ember.js</option>
+              <option value="backbone">Backbone.js</option>
+            </select>
+            <details class="code-details">
+              <summary>Ver código</summary>
+
+              <h3>HTML</h3>
+              <pre><code class="language-html">&lt;label for="frameworks"&gt;Selecione até 2 frameworks:&lt;/label&gt;
+&lt;select id="frameworks" multiple&gt;
+  &lt;option value="react"&gt;React&lt;/option&gt;
+  &lt;option value="vue"&gt;Vue.js&lt;/option&gt;
+  &lt;option value="angular"&gt;Angular&lt;/option&gt;
+  &lt;option value="svelte"&gt;Svelte&lt;/option&gt;
+  &lt;option value="ember"&gt;Ember.js&lt;/option&gt;
+  &lt;option value="backbone"&gt;Backbone.js&lt;/option&gt;
+&lt;/select&gt;</code></pre>
+
+              <h3>JavaScript</h3>
+              <pre><code class="language-javascript">new VanillaSmartSelectClass('#frameworks', {
+  searchable: true,
+  maximumSelectionLength: 2
+});</code></pre>
+            </details>
+          </div>
+        </section>
+
+        <!-- Example 3: Limit of 5 Items with Optgroups -->
+        <section class="section-mb-lg">
+          <h2>Limite de 5 Itens com Grupos</h2>
+          <p>O limite de seleção funciona perfeitamente com optgroups. Neste exemplo, você pode selecionar 
+          até 5 países de diferentes continentes.</p>
+          
+          <div class="demo-container">
+            <label for="countries" class="demo-label">Selecione até 5 países:</label>
+            <select id="countries" multiple>
+              <optgroup label="América do Sul">
+                <option value="br">Brasil</option>
+                <option value="ar">Argentina</option>
+                <option value="cl">Chile</option>
+                <option value="co">Colômbia</option>
+                <option value="pe">Peru</option>
+              </optgroup>
+              <optgroup label="Europa">
+                <option value="pt">Portugal</option>
+                <option value="es">Espanha</option>
+                <option value="fr">França</option>
+                <option value="it">Itália</option>
+                <option value="de">Alemanha</option>
+              </optgroup>
+              <optgroup label="Ásia">
+                <option value="jp">Japão</option>
+                <option value="cn">China</option>
+                <option value="kr">Coreia do Sul</option>
+                <option value="in">Índia</option>
+              </optgroup>
+            </select>
+            <details class="code-details">
+              <summary>Ver código</summary>
+
+              <h3>HTML</h3>
+              <pre><code class="language-html">&lt;label for="countries"&gt;Selecione até 5 países:&lt;/label&gt;
+&lt;select id="countries" multiple&gt;
+  &lt;optgroup label="América do Sul"&gt;
+    &lt;option value="br"&gt;Brasil&lt;/option&gt;
+    &lt;option value="ar"&gt;Argentina&lt;/option&gt;
+    &lt;option value="cl"&gt;Chile&lt;/option&gt;
+    &lt;option value="co"&gt;Colômbia&lt;/option&gt;
+    &lt;option value="pe"&gt;Peru&lt;/option&gt;
+  &lt;/optgroup&gt;
+  &lt;optgroup label="Europa"&gt;
+    &lt;option value="pt"&gt;Portugal&lt;/option&gt;
+    &lt;option value="es"&gt;Espanha&lt;/option&gt;
+    &lt;option value="fr"&gt;França&lt;/option&gt;
+    &lt;option value="it"&gt;Itália&lt;/option&gt;
+    &lt;option value="de"&gt;Alemanha&lt;/option&gt;
+  &lt;/optgroup&gt;
+  &lt;optgroup label="Ásia"&gt;
+    &lt;option value="jp"&gt;Japão&lt;/option&gt;
+    &lt;option value="cn"&gt;China&lt;/option&gt;
+    &lt;option value="kr"&gt;Coreia do Sul&lt;/option&gt;
+    &lt;option value="in"&gt;Índia&lt;/option&gt;
+  &lt;/optgroup&gt;
+&lt;/select&gt;</code></pre>
+
+              <h3>JavaScript</h3>
+              <pre><code class="language-javascript">new VanillaSmartSelectClass('#countries', {
+  searchable: true,
+  maximumSelectionLength: 5
+});</code></pre>
+            </details>
+          </div>
+        </section>
+
+        <!-- Example 4: No Limit (Default) -->
+        <section class="section-mb-lg">
+          <h2>Sem Limite (Padrão)</h2>
+          <p>Por padrão, não há limite de seleção. Você pode definir explicitamente <code>maximumSelectionLength: 0</code> 
+          ou simplesmente omitir a configuração para permitir seleção ilimitada.</p>
+          
+          <div class="demo-container">
+            <label for="colors" class="demo-label">Selecione quantas cores desejar:</label>
+            <select id="colors" multiple>
+              <option value="red">Vermelho</option>
+              <option value="blue">Azul</option>
+              <option value="green">Verde</option>
+              <option value="yellow">Amarelo</option>
+              <option value="purple">Roxo</option>
+              <option value="orange">Laranja</option>
+              <option value="pink">Rosa</option>
+              <option value="brown">Marrom</option>
+              <option value="black">Preto</option>
+              <option value="white">Branco</option>
+            </select>
+            <details class="code-details">
+              <summary>Ver código</summary>
+
+              <h3>HTML</h3>
+              <pre><code class="language-html">&lt;label for="colors"&gt;Selecione quantas cores desejar:&lt;/label&gt;
+&lt;select id="colors" multiple&gt;
+  &lt;option value="red"&gt;Vermelho&lt;/option&gt;
+  &lt;option value="blue"&gt;Azul&lt;/option&gt;
+  &lt;option value="green"&gt;Verde&lt;/option&gt;
+  &lt;option value="yellow"&gt;Amarelo&lt;/option&gt;
+  &lt;option value="purple"&gt;Roxo&lt;/option&gt;
+  &lt;option value="orange"&gt;Laranja&lt;/option&gt;
+  &lt;option value="pink"&gt;Rosa&lt;/option&gt;
+  &lt;option value="brown"&gt;Marrom&lt;/option&gt;
+  &lt;option value="black"&gt;Preto&lt;/option&gt;
+  &lt;option value="white"&gt;Branco&lt;/option&gt;
+&lt;/select&gt;</code></pre>
+
+              <h3>JavaScript</h3>
+              <pre><code class="language-javascript">new VanillaSmartSelectClass('#colors', {
+  searchable: true,
+  maximumSelectionLength: 0  // 0 = unlimited (default)
+});</code></pre>
+            </details>
+          </div>
+        </section>
+
+        <!-- Example 5: Event Listener -->
+        <section class="section-mb-lg">
+          <h2>Monitorando Eventos de Limite</h2>
+          <p>Você pode escutar o evento <code>vs:selectionLimitReached</code> para executar ações personalizadas 
+          quando o limite é atingido. O evento fornece detalhes sobre o limite máximo e a mensagem exibida.</p>
+          
+          <div class="demo-container">
+            <label for="tags" class="demo-label">Selecione até 4 tags:</label>
+            <select id="tags" multiple>
+              <option value="tag1">Design</option>
+              <option value="tag2">Desenvolvimento</option>
+              <option value="tag3">Marketing</option>
+              <option value="tag4">Vendas</option>
+              <option value="tag5">Suporte</option>
+              <option value="tag6">Administração</option>
+              <option value="tag7">Recursos Humanos</option>
+              <option value="tag8">Financeiro</option>
+            </select>
+            
+            <div style="margin-top: 20px;">
+              <strong>Log de Eventos:</strong>
+              <div id="event-log" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 4px; padding: 12px; min-height: 100px; max-height: 300px; overflow-y: auto; margin-top: 8px;">
+                <div style="color: #999; font-style: italic;">Os eventos aparecerão aqui...</div>
+              </div>
+            </div>
+            <details class="code-details">
+              <summary>Ver código</summary>
+
+              <h3>HTML</h3>
+              <pre><code class="language-html">&lt;label for="tags"&gt;Selecione até 4 tags:&lt;/label&gt;
+&lt;select id="tags" multiple&gt;
+  &lt;option value="tag1"&gt;Design&lt;/option&gt;
+  &lt;option value="tag2"&gt;Desenvolvimento&lt;/option&gt;
+  &lt;option value="tag3"&gt;Marketing&lt;/option&gt;
+  &lt;option value="tag4"&gt;Vendas&lt;/option&gt;
+  &lt;option value="tag5"&gt;Suporte&lt;/option&gt;
+  &lt;option value="tag6"&gt;Administração&lt;/option&gt;
+  &lt;option value="tag7"&gt;Recursos Humanos&lt;/option&gt;
+  &lt;option value="tag8"&gt;Financeiro&lt;/option&gt;
+&lt;/select&gt;
+
+&lt;div id="event-log"&gt;&lt;/div&gt;</code></pre>
+
+              <h3>JavaScript</h3>
+              <pre><code class="language-javascript">const tagsElement = document.getElementById('tags');
+const eventLog = document.getElementById('event-log');
+
+new VanillaSmartSelectClass('#tags', {
+  searchable: true,
+  maximumSelectionLength: 4
+});
+
+// Listen to selection limit reached event
+tagsElement.addEventListener('vs:selectionLimitReached', (e) => {
+  const timestamp = new Date().toLocaleTimeString();
+  const logEntry = document.createElement('div');
+  logEntry.style.marginBottom = '8px';
+  logEntry.innerHTML = `
+    &lt;strong style="color: #856404;"&gt;[${timestamp}] Limite Atingido!&lt;/strong&gt;&lt;br&gt;
+    &lt;span style="color: #666;"&gt;Máximo: ${e.detail.maximum} | Mensagem: "${e.detail.message}"&lt;/span&gt;
+  `;
+  eventLog.insertBefore(logEntry, eventLog.firstChild);
+});
+
+// Also log select events
+tagsElement.addEventListener('vs:select', (e) => {
+  const timestamp = new Date().toLocaleTimeString();
+  const logEntry = document.createElement('div');
+  logEntry.style.marginBottom = '8px';
+  logEntry.innerHTML = `
+    &lt;strong style="color: #28a745;"&gt;[${timestamp}] Selecionado:&lt;/strong&gt;
+    &lt;span style="color: #666;"&gt;${e.detail.data.text}&lt;/span&gt;
+  `;
+  eventLog.insertBefore(logEntry, eventLog.firstChild);
+});</code></pre>
+            </details>
+          </div>
+
+          <div class="info-callout info-callout-success">
+            <strong>✅ Evento Personalizado:</strong> O evento <code>vs:selectionLimitReached</code> contém 
+            <code>e.detail.maximum</code> (número máximo permitido) e <code>e.detail.message</code> (mensagem exibida ao usuário).
+          </div>
+        </section>
+
+        <!-- API Reference -->
+        <section class="section-mb-lg">
+          <h2>Configuração da API</h2>
+          <p>Configurações disponíveis para controle do limite de seleção:</p>
+          
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Propriedade</th>
+                  <th>Tipo</th>
+                  <th>Padrão</th>
+                  <th>Descrição</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>maximumSelectionLength</code></td>
+                  <td>Number</td>
+                  <td><code>0</code></td>
+                  <td>Número máximo de itens que podem ser selecionados. Use <code>0</code> para ilimitado.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Events -->
+        <section class="section-mb-lg">
+          <h2>Eventos Relacionados</h2>
+          <p>Eventos disparados durante o controle de limite de seleção:</p>
+          
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Evento</th>
+                  <th>Descrição</th>
+                  <th>Dados do Evento</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>vs:selectionLimitReached</code></td>
+                  <td>Disparado quando o usuário tenta selecionar mais itens do que o limite permitido</td>
+                  <td>
+                    <code>e.detail.maximum</code> - número máximo permitido<br>
+                    <code>e.detail.message</code> - mensagem exibida
+                  </td>
+                </tr>
+                <tr>
+                  <td><code>vs:select</code></td>
+                  <td>Disparado quando um item é selecionado (antes do limite ser atingido)</td>
+                  <td>
+                    <code>e.detail.data</code> - dados do item selecionado
+                  </td>
+                </tr>
+                <tr>
+                  <td><code>vs:unselect</code></td>
+                  <td>Disparado quando um item é removido da seleção</td>
+                  <td>
+                    <code>e.detail.data</code> - dados do item removido
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- i18n Customization -->
+        <section class="section-mb-lg">
+          <h2>Personalização de Mensagens (i18n)</h2>
+          <p>Você pode personalizar a mensagem exibida quando o limite é atingido através das configurações de internacionalização:</p>
+          
+          <div class="code-example">
+            <h3>JavaScript</h3>
+            <pre><code class="language-javascript">new VanillaSmartSelectClass('#element', {
+  maximumSelectionLength: 3,
+  language: {
+    maximumSelected: function(args) {
+      return 'Você só pode selecionar ' + args.maximum + ' itens';
+    }
+  }
+});
+
+// Ou usando texto simples
+new VanillaSmartSelectClass('#element', {
+  maximumSelectionLength: 5,
+  language: {
+    maximumSelected: 'Limite de 5 itens atingido!'
+  }
+});</code></pre>
+          </div>
+
+          <div class="info-callout info-callout-info">
+            <strong>💡 Multilíngue:</strong> Use a configuração <code>language</code> para adaptar mensagens 
+            ao idioma do seu aplicativo. Veja a <a href="example-i18n.html">página de internacionalização</a> 
+            para mais detalhes.
+          </div>
+        </section>
+
+        <!-- Use Cases -->
+        <section class="section-mb-lg">
+          <h2>Casos de Uso Comuns</h2>
+          
+          <div class="info-callout">
+            <strong>📋 Aplicações Práticas:</strong>
+            <ul style="margin: 10px 0 0 0; padding-left: 20px;">
+              <li><strong>Formulários de Pesquisa:</strong> Limitar número de filtros ou categorias selecionadas</li>
+              <li><strong>Seleção de Skills:</strong> Pedir aos usuários que escolham suas principais competências (ex: top 3)</li>
+              <li><strong>Preferências:</strong> Limitar escolhas em configurações ou preferências do usuário</li>
+              <li><strong>Votação:</strong> Permitir voto em múltiplas opções até um limite específico</li>
+              <li><strong>Tags/Categorias:</strong> Evitar sobrecarga de tags em conteúdo ou produtos</li>
+              <li><strong>Alocação de Recursos:</strong> Limitar quantos recursos podem ser atribuídos a uma tarefa</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- Best Practices -->
+        <section class="section-mb-lg">
+          <h2>Boas Práticas</h2>
+          
+          <div class="info-callout info-callout-success">
+            <strong>✅ Recomendações:</strong>
+            <ul style="margin: 10px 0 0 0; padding-left: 20px;">
+              <li><strong>Comunique o Limite:</strong> Sempre informe o limite no label ou placeholder (ex: "Selecione até 3 itens")</li>
+              <li><strong>Feedback Visual:</strong> A biblioteca já fornece feedback, mas você pode adicionar estilos personalizados</li>
+              <li><strong>Eventos Customizados:</strong> Use <code>vs:selectionLimitReached</code> para mostrar avisos ou sugestões adicionais</li>
+              <li><strong>Limites Razoáveis:</strong> Escolha limites que façam sentido para o contexto (evite limites muito restritivos)</li>
+              <li><strong>Mensagens Claras:</strong> Personalize mensagens de erro para serem úteis e amigáveis</li>
+              <li><strong>Validação:</strong> Combine com validação de formulário para garantir que o mínimo também seja respeitado</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- Navigation -->
+        <section class="section-mb-lg">
+          <div style="display: flex; justify-content: space-between; padding-top: 20px; border-top: 1px solid #e5e7eb;">
+            <a href="example-pagination.html" class="btn btn-secondary">← Paginação</a>
+            <a href="example-validation.html" class="btn btn-secondary">Validação →</a>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+  <script src="../../dist/vanilla-smart-select.min.js"></script>
+  <script src="../js/docs.js"></script>
+
+  <!-- Initialize Examples -->
+  <script>
+    // Example 1: Limite de 3 itens
+    new VanillaSmartSelect('#skills', {
+      searchable: true,
+      maximumSelectionLength: 3
+    });
+
+    // Example 2: Limite de 2 itens
+    new VanillaSmartSelect('#frameworks', {
+      searchable: true,
+      maximumSelectionLength: 2
+    });
+
+    // Example 3: Limite de 5 itens com grupos
+    new VanillaSmartSelect('#countries', {
+      searchable: true,
+      maximumSelectionLength: 5
+    });
+
+    // Example 4: Sem limite (padrão)
+    new VanillaSmartSelect('#colors', {
+      searchable: true,
+      maximumSelectionLength: 0  // 0 = unlimited (default)
+    });
+
+    // Example 5: Com event listener
+    const tagsElement = document.getElementById('tags');
+    const eventLog = document.getElementById('event-log');
+
+    new VanillaSmartSelect('#tags', {
+      searchable: true,
+      maximumSelectionLength: 4
+    });
+
+    // Listen to selection limit reached event
+    tagsElement.addEventListener('vs:selectionLimitReached', (e) => {
+      const timestamp = new Date().toLocaleTimeString();
+      const logEntry = document.createElement('div');
+      logEntry.style.marginBottom = '8px';
+      logEntry.innerHTML = `
+        <strong style="color: #856404;">[${timestamp}] Limite Atingido!</strong><br>
+        <span style="color: #666;">Máximo: ${e.detail.maximum} | Mensagem: "${e.detail.message}"</span>
+      `;
+
+      // Clear placeholder if present
+      const placeholder = eventLog.querySelector('div[style*="color: #999"]');
+      if (placeholder) {
+        placeholder.remove();
+      }
+
+      eventLog.insertBefore(logEntry, eventLog.firstChild);
+    });
+
+    // Also log other events for comparison
+    tagsElement.addEventListener('vs:select', (e) => {
+      const timestamp = new Date().toLocaleTimeString();
+      const logEntry = document.createElement('div');
+      logEntry.style.marginBottom = '8px';
+      logEntry.innerHTML = `
+        <strong style="color: #28a745;">[${timestamp}] Selecionado:</strong>
+        <span style="color: #666;">${e.detail.data.text}</span>
+      `;
+
+      const placeholder = eventLog.querySelector('div[style*="color: #999"]');
+      if (placeholder) {
+        placeholder.remove();
+      }
+
+      eventLog.insertBefore(logEntry, eventLog.firstChild);
+    });
+
+    console.log('✓ maxSelectionLength examples ready!');
+  </script>
+</body>
+</html>

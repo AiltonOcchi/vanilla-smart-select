@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AJAX Básico no Vanilla Smart Select - Carregamento de dados remotos">
+  <title>AJAX Básico - Vanilla Smart Select</title>
+  <link rel="stylesheet" href="../css/docs.css">
+  <link rel="stylesheet" href="../../dist/vanilla-smart-select.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+</head>
+<body>
+  <div class="docs-container">
+    <aside class="docs-sidebar">
+      <div class="sidebar-header">
+        <a href="index.html" class="sidebar-logo">
+          <div class="sidebar-logo-icon">VS</div>
+          <div class="sidebar-logo-text">
+            <div class="sidebar-logo-title">Vanilla Smart Select</div>
+            <div class="sidebar-logo-subtitle">v1.0.1</div>
+          </div>
+        </a>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Introduction</div>
+          <ul class="nav-links">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="getting-started.html" class="nav-link">Getting Started</a></li>
+          </ul>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Resources</div>
+          <ul class="nav-links">
+            <li><a href="api-reference.html" class="nav-link">API Reference</a></li>
+            <li><a href="configuration.html" class="nav-link">Configuration</a></li>
+            <li><a href="events.html" class="nav-link">Events</a></li>
+          </ul>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Examples</div>
+          <ul class="nav-links">
+            <li><a href="example-basic.html" class="nav-link">Basic</a></li>
+            <li><a href="example-api-programmatic.html" class="nav-link">Programmatic API</a></li>
+            <li><a href="example-ajax-basic.html" class="nav-link active">Basic AJAX</a></li>
+            <li><a href="example-tags.html" class="nav-link">Tags</a></li>
+            <li><a href="example-pagination.html" class="nav-link">Pagination</a></li>
+            <li><a href="example-max-selection.html" class="nav-link">Selection Limit</a></li>
+            <li><a href="example-validation.html" class="nav-link">Advanced Validation</a></li>
+            <li><a href="example-templates.html" class="nav-link">Templates</a></li>
+            <li><a href="example-i18n.html" class="nav-link">i18n</a></li>
+            <li><a href="example-bootstrap.html" class="nav-link">Bootstrap</a></li>
+          </ul>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="docs-main">
+      <header class="docs-topbar">
+        <button class="mobile-menu-toggle" aria-label="Toggle menu">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+        <h1 class="topbar-title">AJAX Básico</h1>
+        <div class="topbar-actions">
+          <div class="language-switcher">
+            <a href="../pt/example-ajax-basic.html" class="lang-link">🇧🇷 PT</a>
+            <span class="lang-separator">|</span>
+            <a href="example-ajax-basic.html" class="lang-link active">🇺🇸 EN</a>
+          </div>
+          <a href="https://github.com/ailtonocchi/vanilla-smart-select" class="topbar-btn" target="_blank" rel="noopener noreferrer">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+            </svg>
+            GitHub
+          </a>
+        </div>
+      </header>
+
+      <div class="docs-content">
+        <section class="section-mb-lg">
+          <p class="lead">
+            Integrate with external APIs using AJAX/Fetch to load remote data dynamically.
+            Full support for debounce, cache, custom templates and error handling.
+          </p>          
+        </section>
+
+        <!-- Example 1: REST Countries -->
+        <section class="section-mb-lg">
+          <h2>REST Countries API</h2>
+          <p>Real-time country search using the public REST Countries API.</p>
+
+          <div class="demo-container">
+            <label for="countries" class="demo-label">Search countries:</label>
+            <select id="countries" class="demo-select"></select>
+
+            <div id="country-result" class="code-details" style="display: none; margin-top: 15px;">
+              <strong>Selected Country:</strong>
+              <pre id="country-data" style="margin-top: 10px; background: #2d2d2d; padding: 10px; border-radius: 4px; overflow-x: auto; color: #ccc; font-size: 0.75rem;"></pre>
+            </div>
+
+            <details class="code-details">
+              <summary>View code</summary>
+              
+              <h3>HTML</h3>
+              <pre><code class="language-html">&lt;select id="countries"&gt;&lt;/select&gt;</code></pre>
+
+              <h3>JavaScript</h3>
+              <pre><code class="language-javascript">const countriesSelect = new VanillaSmartSelect('#countries', {
+  placeholder: 'Type to search countries...',
+  allowClear: true,
+  ajax: {
+    url: 'https://restcountries.com/v3.1/name',
+    delay: 300,
+    transport: (params, config) => {
+      const searchTerm = params.term || 'brazil';
+      const url = `${config.url}/${encodeURIComponent(searchTerm)}`;
+      
+      const abortController = new AbortController();
+      const fetchPromise = fetch(url, {
+        signal: abortController.signal
+      }).then(response => response.json());
+      
+      fetchPromise.abort = () => abortController.abort();
+      return fetchPromise;
+    },
+    processResults: (data) => {
+      const results = data.map(country => ({
+        id: country.cca3,
+        text: country.name.common,
+        flag: country.flag,
+        capital: country.capital?.[0],
+        population: country.population
+      }));
+      return { results };
+    }
+  },
+  templateResult: (item) => {
+    return `
+      &lt;div style="display: flex; gap: 10px;"&gt;
+        &lt;span&gt;${item.flag}&lt;/span&gt;
+        &lt;div&gt;
+          &lt;div&gt;${item.text}&lt;/div&gt;
+          &lt;small&gt;Capital: ${item.capital}&lt;/small&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    `;
+  }
+});</code></pre>
+            </details>
+          </div>
+
+        </section>
+
+        <!-- Example 2: ViaCEP -->
+        <section class="section-mb-lg">
+          <h2>ViaCEP - ZIP Code Search</h2>
+          <p>Search for Brazilian addresses by ZIP code using the ViaCEP API.</p>
+
+          <div class="demo-container">
+            <label for="cep" class="demo-label">Enter a ZIP code (e.g.: 01310-100):</label>
+            <select id="cep" class="demo-select"></select>
+
+            <div id="cep-result" class="code-details" style="display: none; margin-top: 15px;">
+              <strong>Address Found:</strong>
+              <pre id="cep-data" style="margin-top: 10px; background: #2d2d2d; padding: 10px; border-radius: 4px; overflow-x: auto; color: #ccc; font-size: 0.75rem;"></pre>
+            </div>
+
+            <details class="code-details">
+              <summary>View code</summary>
+              
+              <h3>HTML</h3>
+              <pre><code class="language-html">&lt;select id="cep"&gt;&lt;/select&gt;</code></pre>
+              <h3>JavaScript</h3>
+              <pre><code class="language-javascript">const cepSelect = new VanillaSmartSelect('#cep', {
+  placeholder: 'Type a ZIP code to search...',
+  allowClear: true,
+  ajax: {
+    url: 'https://viacep.com.br/ws',
+    delay: 400,
+    transport: (params, config) => {
+      const cep = (params.term || '').replace(/\D/g, '');
+      if (cep.length < 8) return Promise.resolve([]);
+      
+      const url = `${config.url}/${cep}/json/`;
+      return fetch(url)
+        .then(response => response.json())
+        .then(data => data.erro ? [] : [data]);
+    },
+    processResults: (data) => {
+      const results = data.map(address => ({
+        id: address.cep,
+        text: `${address.cep} - ${address.logradouro}`,
+        logradouro: address.logradouro,
+        bairro: address.bairro,
+        localidade: address.localidade,
+        uf: address.uf
+      }));
+      return { results };
+    }
+  }
+});</code></pre>
+            </details>
+          </div>
+        </section>
+
+
+        <!-- Example 3: Simulated -->
+        <section class="section-mb-lg">
+          <h2>Movie Search (Simulated)</h2>
+          <p>Search example with local data simulating a movies API.</p>
+
+          <div class="demo-container">
+            <label for="movies" class="demo-label">Search movies:</label>
+            <select id="movies" class="demo-select"></select>
+
+            <div id="movie-result" class="code-details" style="display: none; margin-top: 15px;">
+              <strong>Selected Movie:</strong>
+              <pre id="movie-data" style="margin-top: 10px; background: #2d2d2d; padding: 10px; border-radius: 4px; overflow-x: auto; color: #ccc; font-size: 0.75rem;"></pre>
+            </div>
+
+            <details class="code-details">
+              <summary>View code</summary>
+              
+              <h3>HTML</h3>
+              <pre><code class="language-html">&lt;select id="movies"&gt;&lt;/select&gt;</code></pre>
+
+              <h3>JavaScript</h3>
+              <pre><code class="language-javascript">const moviesSelect = new VanillaSmartSelect('#movies', {
+  placeholder: 'Type to search movies...',
+  allowClear: true,
+  ajax: {
+    delay: 300,
+    transport: (params) => {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          const term = (params.term || '').toLowerCase();
+          const filtered = moviesDatabase.filter(movie =>
+            movie.title.toLowerCase().includes(term)
+          );
+          resolve(filtered);
+        }, 500);
+      });
+    },
+    processResults: (data) => {
+      return {
+        results: data.map(movie => ({
+          id: movie.id,
+          text: movie.title,
+          year: movie.year,
+          genre: movie.genre,
+          rating: movie.rating
+        }))
+      };
+    }
+  },
+  templateResult: (item) => {
+    return `
+      &lt;div style="display: flex; justify-content: space-between;"&gt;
+        &lt;div&gt;
+          &lt;div&gt;🎬 ${item.text}&lt;/div&gt;
+          &lt;small&gt;${item.year} • ${item.genre}&lt;/small&gt;
+        &lt;/div&gt;
+        &lt;span style="background: #ffc107; padding: 4px 8px; border-radius: 4px;"&gt;
+          ⭐ ${item.rating}
+        &lt;/span&gt;
+      &lt;/div&gt;
+    `;
+  }
+});</code></pre>
+            </details>
+          </div>
+
+        </section>
+
+        <!-- Example 4: Headers Customizados -->
+        <section class="section-mb-lg">
+          <h2>Custom Headers</h2>
+          <p>Configure custom HTTP headers, including Bearer authentication and Content-Type.</p>
+
+          <div class="demo-container">
+            <label for="auth-api" class="demo-label">API with Authentication:</label>
+            <select id="auth-api" class="demo-select"></select>
+
+            <div id="auth-result" class="code-details" style="display: none; margin-top: 15px;">
+              <strong>Result:</strong>
+              <pre id="auth-data" style="margin-top: 10px; background: #2d2d2d; padding: 10px; border-radius: 4px; overflow-x: auto; color: #ccc; font-size: 0.75rem;"></pre>
+            </div>
+
+            <details class="code-details">
+              <summary>View code</summary>
+              
+              <h3>HTML</h3>
+              <pre><code class="language-html">&lt;select id="auth-api"&gt;&lt;/select&gt;</code></pre>
+
+              <h3>JavaScript</h3>
+              <pre><code class="language-javascript">const authSelect = new VanillaSmartSelect('#auth-api', {
+  placeholder: 'Search authenticated data...',
+  ajax: {
+    url: 'https://api.example.com/data',
+    delay: 300,
+    transport: (params, config) => {
+      const abortController = new AbortController();
+
+      const fetchPromise = fetch(config.url, {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer YOUR_TOKEN_HERE',
+          'Content-Type': 'application/json',
+          'X-Custom-Header': 'CustomValue'
+        },
+        body: JSON.stringify({
+          query: params.term,
+          limit: 20
+        }),
+        signal: abortController.signal
+      })
+        .then(response => {
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+          return response.json();
+        });
+
+      fetchPromise.abort = () => abortController.abort();
+      return fetchPromise;
+    },
+    processResults: (data) => {
+      return {
+        results: data.results.map(item => ({
+          id: item.id,
+          text: item.name
+        }))
+      };
+    }
+  }
+});</code></pre>
+            </details>
+          </div>
+
+        </section>
+
+        <!-- Example 5: Tratamento de Erros -->
+        <section class="section-mb-lg">
+          <h2>Error Handling</h2>
+          <p>Monitor and handle AJAX request errors using custom events.</p>
+
+          <div class="demo-container">
+            <label for="error-demo" class="demo-label">Test API Error:</label>
+            <select id="error-demo" class="demo-select"></select>
+
+            <div id="error-log" style="margin-top: 15px; padding: 15px; background: #ffe4e1; border-left: 4px solid #ff6b6b; border-radius: 4px; display: none;">
+              <strong style="color: #c92a2a;">⚠️ Error detected:</strong>
+              <pre id="error-message" style="margin-top: 8px; color: #c92a2a; font-size: 13px; white-space: pre-wrap;"></pre>
+            </div>
+
+            <div id="success-log" style="margin-top: 15px; padding: 15px; background: #d3f9d8; border-left: 4px solid #51cf66; border-radius: 4px; display: none;">
+              <strong style="color: #2f9e44;">✓ Successful request:</strong>
+              <pre id="success-message" style="margin-top: 8px; color: #2f9e44; font-size: 13px; white-space: pre-wrap;"></pre>
+            </div>
+
+            <details class="code-details">
+              <summary>View code</summary>
+              
+              <h3>HTML</h3>
+              <pre><code class="language-html">&lt;select id="error-demo"&gt;&lt;/select&gt;</code></pre>
+
+              <h3>JavaScript</h3>
+              <pre><code class="language-javascript">const errorSelect = new VanillaSmartSelect('#error-demo', {
+  placeholder: 'Type to test...',
+  ajax: {
+    url: 'https://api.invalid-domain-example-12345.com/search',
+    delay: 300,
+    transport: (params, config) => {
+      const abortController = new AbortController();
+
+      const fetchPromise = fetch(config.url, {
+        signal: abortController.signal
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+          }
+          return response.json();
+        });
+
+      fetchPromise.abort = () => abortController.abort();
+      return fetchPromise;
+    }
+  }
+});
+
+// Monitor events
+const selectElement = document.getElementById('error-demo');</code></pre>
+            </details>
+          </div>
+
+
+selectElement.addEventListener('vs:ajaxLoading', (e) => {
+  console.log('🔄 Carregando...', e.detail);
+});
+
+selectElement.addEventListener('vs:ajaxSuccess', (e) => {
+  console.log('✅ Sucesso!', e.detail.data);
+  alert('Dados carregados com sucesso!');
+});
+
+selectElement.addEventListener('vs:ajaxError', (e) => {
+  console.error('❌ Erro ao carregar:', e.detail.error);
+  alert(`Erro: ${e.detail.error.message}`);
+});</code></pre>
+        </section>
+
+      
+        <!-- Events -->
+        <section class="section-mb-lg">
+          <h2>AJAX Events</h2>
+          <p>Monitor request state using events:</p>
+
+          <h3>JavaScript</h3>
+          <pre><code class="language-javascript">// Available events
+selectElement.addEventListener('vs:ajaxLoading', (e) => {
+  console.log('Loading...', e.detail);
+});
+
+selectElement.addEventListener('vs:ajaxSuccess', (e) => {
+  console.log('Success!', e.detail);
+});
+
+selectElement.addEventListener('vs:ajaxError', (e) => {
+  console.error('Error:', e.detail);
+});</code></pre>
+        </section>
+
+
+          <!-- Features -->
+        <section class="section-mb-lg">
+          <h2>Implemented Features</h2>
+          <ul>
+            <li>✅ Asynchronous loading via fetch API</li>
+            <li>✅ Automatic debounce to avoid excessive requests</li>
+            <li>✅ Custom transport for full control of requests</li>
+            <li>✅ Remote search with dynamic parameters</li>
+            <li>✅ Loading indicator</li>
+            <li>✅ Error handling with custom messages</li>
+            <li>✅ Custom templates for results</li>
+            <li>✅ AbortController support to cancel requests</li>
+            <li>✅ Custom HTTP headers (Authorization, Content-Type)</li>
+            <li>✅ Success and error events for monitoring</li>
+          </ul>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+  <script src="../../dist/vanilla-smart-select.min.js"></script>
+  <script src="../js/docs.js"></script>
+
+  <!-- Initialize AJAX examples -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      try {
+        const VanillaSmartSelectClass = VanillaSmartSelect.default || VanillaSmartSelect;
+
+        // Example 1: REST Countries API
+        const countriesSelect = new VanillaSmartSelectClass('#countries', {
+          placeholder: 'Type to search countries...',
+          allowClear: true,
+          ajax: {
+            url: 'https://restcountries.com/v3.1/name',
+            delay: 300,
+            transport: (params, config) => {
+              const searchTerm = params.term || 'brazil';
+              const url = `${config.url}/${encodeURIComponent(searchTerm)}`;
+              const abortController = new AbortController();
+
+              const fetchPromise = fetch(url, {
+                signal: abortController.signal
+              })
+                .then(response => {
+                  if (!response.ok) {
+                    if (response.status === 404) return [];
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                  }
+                  return response.json();
+                });
+
+              fetchPromise.abort = () => abortController.abort();
+              return fetchPromise;
+            },
+            processResults: (data) => {
+              if (!Array.isArray(data)) return { results: [] };
+
+              const results = data.map(country => ({
+                id: country.cca3,
+                text: country.name.common,
+                flag: country.flag,
+                capital: country.capital ? country.capital[0] : 'N/A',
+                population: country.population,
+                region: country.region
+              }));
+
+              return { results };
+            }
+          },
+          templateResult: (item) => {
+            const div = document.createElement('div');
+            div.style.display = 'flex';
+            div.style.alignItems = 'center';
+            div.style.gap = '10px';
+            div.innerHTML = `
+              <span style="font-size: 24px;">${item.flag || '🌍'}</span>
+              <div style="flex: 1;">
+                <div style="font-weight: 500;">${item.text}</div>
+                ${item.capital ? `<div style="font-size: 12px; color: #666;">Capital: ${item.capital}</div>` : ''}
+              </div>
+            `;
+            return div;
+          },
+          templateSelection: (item) => {
+            return `${item.flag || '🌍'} ${item.text}`;
+          }
+        });
+
+        document.getElementById('countries').addEventListener('vs:select', (e) => {
+          const resultDiv = document.getElementById('country-result');
+          const dataDiv = document.getElementById('country-data');
+          resultDiv.style.display = 'block';
+          dataDiv.textContent = JSON.stringify(e.detail.data, null, 2);
+        });
+
+        // Example 2: ViaCEP API
+        const cepSelect = new VanillaSmartSelectClass('#cep', {
+          placeholder: 'Type a ZIP code to search...',
+          allowClear: true,
+          ajax: {
+            url: 'https://viacep.com.br/ws',
+            delay: 400,
+            transport: (params, config) => {
+              const cep = (params.term || '').replace(/\D/g, '');
+              if (cep.length < 8) return Promise.resolve([]);
+
+              const url = `${config.url}/${cep}/json/`;
+              const abortController = new AbortController();
+
+              const fetchPromise = fetch(url, {
+                signal: abortController.signal
+              })
+                .then(response => {
+                  if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                  return response.json();
+                })
+                .then(data => {
+                  if (data.erro) return [];
+                  return [data];
+                });
+
+              fetchPromise.abort = () => abortController.abort();
+              return fetchPromise;
+            },
+            processResults: (data) => {
+              if (!Array.isArray(data) || data.length === 0) return { results: [] };
+
+              const results = data.map(address => ({
+                id: address.cep,
+                text: `${address.cep} - ${address.logradouro}, ${address.bairro}`,
+                cep: address.cep,
+                logradouro: address.logradouro,
+                bairro: address.bairro,
+                localidade: address.localidade,
+                uf: address.uf
+              }));
+
+              return { results };
+            }
+          },
+          templateResult: (item) => {
+            const div = document.createElement('div');
+            div.innerHTML = `
+              <div style="font-weight: 500;">📮 ${item.cep}</div>
+              <div style="font-size: 13px; color: #666; margin-top: 4px;">
+                ${item.logradouro}<br>
+                ${item.bairro} - ${item.localidade}/${item.uf}
+              </div>
+            `;
+            return div;
+          },
+          templateSelection: (item) => {
+            return `📮 ${item.cep}`;
+          }
+        });
+
+        document.getElementById('cep').addEventListener('vs:select', (e) => {
+          const resultDiv = document.getElementById('cep-result');
+          const dataDiv = document.getElementById('cep-data');
+          resultDiv.style.display = 'block';
+          dataDiv.textContent = JSON.stringify(e.detail.data, null, 2);
+        });
+
+        // Example 3: Simulated Movie Search
+        const moviesDatabase = [
+          { id: 1, title: 'The Shawshank Redemption', year: 1994, genre: 'Drama', rating: 9.3 },
+          { id: 2, title: 'The Godfather', year: 1972, genre: 'Crime', rating: 9.2 },
+          { id: 3, title: 'The Dark Knight', year: 2008, genre: 'Action', rating: 9.0 },
+          { id: 4, title: 'Pulp Fiction', year: 1994, genre: 'Crime', rating: 8.9 },
+          { id: 5, title: 'Forrest Gump', year: 1994, genre: 'Drama', rating: 8.8 },
+          { id: 6, title: 'Inception', year: 2010, genre: 'Sci-Fi', rating: 8.8 },
+          { id: 7, title: 'The Matrix', year: 1999, genre: 'Sci-Fi', rating: 8.7 },
+          { id: 8, title: 'Interstellar', year: 2014, genre: 'Sci-Fi', rating: 8.6 },
+          { id: 9, title: 'The Lord of the Rings', year: 2001, genre: 'Fantasy', rating: 8.9 },
+          { id: 10, title: 'Star Wars', year: 1977, genre: 'Sci-Fi', rating: 8.6 }
+        ];
+
+        const moviesSelect = new VanillaSmartSelectClass('#movies', {
+          placeholder: 'Type to search movies...',
+          allowClear: true,
+          ajax: {
+            delay: 300,
+            transport: (params) => {
+              return new Promise((resolve) => {
+                setTimeout(() => {
+                  const term = (params.term || '').toLowerCase();
+                  const filtered = moviesDatabase.filter(movie =>
+                    movie.title.toLowerCase().includes(term)
+                  );
+                  resolve(filtered);
+                }, 500);
+              });
+            },
+            processResults: (data) => {
+              const results = data.map(movie => ({
+                id: movie.id,
+                text: movie.title,
+                year: movie.year,
+                genre: movie.genre,
+                rating: movie.rating
+              }));
+              return { results };
+            }
+          },
+          templateResult: (item) => {
+            const div = document.createElement('div');
+            div.innerHTML = `
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <div style="font-weight: 500;">🎬 ${item.text}</div>
+                  <div style="font-size: 12px; color: #666; margin-top: 2px;">
+                    ${item.year} • ${item.genre}
+                  </div>
+                </div>
+                <div style="background: #ffc107; color: #000; padding: 4px 8px; border-radius: 4px; font-weight: 600; font-size: 12px;">
+                  ⭐ ${item.rating}
+                </div>
+              </div>
+            `;
+            return div;
+          },
+          templateSelection: (item) => {
+            return `🎬 ${item.text} (${item.year})`;
+          }
+        });
+
+        document.getElementById('movies').addEventListener('vs:select', (e) => {
+          const resultDiv = document.getElementById('movie-result');
+          const dataDiv = document.getElementById('movie-data');
+          resultDiv.style.display = 'block';
+          dataDiv.textContent = JSON.stringify(e.detail.data, null, 2);
+        });
+
+        // Example 4: Headers Customizados (simulado localmente)
+        const authDatabase = [
+          { id: 1, name: 'Usuário Premium - João Silva' },
+          { id: 2, name: 'Usuário Premium - Maria Santos' },
+          { id: 3, name: 'Usuário Premium - Pedro Oliveira' },
+          { id: 4, name: 'Usuário Premium - Ana Costa' },
+          { id: 5, name: 'Usuário Premium - Carlos Ferreira' }
+        ];
+
+        const authSelect = new VanillaSmartSelectClass('#auth-api', {
+          placeholder: 'Search authenticated data...',
+          allowClear: true,
+          ajax: {
+            delay: 300,
+            transport: (params) => {
+              // Simula uma API com autenticação
+              return new Promise((resolve) => {
+                setTimeout(() => {
+                  const term = (params.term || '').toLowerCase();
+                  const filtered = authDatabase.filter(user =>
+                    user.name.toLowerCase().includes(term)
+                  );
+                  resolve({ results: filtered });
+                }, 400);
+              });
+            },
+            processResults: (data) => {
+              return {
+                results: data.results.map(item => ({
+                  id: item.id,
+                  text: item.name
+                }))
+              };
+            }
+          },
+          templateResult: (item) => {
+            const div = document.createElement('div');
+            div.innerHTML = `
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <span style="background: #51cf66; color: white; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 600;">
+                  🔐 AUTH
+                </span>
+                <span>${item.text}</span>
+              </div>
+            `;
+            return div;
+          }
+        });
+
+        document.getElementById('auth-api').addEventListener('vs:select', (e) => {
+          const resultDiv = document.getElementById('auth-result');
+          const dataDiv = document.getElementById('auth-data');
+          resultDiv.style.display = 'block';
+          dataDiv.textContent = JSON.stringify(e.detail.data, null, 2);
+        });
+
+        // Example 5: Error Handling
+        const errorSelect = new VanillaSmartSelectClass('#error-demo', {
+          placeholder: 'Type to test API error...',
+          allowClear: true,
+          ajax: {
+            url: 'https://api.invalid-domain-example-12345.com/search',
+            delay: 300,
+            transport: (params, config) => {
+              const abortController = new AbortController();
+
+              // Simula erro após 1 segundo
+              const fetchPromise = new Promise((resolve, reject) => {
+                setTimeout(() => {
+                  reject(new Error('Failed to fetch: A network error occurred. The domain does not exist or is unreachable.'));
+                }, 1000);
+              });
+
+              fetchPromise.abort = () => abortController.abort();
+              return fetchPromise;
+            }
+          }
+        });
+
+        const errorDemoElement = document.getElementById('error-demo');
+        const errorLogDiv = document.getElementById('error-log');
+        const errorMessageDiv = document.getElementById('error-message');
+        const successLogDiv = document.getElementById('success-log');
+        const successMessageDiv = document.getElementById('success-message');
+
+        errorDemoElement.addEventListener('vs:ajaxLoading', (e) => {
+          console.log('🔄 Loading...', e.detail);
+          errorLogDiv.style.display = 'none';
+          successLogDiv.style.display = 'none';
+        });
+
+        errorDemoElement.addEventListener('vs:ajaxSuccess', (e) => {
+          console.log('✅ Success!', e.detail.data);
+          errorLogDiv.style.display = 'none';
+          successLogDiv.style.display = 'block';
+          successMessageDiv.textContent = 'Data loaded successfully!\n' + JSON.stringify(e.detail.data, null, 2);
+        });
+
+        errorDemoElement.addEventListener('vs:ajaxError', (e) => {
+          console.error('❌ Error loading:', e.detail.error);
+          successLogDiv.style.display = 'none';
+          errorLogDiv.style.display = 'block';
+          errorMessageDiv.textContent = `${e.detail.error.message}\n\nThis is an example of how to capture and display AJAX request errors.`;
+        });
+
+        // Log AJAX events
+        document.querySelectorAll('select').forEach(select => {
+          select.addEventListener('vs:ajaxLoading', (e) => {
+            console.log('🔄 AJAX Loading:', e.detail);
+          });
+
+          select.addEventListener('vs:ajaxSuccess', (e) => {
+            console.log('✅ AJAX Success:', e.detail);
+          });
+
+          select.addEventListener('vs:ajaxError', (e) => {
+            console.error('❌ AJAX Error:', e.detail);
+          });
+        });
+
+        console.log('✓ Basic AJAX - All 5 examples initialized!');
+
+      } catch (error) {
+        console.error('❌ Initialization error:', error);
+      }
+    });
+  </script>
+</body>
+</html>

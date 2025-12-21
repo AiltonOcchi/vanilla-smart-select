@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom Templates - Vanilla Smart Select</title>
+  <link rel="stylesheet" href="../css/docs.css">
+  <link rel="stylesheet" href="../../dist/vanilla-smart-select.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+</head>
+<body>
+  <div class="docs-container">
+    <aside class="docs-sidebar">
+      <div class="sidebar-header">
+        <a href="index.html" class="sidebar-logo">
+          <div class="sidebar-logo-icon">VS</div>
+          <div class="sidebar-logo-text">
+            <div class="sidebar-logo-title">Vanilla Smart Select</div>
+            <div class="sidebar-logo-subtitle">v1.0.1</div>
+          </div>
+        </a>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Introduction</div>
+          <ul class="nav-links">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="getting-started.html" class="nav-link">Getting Started</a></li>
+          </ul>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Resources</div>
+          <ul class="nav-links">
+            <li><a href="api-reference.html" class="nav-link">API Reference</a></li>
+            <li><a href="configuration.html" class="nav-link">Configuration</a></li>
+            <li><a href="events.html" class="nav-link">Events</a></li>
+          </ul>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Examples</div>
+          <ul class="nav-links">
+            <li><a href="example-basic.html" class="nav-link">Basic</a></li>
+            <li><a href="example-api-programmatic.html" class="nav-link">Programmatic API</a></li>
+            <li><a href="example-ajax-basic.html" class="nav-link">Basic AJAX</a></li>
+            <li><a href="example-tags.html" class="nav-link">Tags</a></li>
+            <li><a href="example-pagination.html" class="nav-link">Pagination</a></li>
+            <li><a href="example-max-selection.html" class="nav-link">Selection Limit</a></li>
+            <li><a href="example-validation.html" class="nav-link">Advanced Validation</a></li>
+            <li><a href="example-templates.html" class="nav-link active">Templates</a></li>
+            <li><a href="example-i18n.html" class="nav-link">i18n</a></li>
+            <li><a href="example-bootstrap.html" class="nav-link">Bootstrap</a></li>
+          </ul>
+        </div>
+      </nav>
+    </aside>
+    <main class="docs-main">
+      <header class="docs-topbar">
+        <button class="mobile-menu-toggle" aria-label="Toggle menu">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+        <h1 class="topbar-title">Custom Templates</h1>
+        <div class="topbar-actions">
+          <div class="language-switcher">
+            <a href="../pt/example-templates.html" class="lang-link">🇧🇷 PT</a>
+            <span class="lang-separator">|</span>
+            <a href="example-templates.html" class="lang-link active">🇺🇸 EN</a>
+          </div>
+          <a href="https://github.com/ailtonocchi/vanilla-smart-select" class="topbar-btn" target="_blank" rel="noopener noreferrer">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+            </svg>
+            GitHub
+          </a>
+        </div>
+      </header>
+      <div class="docs-content">
+        <section class="section-mb-lg">
+          <p class="lead">
+            Custom templates using only <strong>emojis</strong> and <strong>CSS</strong>, with no external dependencies. 
+            Customize the appearance of items in the dropdown and selection.
+          </p>
+        </section>
+
+        <!-- Example 1: Countries -->
+        <section class="section-mb-lg">
+          <h2>Countries with Flags and Codes</h2>
+          <p>Native flag emojis + badges with country codes.</p>
+
+          <div class="demo-container">
+            <label for="countries" class="demo-label">Select a country:</label>
+            <select id="countries"></select>
+            <details class="code-details">
+              <summary>View code</summary>
+
+              <h3>HTML</h3>
+              <pre><code class="language-html">&lt;select id="countries"&gt;&lt;/select&gt;</code></pre>
+
+              <h3>JavaScript</h3>
+              <pre><code class="language-javascript">const countriesData = [
+  { id: 'us', text: 'United States', flag: '🇺🇸', code: 'US' },
+  { id: 'br', text: 'Brazil', flag: '🇧🇷', code: 'BR' },
+  { id: 'uk', text: 'United Kingdom', flag: '🇬🇧', code: 'UK' },
+  { id: 'fr', text: 'France', flag: '🇫🇷', code: 'FR' },
+  { id: 'de', text: 'Germany', flag: '🇩🇪', code: 'DE' }
+];
+
+new VanillaSmartSelect('#countries', {
+  data: countriesData,
+  placeholder: 'Select a country...',
+  allowClear: true,
+  templateResult: (item) => {
+    const div = document.createElement('div');
+    div.style.display = 'flex';
+    div.style.alignItems = 'center';
+    div.style.gap = '10px';
+    div.innerHTML = `
+      &lt;span style="font-size: 24px;"&gt;${item.flag}&lt;/span&gt;
+      &lt;span style="font-weight: 500; flex: 1;"&gt;${item.text}&lt;/span&gt;
+      &lt;span style="background: #e9ecef; padding: 2px 8px; border-radius: 3px; 
+                   font-size: 11px; font-weight: 600;"&gt;${item.code}&lt;/span&gt;
+    `;
+    return div;
+  },
+  templateSelection: (item) => {
+    return `${item.icon} ${item.text} - R$ ${item.price.toFixed(2).replace('.', ',')}`;
+  }
+});</code></pre>
+            </details>
+          </div>
+        </section>
+
+        <!-- Example 2: Users -->
+        <section class="section-mb-lg">
+          <h2>Users with Emoji Avatars</h2>
+          <p>Colorful gradient avatars + role information.</p>
+
+          <div class="demo-container">
+            <label for="users" class="demo-label">Select a user:</label>
+            <select id="users"></select>
+            <details class="code-details">
+              <summary>View code</summary>
+
+              <h3>HTML</h3>
+              <pre><code class="language-html">&lt;select id="users"&gt;&lt;/select&gt;</code></pre>
+
+              <h3>JavaScript</h3>
+              <pre><code class="language-javascript">const usersData = [
+  { id: 1, text: 'Ana Silva', role: 'Project Manager', emoji: '👩‍💼' },
+  { id: 2, text: 'Carlos Santos', role: 'Senior Developer', emoji: '👨‍💻' },
+  { id: 3, text: 'Maria Oliveira', role: 'UX/UI Designer', emoji: '👩‍🎨' },
+  { id: 4, text: 'João Costa', role: 'Data Analyst', emoji: '👨‍🔬' },
+  { id: 5, text: 'Paula Ferreira', role: 'Product Manager', emoji: '👩‍🚀' }
+];
+
+new VanillaSmartSelect('#users', {
+  data: usersData,
+  placeholder: 'Select a user...',
+  allowClear: true,
+  templateResult: (item) => {
+    const div = document.createElement('div');
+    div.style.display = 'flex';
+    div.style.alignItems = 'center';
+    div.style.gap = '12px';
+    div.innerHTML = `
+      &lt;div style="font-size: 32px; width: 40px; height: 40px; display: flex; 
+                  align-items: center; justify-content: center; 
+                  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+                  border-radius: 50%;"&gt;${item.emoji}&lt;/div&gt;
+      &lt;div&gt;
+        &lt;div style="font-weight: 500;"&gt;${item.text}&lt;/div&gt;
+        &lt;div style="font-size: 12px; color: #666;"&gt;${item.role}&lt;/div&gt;
+      &lt;/div&gt;
+    `;
+    return div;
+  },
+  templateSelection: (item) => {
+    return `${item.emoji} ${item.text}`;
+  }
+});</code></pre>
+            </details>
+          </div>
+        </section>
+
+        <!-- Example 6: Different Templates -->
+        <section class="section-mb-lg">
+          <h2>Different Templates: Dropdown vs Selection</h2>
+          <p>Demonstrates how to use detailed templates in dropdown and simplified ones in selection.</p>
+
+          <div class="demo-container">
+            <label for="employees" class="demo-label">Select an employee:</label>
+            <select id="employees"></select>
+            <details class="code-details">
+              <summary>View code</summary>
+
+              <h3>HTML</h3>
+              <pre><code class="language-html">&lt;select id="employees"&gt;&lt;/select&gt;</code></pre>
+
+              <h3>JavaScript</h3>
+              <pre><code class="language-javascript">const employeesData = [
+  { id: 1, text: 'Sarah Connor', role: 'Engineering Manager', department: 'Engineering', emoji: '👩‍💼' },
+  { id: 2, text: 'Kyle Reese', role: 'Senior Developer', department: 'Engineering', emoji: '👨‍💻' },
+  { id: 3, text: 'Miles Dyson', role: 'Tech Lead', department: 'Research', emoji: '👨‍🔬' },
+  { id: 4, text: 'John Connor', role: 'Product Manager', department: 'Product', emoji: '👨‍🚀' }
+];
+
+new VanillaSmartSelect('#employees', {
+  data: employeesData,
+  placeholder: 'Select an employee...',
+  allowClear: true,
+  // Detailed template for dropdown
+  templateResult: (item) => {
+    const div = document.createElement('div');
+    div.style.display = 'flex';
+    div.style.alignItems = 'center';
+    div.style.gap = '12px';
+    div.innerHTML = `
+      &lt;div style="width: 40px; height: 40px; display: flex; align-items: center; 
+                  justify-content: center; font-size: 24px; border-radius: 50%;
+                  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"&gt;
+        ${item.emoji}
+      &lt;/div&gt;
+      &lt;div&gt;
+        &lt;div style="font-weight: 500;"&gt;${item.text}&lt;/div&gt;
+        &lt;div style="font-size: 12px; color: #666;"&gt;
+          ${item.role} • ${item.department}
+        &lt;/div&gt;
+      &lt;/div&gt;
+    `;
+    return div;
+  },
+  // Simplified template for selected item (name only)
+  templateSelection: (item) => {
+    return item.text;
+  }
+});</code></pre>
+            </details>
+          </div>
+
+          <div class="info-callout info-callout-success">
+            <strong>✅ Flexibility:</strong> Use <code>templateResult</code> to show detailed information in the dropdown 
+            and <code>templateSelection</code> to keep the selection clean and compact.
+          </div>
+        </section>
+
+        <!-- Example 3: Products -->
+        <section class="section-mb-lg">
+          <h2>Products with Icons and Prices</h2>
+          <p>Emoji icons + name, category and formatted price.</p>
+
+          <div class="demo-container">
+            <label for="products" class="demo-label">Select a product:</label>
+            <select id="products"></select>
+            <details class="code-details">
+              <summary>View code</summary>
+
+              <h3>HTML</h3>
+              <pre><code class="language-html">&lt;select id="products"&gt;&lt;/select&gt;</code></pre>
+
+              <h3>JavaScript</h3>
+              <pre><code class="language-javascript">const productsData = [
+  { id: 1, text: 'Notebook Pro', category: 'Electronics', price: 4299.90, icon: '💻', color: '#007bff' },
+  { id: 2, text: 'Wireless Mouse', category: 'Peripherals', price: 89.90, icon: '🖱️', color: '#28a745' },
+  { id: 3, text: 'Mechanical Keyboard', category: 'Peripherals', price: 349.90, icon: '⌨️', color: '#17a2b8' },
+  { id: 4, text: 'Monitor 4K 27"', category: 'Electronics', price: 1899.90, icon: '🖥️', color: '#6f42c1' },
+  { id: 5, text: 'HD Webcam', category: 'Accessories', price: 299.90, icon: '📹', color: '#fd7e14' }
+];
+
+new VanillaSmartSelect('#products', {
+  data: productsData,
+  placeholder: 'Select a product...',
+  allowClear: true,
+  templateResult: (item) => {
+    const div = document.createElement('div');
+    div.style.display = 'flex';
+    div.style.alignItems = 'center';
+    div.style.gap = '12px';
+    div.innerHTML = `
+      &lt;div style="width: 40px; height: 40px; display: flex; align-items: center; 
+                  justify-content: center; border-radius: 8px; font-size: 24px;
+                  background: ${item.color}20; color: ${item.color};"&gt;
+        ${item.icon}
+      &lt;/div&gt;
+      &lt;div style="flex: 1;"&gt;
+        &lt;div style="font-weight: 500;"&gt;${item.text}&lt;/div&gt;
+        &lt;div style="font-size: 12px; color: #666;"&gt;${item.category}&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div style="font-weight: 600; color: #007bff;"&gt;
+        R$ ${item.price.toFixed(2).replace('.', ',')}
+      &lt;/div&gt;
+    `;
+    return div;
+  },
+  templateSelection: (item) => {
+    return `${item.icon} ${item.text} - R$ ${item.price.toFixed(2).replace('.', ',')}`;
+  }
+});</code></pre>
+            </details>
+          </div>
+        </section>
+
+        <!-- Example 4: Tasks -->
+        <section class="section-mb-lg">
+          <h2>Tasks with Status (Multi-Select)</h2>
+          <p>Multi-select with status icons and colored badges.</p>
+
+          <div class="demo-container">
+            <label for="tasks" class="demo-label">Select tasks:</label>
+            <select id="tasks" multiple></select>
+            <details class="code-details">
+              <summary>View code</summary>
+
+              <h3>HTML</h3>
+              <pre><code class="language-html">&lt;select id="tasks" multiple&gt;&lt;/select&gt;</code></pre>
+
+              <h3>JavaScript</h3>
+              <pre><code class="language-javascript">const tasksData = [
+  { id: 1, text: 'Update documentation', status: 'active', statusText: 'In Progress', icon: '📝' },
+  { id: 2, text: 'Fix bug #123', status: 'active', statusText: 'In Progress', icon: '🐛' },
+  { id: 3, text: 'Review pull request', status: 'pending', statusText: 'Pending', icon: '👀' },
+  { id: 4, text: 'Deploy to production', status: 'pending', statusText: 'Pending', icon: '🚀' },
+  { id: 5, text: 'Implement feature X', status: 'completed', statusText: 'Completed', icon: '✅' }
+];
+
+const statusColors = {
+  active: { bg: '#d4edda', text: '#155724' },
+  pending: { bg: '#fff3cd', text: '#856404' },
+  completed: { bg: '#cce5ff', text: '#004085' },
+  cancelled: { bg: '#f8d7da', text: '#721c24' }
+};
+
+new VanillaSmartSelect('#tasks', {
+  data: tasksData,
+  placeholder: 'Select tasks...',
+  multiple: true,
+  maximumSelectionLength: 4,
+  templateResult: (item) => {
+    const div = document.createElement('div');
+    div.style.display = 'flex';
+    div.style.alignItems = 'center';
+    div.style.justifyContent = 'space-between';
+    div.style.gap = '12px';
+    const colors = statusColors[item.status];
+    div.innerHTML = `
+      &lt;span style="font-size: 20px;"&gt;${item.icon}&lt;/span&gt;
+      &lt;span style="flex: 1;"&gt;${item.text}&lt;/span&gt;
+      &lt;span style="padding: 3px 10px; border-radius: 12px; font-size: 11px; 
+                   font-weight: 600; background: ${colors.bg}; color: ${colors.text};"&gt;
+        ${item.statusText}
+      &lt;/span&gt;
+    `;
+    return div;
+  },
+  templateSelection: (item) => {
+    return `${item.icon} ${item.text} - R$ ${item.price.toFixed(2).replace('.', ',')}`;
+  }
+});</code></pre>
+            </details>
+          </div>
+        </section>
+
+        <!-- Example 5: Categories -->
+        <section class="section-mb-lg">
+          <h2>Categories with Counters</h2>
+          <p>Simplified template in selection, detailed in dropdown.</p>
+
+          <div class="demo-container">
+            <label for="categories" class="demo-label">Select a category:</label>
+            <select id="categories"></select>
+            <details class="code-details">
+              <summary>View code</summary>
+
+              <h3>HTML</h3>
+              <pre><code class="language-html">&lt;select id="categories"&gt;&lt;/select&gt;</code></pre>
+
+              <h3>JavaScript</h3>
+              <pre><code class="language-javascript">const categoriesData = [
+  { id: 1, text: 'Documents', icon: '📄', count: 127 },
+  { id: 2, text: 'Images', icon: '🖼️', count: 543 },
+  { id: 3, text: 'Videos', icon: '🎬', count: 89 },
+  { id: 4, text: 'Music', icon: '🎵', count: 234 },
+  { id: 5, text: 'Spreadsheets', icon: '📊', count: 67 }
+];
+
+new VanillaSmartSelect('#categories', {
+  data: categoriesData,
+  placeholder: 'Select a category...',
+  allowClear: true,
+  templateResult: (item) => {
+    const div = document.createElement('div');
+    div.style.display = 'flex';
+    div.style.alignItems = 'center';
+    div.style.gap = '10px';
+    div.innerHTML = `
+      &lt;span style="font-size: 24px;"&gt;${item.icon}&lt;/span&gt;
+      &lt;div style="flex: 1;"&gt;
+        &lt;span style="font-weight: 500;"&gt;${item.text}&lt;/span&gt;
+        &lt;span style="font-size: 11px; color: #666; background: #e9ecef; 
+                     padding: 2px 6px; border-radius: 10px; margin-left: 8px;"&gt;
+          ${item.count} itens
+        &lt;/span&gt;
+      &lt;/div&gt;
+    `;
+    return div;
+  },
+  templateSelection: (item) => {
+    return `${item.icon} ${item.text}`;
+  }
+});</code></pre>
+            </details>
+          </div>
+        </section>
+
+        
+
+        <!-- How Templates Work -->
+        <section class="section-mb-lg">
+          <h2>How Templates Work</h2>
+
+          <div class="info-callout">
+            <strong>📋 Main Concepts:</strong>
+            <ul style="margin: 10px 0 0 0; padding-left: 20px;">
+              <li><strong>templateResult:</strong> Controls the appearance of items in the dropdown</li>
+              <li><strong>templateSelection:</strong> Controls the appearance of the selected item (selection field)</li>
+              <li><strong>Return:</strong> Can return HTML string or DOM element (createElement)</li>
+              <li><strong>Native emojis:</strong> Work in all modern browsers, no external images needed</li>
+              <li><strong>Inline CSS:</strong> Styles applied directly to elements for simplicity</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- Techniques and Best Practices -->
+        <section class="section-mb-lg">
+          <h2>Techniques and Best Practices</h2>
+
+          <div class="info-callout">
+            <strong>📋 Tips for Efficient Templates:</strong>
+            <ul style="margin: 10px 0 0 0; padding-left: 20px;">
+              <li><strong>createElement vs innerHTML:</strong> Use <code>createElement</code> for better security and performance</li>
+              <li><strong>Data fallback:</strong> Always check if properties exist before using them</li>
+              <li><strong>Inline CSS vs classes:</strong> Inline is simpler for examples, classes are better for production</li>
+              <li><strong>Performance:</strong> Templates are rendered for each visible item - avoid heavy operations</li>
+              <li><strong>Test with volume:</strong> Check performance with 100+ items in the select</li>
+              <li><strong>Keep selection simple:</strong> templateSelection should be concise</li>
+              <li><strong>Details in dropdown:</strong> templateResult can have more information and visual elements</li>
+            </ul>
+          </div>
+
+          <div class="info-callout info-callout-info" style="margin-top: 16px;">
+            <strong>📌 Accessibility Recommendations:</strong>
+            <ul style="margin: 10px 0 0 0; padding-left: 20px;">
+              <li><strong>Contrast:</strong> Maintain adequate contrast between text and background (WCAG AA)</li>
+              <li><strong>Consistent sizes:</strong> Use consistent sizes for icons and visual elements</li>
+              <li><strong>Use native emojis:</strong> Work well with screen readers and don't depend on external resources</li>
+              <li><strong>Mobile responsive:</strong> Templates should work well on small screens</li>
+              <li><strong>Loading states:</strong> Provide visual feedback for loading remote data</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- Navigation -->
+        <section class="section-mb-lg">
+          <div style="display: flex; justify-content: space-between; padding-top: 20px; border-top: 1px solid #e5e7eb;">
+            <a href="example-validation.html" class="btn btn-secondary">← Validation</a>
+            <a href="example-i18n.html" class="btn btn-secondary">i18n →</a>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+  <script src="../../dist/vanilla-smart-select.min.js"></script>
+  <script src="../js/docs.js"></script>
+
+  <script>
+    // Example 1: Countries
+    const countriesData = [
+      { id: 'us', text: 'United States', flag: '🇺🇸', code: 'US' },
+      { id: 'br', text: 'Brazil', flag: '🇧🇷', code: 'BR' },
+      { id: 'uk', text: 'United Kingdom', flag: '🇬🇧', code: 'UK' },
+      { id: 'fr', text: 'France', flag: '🇫🇷', code: 'FR' },
+      { id: 'de', text: 'Germany', flag: '🇩🇪', code: 'DE' },
+      { id: 'jp', text: 'Japan', flag: '🇯🇵', code: 'JP' },
+      { id: 'ca', text: 'Canada', flag: '🇨🇦', code: 'CA' },
+      { id: 'au', text: 'Australia', flag: '🇦🇺', code: 'AU' },
+      { id: 'it', text: 'Italy', flag: '🇮🇹', code: 'IT' },
+      { id: 'es', text: 'Spain', flag: '🇪🇸', code: 'ES' }
+    ];
+
+    new VanillaSmartSelect('#countries', {
+      data: countriesData,
+      placeholder: 'Select a country...',
+      allowClear: true,
+      templateResult: (item) => {
+        const div = document.createElement('div');
+        div.style.display = 'flex';
+        div.style.alignItems = 'center';
+        div.style.gap = '10px';
+        div.innerHTML = `
+          <span style="font-size: 24px;">${item.flag}</span>
+          <span style="font-weight: 500; flex: 1;">${item.text}</span>
+          <span style="background: #e9ecef; padding: 2px 8px; border-radius: 3px; 
+                       font-size: 11px; font-weight: 600;">${item.code}</span>
+        `;
+        return div;
+      },
+      templateSelection: (item) => {
+        return `${item.flag} ${item.text}`;
+      }
+    });
+
+    // Example 2: Users with Emoji Avatars
+    const usersData = [
+      { id: 1, text: 'Ana Silva', role: 'Project Manager', emoji: '👩‍💼' },
+      { id: 2, text: 'Carlos Santos', role: 'Senior Developer', emoji: '👨‍💻' },
+      { id: 3, text: 'Maria Oliveira', role: 'UX/UI Designer', emoji: '👩‍🎨' },
+      { id: 4, text: 'João Costa', role: 'Data Analyst', emoji: '👨‍🔬' },
+      { id: 5, text: 'Paula Ferreira', role: 'Product Manager', emoji: '👩‍🚀' },
+      { id: 6, text: 'Roberto Lima', role: 'Tech Lead', emoji: '👨‍🏫' }
+    ];
+
+    new VanillaSmartSelect('#users', {
+      data: usersData,
+      placeholder: 'Select a user...',
+      allowClear: true,
+      templateResult: (item) => {
+        const div = document.createElement('div');
+        div.style.display = 'flex';
+        div.style.alignItems = 'center';
+        div.style.gap = '12px';
+        div.innerHTML = `
+          <div style="font-size: 32px; width: 40px; height: 40px; display: flex; 
+                      align-items: center; justify-content: center; 
+                      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+                      border-radius: 50%;">${item.emoji}</div>
+          <div>
+            <div style="font-weight: 500;">${item.text}</div>
+            <div style="font-size: 12px; color: #666;">${item.role}</div>
+          </div>
+        `;
+        return div;
+      },
+      templateSelection: (item) => {
+        return `${item.emoji} ${item.text}`;
+      }
+    });
+
+    // Example 4: Products
+    const productsData = [
+      { id: 1, text: 'Notebook Pro', category: 'Electronics', price: 4299.90, icon: '💻', color: '#007bff' },
+      { id: 2, text: 'Wireless Mouse', category: 'Peripherals', price: 89.90, icon: '🖱️', color: '#28a745' },
+      { id: 3, text: 'Mechanical Keyboard', category: 'Peripherals', price: 349.90, icon: '⌨️', color: '#17a2b8' },
+      { id: 4, text: 'Monitor 4K 27"', category: 'Electronics', price: 1899.90, icon: '🖥️', color: '#6f42c1' },
+      { id: 5, text: 'HD Webcam', category: 'Accessories', price: 299.90, icon: '📹', color: '#fd7e14' },
+      { id: 6, text: 'Gaming Headset', category: 'Audio', price: 459.90, icon: '🎧', color: '#e83e8c' },
+      { id: 7, text: 'Gaming Chair', category: 'Furniture', price: 1299.90, icon: '🪑', color: '#20c997' },
+      { id: 8, text: 'SSD 1TB', category: 'Storage', price: 549.90, icon: '💾', color: '#6c757d' }
+    ];
+
+    new VanillaSmartSelect('#products', {
+      data: productsData,
+      placeholder: 'Select a product...',
+      allowClear: true,
+      templateResult: (item) => {
+        const div = document.createElement('div');
+        div.style.display = 'flex';
+        div.style.alignItems = 'center';
+        div.style.gap = '12px';
+        div.innerHTML = `
+          <div style="width: 40px; height: 40px; display: flex; align-items: center; 
+                      justify-content: center; border-radius: 8px; font-size: 24px;
+                      background: ${item.color}20; color: ${item.color};">
+            ${item.icon}
+          </div>
+          <div style="flex: 1;">
+            <div style="font-weight: 500;">${item.text}</div>
+            <div style="font-size: 12px; color: #666;">${item.category}</div>
+          </div>
+          <div style="font-weight: 600; color: #007bff;">
+            R$ ${item.price.toFixed(2).replace('.', ',')}
+          </div>
+        `;
+        return div;
+      },
+      templateSelection: (item) => {
+        return `${item.icon} ${item.text} - R$ ${item.price.toFixed(2).replace('.', ',')}`;
+      }
+    });
+
+    // Example 5: Tasks with Status (Multi-Select)
+    const tasksData = [
+      { id: 1, text: 'Update documentation', status: 'active', statusText: 'In Progress', icon: '📝' },
+      { id: 2, text: 'Fix bug #123', status: 'active', statusText: 'In Progress', icon: '🐛' },
+      { id: 3, text: 'Review pull request', status: 'pending', statusText: 'Pending', icon: '👀' },
+      { id: 4, text: 'Deploy to production', status: 'pending', statusText: 'Pending', icon: '🚀' },
+      { id: 5, text: 'Implement feature X', status: 'completed', statusText: 'Completed', icon: '✅' },
+      { id: 6, text: 'Refactor legacy code', status: 'active', statusText: 'In Progress', icon: '🔧' },
+      { id: 7, text: 'Meeting cancelled', status: 'cancelled', statusText: 'Cancelled', icon: '❌' }
+    ];
+
+    const statusColors = {
+      active: { bg: '#d4edda', text: '#155724' },
+      pending: { bg: '#fff3cd', text: '#856404' },
+      completed: { bg: '#cce5ff', text: '#004085' },
+      cancelled: { bg: '#f8d7da', text: '#721c24' }
+    };
+
+    new VanillaSmartSelect('#tasks', {
+      data: tasksData,
+      placeholder: 'Select tasks...',
+      multiple: true,
+      maximumSelectionLength: 4,
+      templateResult: (item) => {
+        const div = document.createElement('div');
+        div.style.display = 'flex';
+        div.style.alignItems = 'center';
+        div.style.justifyContent = 'space-between';
+        div.style.gap = '12px';
+        const colors = statusColors[item.status];
+        div.innerHTML = `
+          <span style="font-size: 20px;">${item.icon}</span>
+          <span style="flex: 1;">${item.text}</span>
+          <span style="padding: 3px 10px; border-radius: 12px; font-size: 11px; 
+                       font-weight: 600; background: ${colors.bg}; color: ${colors.text};">
+            ${item.statusText}
+          </span>
+        `;
+        return div;
+      },
+      templateSelection: (item) => {
+        return `${item.icon} ${item.text}`;
+      }
+    });
+
+    // Example 6: Categories with Counters
+    const categoriesData = [
+      { id: 1, text: 'Documents', icon: '📄', count: 127 },
+      { id: 2, text: 'Images', icon: '🖼️', count: 543 },
+      { id: 3, text: 'Videos', icon: '🎬', count: 89 },
+      { id: 4, text: 'Music', icon: '🎵', count: 234 },
+      { id: 5, text: 'Spreadsheets', icon: '📊', count: 67 },
+      { id: 6, text: 'Presentations', icon: '📽️', count: 45 },
+      { id: 7, text: 'Compressed files', icon: '📦', count: 23 }
+    ];
+
+    new VanillaSmartSelect('#categories', {
+      data: categoriesData,
+      placeholder: 'Select a category...',
+      allowClear: true,
+      templateResult: (item) => {
+        const div = document.createElement('div');
+        div.style.display = 'flex';
+        div.style.alignItems = 'center';
+        div.style.gap = '10px';
+        div.innerHTML = `
+          <span style="font-size: 24px;">${item.icon}</span>
+          <div style="flex: 1;">
+            <span style="font-weight: 500;">${item.text}</span>
+            <span style="font-size: 11px; color: #666; background: #e9ecef; 
+                         padding: 2px 6px; border-radius: 10px; margin-left: 8px;">
+              ${item.count} items
+            </span>
+          </div>
+        `;
+        return div;
+      },
+      templateSelection: (item) => {
+        return `${item.icon} ${item.text}`;
+      }
+    });
+
+    // Example 3: Employees - Different Templates
+    const employeesData = [
+      { id: 1, text: 'Sarah Connor', role: 'Engineering Manager', department: 'Engineering', emoji: '👩‍💼' },
+      { id: 2, text: 'Kyle Reese', role: 'Senior Developer', department: 'Engineering', emoji: '👨‍💻' },
+      { id: 3, text: 'Miles Dyson', role: 'Tech Lead', department: 'Research', emoji: '👨‍🔬' },
+      { id: 4, text: 'John Connor', role: 'Product Manager', department: 'Product', emoji: '👨‍🚀' },
+      { id: 5, text: 'Ellen Ripley', role: 'Security Lead', department: 'Operations', emoji: '👩‍🚀' }
+    ];
+
+    new VanillaSmartSelect('#employees', {
+      data: employeesData,
+      placeholder: 'Select an employee...',
+      allowClear: true,
+      // Detailed template for dropdown results
+      templateResult: (item) => {
+        const div = document.createElement('div');
+        div.style.display = 'flex';
+        div.style.alignItems = 'center';
+        div.style.gap = '12px';
+        div.innerHTML = `
+          <div style="width: 40px; height: 40px; display: flex; align-items: center; 
+                      justify-content: center; font-size: 24px; border-radius: 50%;
+                      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+            ${item.emoji}
+          </div>
+          <div>
+            <div style="font-weight: 500;">${item.text}</div>
+            <div style="font-size: 12px; color: #666;">
+              ${item.role} • ${item.department}
+            </div>
+          </div>
+        `;
+        return div;
+      },
+      // Simplified template for selected item (just name)
+      templateSelection: (item) => {
+        return item.text;
+      }
+    });
+
+    console.log('✓ Template examples ready!');
+  </script>
+</body>
+</html>

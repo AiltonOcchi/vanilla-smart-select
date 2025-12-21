@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Complete installation and first steps guide with Vanilla Smart Select">
+  <title>Getting Started - Vanilla Smart Select</title>
+
+  <link rel="stylesheet" href="../css/docs.css">
+  <link rel="stylesheet" href="../../dist/vanilla-smart-select.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+</head>
+<body>
+  <div class="docs-container">
+    <!-- Sidebar -->
+    <aside class="docs-sidebar">
+      <div class="sidebar-header">
+        <a href="index.html" class="sidebar-logo">
+          <div class="sidebar-logo-icon">VS</div>
+          <div class="sidebar-logo-text">
+            <div class="sidebar-logo-title">Vanilla Smart Select</div>
+            <div class="sidebar-logo-subtitle">v1.0.1</div>
+          </div>
+        </a>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Introduction</div>
+          <ul class="nav-links">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="getting-started.html" class="nav-link">Getting Started</a></li>
+          </ul>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Resources</div>
+          <ul class="nav-links">
+            <li><a href="api-reference.html" class="nav-link">API Reference</a></li>
+            <li><a href="configuration.html" class="nav-link">Configuration</a></li>
+            <li><a href="events.html" class="nav-link">Events</a></li>
+          </ul>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Examples</div>
+          <ul class="nav-links">
+            <li><a href="example-basic.html" class="nav-link">Basic</a></li>
+            <li><a href="example-api-programmatic.html" class="nav-link">Programmatic API</a></li>
+            <li><a href="example-ajax-basic.html" class="nav-link">Basic AJAX</a></li>
+            <li><a href="example-tags.html" class="nav-link">Tags</a></li>
+            <li><a href="example-pagination.html" class="nav-link">Pagination</a></li>
+            <li><a href="example-max-selection.html" class="nav-link">Selection Limit</a></li>
+            <li><a href="example-validation.html" class="nav-link">Advanced Validation</a></li>
+            <li><a href="example-templates.html" class="nav-link">Templates</a></li>
+            <li><a href="example-i18n.html" class="nav-link">i18n</a></li>
+            <li><a href="example-bootstrap.html" class="nav-link">Bootstrap</a></li>
+          </ul>
+        </div>
+
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="docs-main">
+      <!-- Top Bar -->
+      <header class="docs-topbar">
+        <button class="mobile-menu-toggle" aria-label="Toggle menu">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+        <h1 class="topbar-title">Getting Started</h1>
+        <div class="topbar-actions">
+          <div class="language-switcher">
+            <a href="../pt/getting-started.html" class="lang-link">🇧🇷 PT</a>
+            <span class="lang-separator">|</span>
+            <a href="getting-started.html" class="lang-link active">🇺🇸 EN</a>
+          </div>
+          <a href="https://github.com/ailtonocchi/vanilla-smart-select" class="topbar-btn" target="_blank" rel="noopener noreferrer">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+            </svg>
+            GitHub
+          </a>
+          <a href="example-basic.html" class="topbar-btn primary">
+            View Examples
+          </a>
+        </div>
+      </header>
+
+      <!-- Content -->
+      <div class="docs-content">
+        <h1>Getting Started</h1>
+        <p class="lead">Start using Vanilla Smart Select in your project in just a few minutes. This guide will take you from installation to your first functional dropdown.</p>
+
+        <!-- Installation -->
+        <section>
+          <h2 id="installation">Installation</h2>
+          <p>Vanilla Smart Select can be installed in several ways, depending on your project setup:</p>
+
+          <h3 id="npm">Via NPM</h3>
+          <p>Recommended for modern projects with build tools (Webpack, Vite, Rollup, etc.):</p>
+          <pre><code class="language-bash">npm install vanilla-smart-select</code></pre>
+
+          <p>Or using Yarn:</p>
+          <pre><code class="language-bash">yarn add vanilla-smart-select</code></pre>
+
+          <h3 id="cdn">Via CDN</h3>
+          <p>Perfect for rapid prototyping or projects without a build process:</p>
+          <pre><code class="language-html">&lt;!-- CSS --&gt;
+&lt;link rel="stylesheet" href="https://unpkg.com/vanilla-smart-select/dist/vanilla-smart-select.min.css"&gt;
+
+&lt;!-- JavaScript --&gt;
+&lt;script src="https://unpkg.com/vanilla-smart-select/dist/vanilla-smart-select.min.js"&gt;&lt;/script&gt;</code></pre>
+
+          <div class="alert alert-info">
+            <strong>💡 Tip:</strong> For production, we recommend pinning a specific version: <code>https://unpkg.com/vanilla-smart-select@1.0.1/dist/...</code>
+          </div>
+
+          <h3 id="download">Direct Download</h3>
+          <p>You can also download the files directly from the GitHub repository:</p>
+          <ol>
+            <li>Visit the <a href="https://github.com/ailtonocchi/vanilla-smart-select/releases">releases page</a></li>
+            <li>Download the latest version</li>
+            <li>Extract the files from the <code>dist/</code> folder</li>
+            <li>Include the CSS and JS files in your project</li>
+          </ol>
+        </section>
+
+        <!-- Basic Usage -->
+        <section>
+          <h2 id="basic-usage">Basic Usage</h2>
+
+          <h3>1. Include the Files</h3>
+          <p>First, include the CSS in the <code>&lt;head&gt;</code> and JavaScript before closing <code>&lt;body&gt;</code>:</p>
+          <pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;link rel="stylesheet" href="vanilla-smart-select.min.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;!-- Your content here --&gt;
+
+  &lt;script src="vanilla-smart-select.min.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+          <h3>2. Create the Select Element</h3>
+          <p>Create a standard HTML <code>&lt;select&gt;</code> element:</p>
+          <pre><code class="language-html">&lt;select id="my-select"&gt;
+  &lt;option value=""&gt;Select an option&lt;/option>
+  &lt;option value="1"&gt;JavaScript&lt;/option&gt;
+  &lt;option value="2"&gt;Python&lt;/option&gt;
+  &lt;option value="3"&gt;Java&lt;/option&gt;
+  &lt;option value="4"&gt;C++&lt;/option&gt;
+  &lt;option value="5"&gt;Ruby&lt;/option&gt;
+&lt;/select&gt;</code></pre>
+
+          <h3>3. Initialize the Plugin</h3>
+          <p>Use JavaScript to transform the select:</p>
+          <pre><code class="language-javascript">// Wait for DOM to load
+document.addEventListener('DOMContentLoaded', function() {
+  // Initialize Vanilla Smart Select
+  const select = new VanillaSmartSelect('#my-select', {
+    placeholder: 'Choose a language...',
+    searchable: true,
+    allowClear: true
+  });
+});</code></pre>
+
+          <div class="demo-container">
+            <div class="demo-title">Live Example</div>
+            <label for="basic-demo">Programming Languages:</label>
+            <select id="basic-demo" class="demo-select">
+              <option value="">Select an option</option>
+              <option value="1">JavaScript</option>
+              <option value="2">Python</option>
+              <option value="3">Java</option>
+              <option value="4">C++</option>
+              <option value="5">Ruby</option>
+              <option value="6">PHP</option>
+              <option value="7">Go</option>
+              <option value="8">Rust</option>
+            </select>
+          </div>
+        </section>
+
+        <!-- ES Modules -->
+        <section>
+          <h2 id="es-modules">ES Modules</h2>
+          <p>For projects using ES Modules (Webpack, Vite, etc.):</p>
+          <pre><code class="language-javascript">// Import the plugin and styles
+import VanillaSmartSelect from 'vanilla-smart-select';
+import 'vanilla-smart-select/dist/vanilla-smart-select.min.css';
+
+// Use normally
+const select = new VanillaSmartSelect('#my-select', {
+  placeholder: 'Select...',
+  searchable: true
+});</code></pre>
+        </section>
+
+        <!-- CommonJS -->
+        <section>
+          <h2 id="commonjs">CommonJS (Node.js)</h2>
+          <p>For Node.js environments or bundlers using CommonJS:</p>
+          <pre><code class="language-javascript">// Import using require
+const VanillaSmartSelect = require('vanilla-smart-select');
+
+// Import CSS (in supported environments)
+require('vanilla-smart-select/dist/vanilla-smart-select.min.css');</code></pre>
+        </section>
+
+        <!-- Configuration Options -->
+        <section>
+          <h2 id="common-options">Common Options</h2>
+          <p>Here are some of the most commonly used configuration options:</p>
+
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Option</th>
+                <th>Type</th>
+                <th>Default</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>placeholder</code></td>
+                <td>String</td>
+                <td><code>''</code></td>
+                <td>Text displayed when nothing is selected</td>
+              </tr>
+              <tr>
+                <td><code>searchable</code></td>
+                <td>Boolean</td>
+                <td><code>true</code></td>
+                <td>Enables option search</td>
+              </tr>
+              <tr>
+                <td><code>allowClear</code></td>
+                <td>Boolean</td>
+                <td><code>false</code></td>
+                <td>Shows button to clear selection</td>
+              </tr>
+              <tr>
+                <td><code>multiple</code></td>
+                <td>Boolean</td>
+                <td><code>false</code></td>
+                <td>Allows multiple selection</td>
+              </tr>
+              <tr>
+                <td><code>disabled</code></td>
+                <td>Boolean</td>
+                <td><code>false</code></td>
+                <td>Disables the select</td>
+              </tr>
+              <tr>
+                <td><code>closeOnSelect</code></td>
+                <td>Boolean</td>
+                <td><code>true</code></td>
+                <td>Closes dropdown after selecting</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p>See the <a href="configuration.html">complete configuration documentation</a> for all available options (40+).</p>
+        </section>
+
+        <!-- Examples -->
+        <section>
+          <h2 id="quick-examples">Quick Examples</h2>
+
+          <h3>Multiple Selection</h3>
+          <pre><code class="language-javascript">const multiSelect = new VanillaSmartSelect('#multi-select', {
+  multiple: true,
+  placeholder: 'Select multiple items...',
+  closeOnSelect: false
+});</code></pre>
+
+          <div class="demo-container">
+            <label for="multi-demo">Frameworks (multi-select):</label>
+            <select id="multi-demo" multiple class="demo-select">
+              <option value="react">React</option>
+              <option value="vue">Vue.js</option>
+              <option value="angular">Angular</option>
+              <option value="svelte">Svelte</option>
+              <option value="solid">Solid.js</option>
+            </select>
+          </div>
+
+          <h3>With Option Groups</h3>
+          <pre><code class="language-html">&lt;select id="grouped-select"&gt;
+  &lt;optgroup label="Frontend"&gt;
+    &lt;option value="react"&gt;React&lt;/option&gt;
+    &lt;option value="vue"&gt;Vue.js&lt;/option&gt;
+  &lt;/optgroup&gt;
+  &lt;optgroup label="Backend"&gt;
+    &lt;option value="node"&gt;Node.js&lt;/option&gt;
+    &lt;option value="django"&gt;Django&lt;/option&gt;
+  &lt;/optgroup&gt;
+&lt;/select&gt;</code></pre>
+
+          <div class="demo-container">
+            <label for="grouped-demo">Technologies (grouped):</label>
+            <select id="grouped-demo" class="demo-select">
+              <optgroup label="Frontend">
+                <option value="react">React</option>
+                <option value="vue">Vue.js</option>
+                <option value="angular">Angular</option>
+              </optgroup>
+              <optgroup label="Backend">
+                <option value="node">Node.js</option>
+                <option value="django">Django</option>
+                <option value="rails">Ruby on Rails</option>
+              </optgroup>
+              <optgroup label="Database">
+                <option value="postgres">PostgreSQL</option>
+                <option value="mongodb">MongoDB</option>
+                <option value="mysql">MySQL</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <h3>With HTML5 Validation</h3>
+          <pre><code class="language-html">&lt;form&gt;
+  &lt;select id="required-select" required&gt;
+    &lt;option value=""&gt;Select...&lt;/option&gt;
+    &lt;option value="1"&gt;Option 1&lt;/option&gt;
+    &lt;option value="2"&gt;Option 2&lt;/option&gt;
+  &lt;/select&gt;
+  &lt;button type="submit"&gt;Submit&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+        </section>
+
+        <!-- Working with Values -->
+        <section>
+          <h2 id="working-with-values">Working with Values</h2>
+
+          <h3>Get Selected Value</h3>
+          <pre><code class="language-javascript">// Get current value
+const value = select.val();
+console.log(value); // "1"
+
+// For multi-select
+const values = multiSelect.val();
+console.log(values); // ["1", "2", "3"]</code></pre>
+
+          <h3>Set Value Programmatically</h3>
+          <pre><code class="language-javascript">// Single select
+select.val('2');
+
+// Multi-select
+multiSelect.val(['1', '3', '5']);</code></pre>
+
+          <h3>Clear Selection</h3>
+          <pre><code class="language-javascript">select.clear();</code></pre>
+
+          <h3>Get Complete Data</h3>
+          <pre><code class="language-javascript">// Returns complete object with id, text, etc.
+const selected = select.getSelected();
+console.log(selected);
+// { id: "1", text: "JavaScript", element: {...} }</code></pre>
+        </section>
+
+        <!-- Events -->
+        <section>
+          <h2 id="listening-events">Listening to Events</h2>
+          <p>You can listen to various events emitted by the plugin:</p>
+
+          <pre><code class="language-javascript">const select = new VanillaSmartSelect('#my-select');
+
+// When an item is selected
+select.on('vs:select', function(e) {
+  console.log('Item selected:', e.detail);
+});
+
+// When value changes
+select.on('vs:change', function(e) {
+  console.log('Value changed:', this.val());
+});
+
+// When dropdown opens
+select.on('vs:open', function(e) {
+  console.log('Dropdown opened');
+});
+
+// When a search is performed
+select.on('vs:query', function(e) {
+  console.log('Searching:', e.detail.query);
+});</code></pre>
+
+          <p>See all available events in the <a href="events.html">events documentation</a>.</p>
+        </section>
+
+        <!-- Destroying -->
+        <section>
+          <h2 id="destroying">Destroying Instance</h2>
+          <p>To completely remove the plugin and restore the original select:</p>
+          <pre><code class="language-javascript">// Destroy and clean up event listeners
+select.destroy();
+
+// Now the element returns to being a native select
+</code></pre>
+        </section>
+
+        <!-- Next Steps -->
+        <section>
+          <h2 id="next-steps">Next Steps</h2>
+          <div class="feature-grid">
+            <a href="example-basic.html" class="link-card feature-card">
+              <div class="feature-icon">💡</div>
+              <h3>Explore Examples</h3>
+              <p>10+ interactive examples showing advanced features</p>
+            </a>
+
+            <a href="api-reference.html" class="link-card feature-card">
+              <div class="feature-icon">📖</div>
+              <h3>API Reference</h3>
+              <p>Complete documentation of all available methods</p>
+            </a>
+
+            <a href="configuration.html" class="link-card feature-card">
+              <div class="feature-icon">⚙️</div>
+              <h3>Configuration</h3>
+              <p>All 40+ configuration options explained</p>
+            </a>
+
+            <a href="example-templates.html" class="link-card feature-card">
+              <div class="feature-icon">🎨</div>
+              <h3>Custom Templates</h3>
+              <p>Learn to create results with rich HTML</p>
+            </a>
+
+            <a href="example-ajax-basic.html" class="link-card feature-card">
+              <div class="feature-icon">🌐</div>
+              <h3>AJAX & Remote Data</h3>
+              <p>Load data from external APIs dynamically</p>
+            </a>
+
+            <a href="events.html" class="link-card feature-card">
+              <div class="feature-icon">⚡</div>
+              <h3>Events</h3>
+              <p>Complete system of events and callbacks</p>
+            </a>
+          </div>
+        </section>
+
+        <!-- Troubleshooting -->
+        <section>
+          <h2 id="troubleshooting">Troubleshooting</h2>
+
+          <h3>The select is not being transformed</h3>
+          <ul>
+            <li>Check if CSS and JS files were loaded correctly</li>
+            <li>Make sure JavaScript code executes after DOM loads</li>
+            <li>Check browser console for errors</li>
+            <li>Confirm CSS selector is correct</li>
+          </ul>
+
+          <h3>Styles don't appear correctly</h3>
+          <ul>
+            <li>Check if CSS was included before JavaScript</li>
+            <li>Look for conflicts with other CSS frameworks</li>
+            <li>Inspect elements in DevTools to check applied classes</li>
+          </ul>
+
+          <h3>Conflicts with Bootstrap/other frameworks</h3>
+          <ul>
+            <li>Vanilla Smart Select uses the <code>.vs-</code> prefix in all classes to avoid conflicts</li>
+            <li>See the <a href="bootstrap.html">Bootstrap integration documentation</a> for details</li>
+          </ul>
+
+          <div class="alert alert-info">
+            <strong>💬 Need help?</strong> Open an issue on <a href="https://github.com/ailtonocchi/vanilla-smart-select/issues">GitHub</a> or consult the complete documentation.
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+  <script src="../../dist/vanilla-smart-select.min.js"></script>
+  <script src="../js/docs.js"></script>
+
+  <!-- Initialize demos -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      new VanillaSmartSelect('#basic-demo', {
+        placeholder: 'Choose a language...',
+        searchable: true,
+        allowClear: true
+      });
+
+      new VanillaSmartSelect('#multi-demo', {
+        multiple: true,
+        placeholder: 'Select multiple frameworks...',
+        closeOnSelect: false,
+        allowClear: true
+      });
+
+      new VanillaSmartSelect('#grouped-demo', {
+        placeholder: 'Choose a technology...',
+        searchable: true,
+        allowClear: true
+      });
+    });
+  </script>
+</body>
+</html>

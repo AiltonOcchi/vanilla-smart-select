@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Internacionalização (i18n) - Vanilla Smart Select</title>
+  <link rel="stylesheet" href="../css/docs.css">
+  <link rel="stylesheet" href="../../dist/vanilla-smart-select.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+  <style>
+    .lang-btn {
+      font-size: 14px;
+      padding: 8px 16px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid #dee2e6;
+      border-radius: 4px;
+      background: white;
+      color: #495057;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-weight: 500;
+    }
+    .lang-btn:hover {
+      background: #f8f9fa;
+      border-color: #adb5bd;
+    }
+    .lang-btn.active {
+      background: #007bff;
+      color: white;
+      border-color: #007bff;
+    }
+    .lang-btn .flag {
+      font-size: 18px;
+      line-height: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="docs-container">
+    <aside class="docs-sidebar">
+      <div class="sidebar-header">
+        <a href="index.html" class="sidebar-logo">
+          <div class="sidebar-logo-icon">VS</div>
+          <div class="sidebar-logo-text">
+            <div class="sidebar-logo-title">Vanilla Smart Select</div>
+            <div class="sidebar-logo-subtitle">v1.0.1</div>
+          </div>
+        </a>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Introdução</div>
+          <ul class="nav-links">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="getting-started.html" class="nav-link">Getting Started</a></li>
+          </ul>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Recursos</div>
+          <ul class="nav-links">
+            <li><a href="api-reference.html" class="nav-link">API Reference</a></li>
+            <li><a href="configuration.html" class="nav-link">Configuração</a></li>
+            <li><a href="events.html" class="nav-link">Eventos</a></li>
+          </ul>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Exemplos</div>
+          <ul class="nav-links">
+            <li><a href="example-basic.html" class="nav-link">Básico</a></li>
+            <li><a href="example-api-programmatic.html" class="nav-link">API Programática</a></li>
+            <li><a href="example-ajax-basic.html" class="nav-link">AJAX Básico</a></li>
+            <li><a href="example-tags.html" class="nav-link">Tags</a></li>
+            <li><a href="example-pagination.html" class="nav-link">Paginação</a></li>
+            <li><a href="example-max-selection.html" class="nav-link">Limite de Seleção</a></li>
+            <li><a href="example-validation.html" class="nav-link">Validação Avançada</a></li>
+            <li><a href="example-templates.html" class="nav-link">Templates</a></li>
+            <li><a href="example-i18n.html" class="nav-link active">i18n</a></li>
+            <li><a href="example-bootstrap.html" class="nav-link">Bootstrap</a></li>
+          </ul>
+        </div>
+      </nav>
+    </aside>
+    <main class="docs-main">
+      <header class="docs-topbar">
+        <button class="mobile-menu-toggle" aria-label="Toggle menu">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+        <h1 class="topbar-title">Internacionalização (i18n)</h1>
+        <div class="topbar-actions">
+          <div class="language-switcher">
+            <a href="example-i18n.html" class="lang-link active">🇧🇷 PT</a>
+            <span class="lang-separator">|</span>
+            <a href="../en/example-i18n.html" class="lang-link">🇺🇸 EN</a>
+          </div>
+          <a href="https://github.com/ailtonocchi/vanilla-smart-select" class="topbar-btn" target="_blank" rel="noopener noreferrer">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+            </svg>
+            GitHub
+          </a>
+        </div>
+      </header>
+      <div class="docs-content">
+        <section class="section-mb-lg">
+          <p class="lead">
+            Sistema completo de internacionalização com detecção automática de idioma, suporte a múltiplos idiomas 
+            e capacidade de trocar idioma dinamicamente sem recriar o componente.
+          </p>
+        </section>
+
+        <!-- Example 1: Auto-detect -->
+        <section class="section-mb-lg">
+          <h2>Detecção Automática de Idioma</h2>
+          <p>VanillaSmartSelect detecta automaticamente o idioma do navegador e aplica as traduções correspondentes.</p>
+
+          <div class="demo-container">
+            <label for="auto" class="demo-label">Selecione frutas (múltipla seleção, máximo 3):</label>
+            <select id="auto" multiple></select>
+            <div style="margin-top: 12px; padding: 10px; background: #d4edda; border: 1px solid #28a745; border-radius: 4px; color: #155724;">
+              <strong>✓ Idioma detectado:</strong> <span id="detected-lang"></span><br>
+              <strong>Teste:</strong> Digite no campo para ver "Buscando...", busque algo inexistente para ver "Nenhum resultado"
+            </div>
+            <details class="code-details">
+              <summary>Ver código</summary>
+
+              <h3>HTML</h3>
+              <pre><code class="language-html">&lt;select id="auto" multiple&gt;
+  &lt;option value="apple"&gt;Maçã&lt;/option&gt;
+  &lt;option value="banana"&gt;Banana&lt;/option&gt;
+  &lt;option value="orange"&gt;Laranja&lt;/option&gt;
+  &lt;option value="grape"&gt;Uva&lt;/option&gt;
+  &lt;option value="strawberry"&gt;Morango&lt;/option&gt;
+&lt;/select&gt;</code></pre>
+
+              <h3>JavaScript</h3>
+              <pre><code class="language-javascript">// Detecção automática do idioma do navegador
+new VanillaSmartSelect('#auto', {
+  searchable: true,
+  maximumSelectionLength: 3
+});
+
+// O idioma é detectado automaticamente baseado em navigator.language</code></pre>
+            </details>
+          </div>
+        </section>
+
+        <!-- Example 2: Dynamic Language Switch -->
+        <section class="section-mb-lg">
+          <h2>Trocar Idioma Dinamicamente</h2>
+          <p>Altere o idioma em tempo de execução sem recriar o select.</p>
+
+          <div class="demo-container">
+            <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
+              <button id="btn-en" class="lang-btn" onclick="changeLanguage('en')">
+                <span class="flag">🇺🇸</span> English
+              </button>
+              <button id="btn-pt" class="lang-btn active" onclick="changeLanguage('pt-BR')">
+                <span class="flag">🇧🇷</span> Português
+              </button>
+              <button id="btn-es" class="lang-btn" onclick="changeLanguage('es')">
+                <span class="flag">🇪🇸</span> Español
+              </button>
+            </div>
+            <label for="dynamic" class="demo-label">Linguagens de Programação:</label>
+            <select id="dynamic" multiple></select>
+            <div style="margin-top: 12px; padding: 10px; background: #e7f3ff; border: 1px solid #007bff; border-radius: 4px;">
+              <strong>Instruções:</strong><br>
+              1. Clique nos botões para trocar o idioma<br>
+              2. Digite no campo para ver mensagem "Buscando..." no idioma selecionado<br>
+              3. Busque algo inexistente para ver mensagem "Nenhum resultado"
+            </div>
+            <details class="code-details">
+              <summary>Ver código</summary>
+
+              <h3>HTML</h3>
+              <pre><code class="language-html">&lt;button onclick="changeLanguage('en')"&gt;🇺🇸 English&lt;/button&gt;
+&lt;button onclick="changeLanguage('pt-BR')"&gt;🇧🇷 Português&lt;/button&gt;
+&lt;button onclick="changeLanguage('es')"&gt;🇪🇸 Español&lt;/button&gt;
+
+&lt;select id="dynamic" multiple&gt;
+  &lt;option value="js"&gt;JavaScript&lt;/option&gt;
+  &lt;option value="py"&gt;Python&lt;/option&gt;
+  &lt;option value="java"&gt;Java&lt;/option&gt;
+  &lt;option value="cpp"&gt;C++&lt;/option&gt;
+  &lt;option value="rust"&gt;Rust&lt;/option&gt;
+  &lt;option value="go"&gt;Go&lt;/option&gt;
+&lt;/select&gt;</code></pre>
+
+              <h3>JavaScript</h3>
+              <pre><code class="language-javascript">import { getLanguage } from './vanilla-smart-select.js';
+
+const dynamicSelect = new VanillaSmartSelect('#dynamic', {
+  searchable: true,
+  language: getLanguage('pt-BR') // Idioma inicial
+});
+
+function changeLanguage(lang) {
+  // Trocar idioma dinamicamente
+  dynamicSelect.updateLanguage(getLanguage(lang));
+  
+  console.log(`Language changed to: ${lang}`);
+}</code></pre>
+            </details>
+          </div>
+        </section>
+
+        <!-- Example 3: Custom Messages -->
+        <section class="section-mb-lg">
+          <h2>Personalizar Mensagens Específicas</h2>
+          <p>Sobrescreva mensagens específicas mantendo as outras traduções padrão.</p>
+
+          <div class="demo-container">
+            <label for="custom" class="demo-label">Selecione até 2 cores:</label>
+            <select id="custom" multiple></select>
+            <div style="margin-top: 12px; padding: 10px; background: #e7f3ff; border: 1px solid #007bff; border-radius: 4px;">
+              <strong>Mensagem customizada:</strong> A mensagem de limite máximo foi personalizada com emoji.<br>
+              <strong>Teste:</strong> Tente selecionar mais de 2 itens para ver a mensagem customizada.
+            </div>
+            <details class="code-details">
+              <summary>Ver código</summary>
+
+              <h3>HTML</h3>
+              <pre><code class="language-html">&lt;select id="custom" multiple&gt;
+  &lt;option value="red"&gt;Vermelho&lt;/option&gt;
+  &lt;option value="blue"&gt;Azul&lt;/option&gt;
+  &lt;option value="green"&gt;Verde&lt;/option&gt;
+  &lt;option value="yellow"&gt;Amarelo&lt;/option&gt;
+  &lt;option value="purple"&gt;Roxo&lt;/option&gt;
+&lt;/select&gt;</code></pre>
+
+              <h3>JavaScript</h3>
+              <pre><code class="language-javascript">import { getLanguage } from './vanilla-smart-select.js';
+
+new VanillaSmartSelect('#custom', {
+  searchable: true,
+  maximumSelectionLength: 2,
+  language: {
+    ...getLanguage('pt-BR'), // Mantém traduções padrão
+    // Sobrescreve apenas a mensagem de limite máximo
+    maximumSelected: (args) => 
+      `🚫 Ops! Limite de ${args.maximum} ${args.maximum === 1 ? 'item' : 'itens'} atingido!`
+  }
+});</code></pre>
+            </details>
+          </div>
+
+          <div class="info-callout info-callout-info">
+            <strong>💡 Dica:</strong> Você pode usar funções para mensagens dinâmicas que recebem parâmetros como 
+            <code>maximum</code>, <code>minimum</code>, <code>over</code>, etc.
+          </div>
+        </section>
+
+        <!-- Available Languages -->
+        <section class="section-mb-lg">
+          <h2>Idiomas Disponíveis</h2>
+          
+          <div style="overflow-x: auto;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Idioma</th>
+                  <th>Código</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>🇺🇸 English</td>
+                  <td><code>en</code></td>
+                  <td><span style="color: #28a745; font-weight: 600;">✓ Disponível</span></td>
+                </tr>
+                <tr>
+                  <td>🇧🇷 Português (Brasil)</td>
+                  <td><code>pt-BR</code></td>
+                  <td><span style="color: #28a745; font-weight: 600;">✓ Disponível</span></td>
+                </tr>
+                <tr>
+                  <td>🇪🇸 Español</td>
+                  <td><code>es</code></td>
+                  <td><span style="color: #28a745; font-weight: 600;">✓ Disponível</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Language API -->
+        <section class="section-mb-lg">
+          <h2>API de Tradução</h2>
+
+          <div class="info-callout">
+            <strong>📋 Mensagens Disponíveis:</strong>
+            <ul style="margin: 10px 0 0 0; padding-left: 20px;">
+              <li><strong>noResults:</strong> Exibido quando nenhum resultado é encontrado na busca</li>
+              <li><strong>searching:</strong> Exibido durante a busca de resultados</li>
+              <li><strong>loadingMore:</strong> Exibido ao carregar mais resultados (paginação)</li>
+              <li><strong>errorLoading:</strong> Exibido quando ocorre erro ao carregar dados</li>
+              <li><strong>maximumSelected:</strong> Exibido quando atinge o limite de seleção</li>
+              <li><strong>inputTooShort:</strong> Exibido quando busca tem menos caracteres que o mínimo</li>
+              <li><strong>inputTooLong:</strong> Exibido quando busca excede o máximo de caracteres</li>
+            </ul>
+          </div>
+
+          <div class="code-example">
+            <h3>Exemplo Completo de Configuração</h3>
+            <pre><code class="language-javascript">// Definir todas as mensagens customizadas
+new VanillaSmartSelect('#mySelect', {
+  language: {
+    noResults: 'Nenhum resultado encontrado',
+    searching: 'Buscando...',
+    loadingMore: 'Carregando mais resultados...',
+    errorLoading: 'Erro ao carregar resultados',
+    maximumSelected: (args) => `Você pode selecionar apenas ${args.maximum} itens`,
+    inputTooShort: (args) => `Digite ${args.minimum} ou mais caracteres`,
+    inputTooLong: (args) => `Remova ${args.over} caractere(s)`
+  }
+});</code></pre>
+          </div>
+
+          <div class="code-example">
+            <h3>Usar Idioma Pré-definido</h3>
+            <pre><code class="language-javascript">import { getLanguage } from './vanilla-smart-select.js';
+
+// Usar inglês
+new VanillaSmartSelect('#mySelect', {
+  language: getLanguage('en')
+});
+
+// Usar espanhol
+new VanillaSmartSelect('#mySelect', {
+  language: getLanguage('es')
+});</code></pre>
+          </div>
+        </section>
+
+        <!-- Best Practices -->
+        <section class="section-mb-lg">
+          <h2>Boas Práticas</h2>
+
+          <div class="info-callout info-callout-success">
+            <strong>✅ Recomendações:</strong>
+            <ul style="margin: 10px 0 0 0; padding-left: 20px;">
+              <li><strong>Detecção automática:</strong> Use detecção automática para melhor experiência do usuário</li>
+              <li><strong>Persistência:</strong> Salve preferência de idioma no localStorage</li>
+              <li><strong>Fallback:</strong> Sempre tenha inglês como idioma fallback</li>
+              <li><strong>Contexto:</strong> Adapte mensagens ao contexto da aplicação</li>
+              <li><strong>Plural:</strong> Use funções para lidar corretamente com singular/plural</li>
+              <li><strong>Performance:</strong> Use <code>updateLanguage()</code> ao invés de recriar o componente</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- Navigation -->
+        <section class="section-mb-lg">
+          <div style="display: flex; justify-content: space-between; padding-top: 20px; border-top: 1px solid #e5e7eb;">
+            <a href="example-templates.html" class="btn btn-secondary">← Templates</a>
+            <a href="index.html" class="btn btn-secondary">Home →</a>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+  <script src="../../dist/vanilla-smart-select.min.js"></script>
+  <script src="../js/docs.js"></script>
+  <script>
+    // Idiomas completos com todas as propriedades necessárias
+    const languages = {
+      'en': {
+        noResults: 'No results found',
+        searching: 'Searching...',
+        searchPlaceholder: 'Search...',
+        inputTooShort: (args) => `Please enter ${args.minimum} or more characters`,
+        inputTooLong: (args) => `Please delete ${args.excess} characters`,
+        maximumSelected: (args) => `You can only select ${args.maximum} item${args.maximum === 1 ? '' : 's'}`,
+        loading: 'Loading...',
+        loadingMore: 'Loading more results...',
+        errorLoading: 'The results could not be loaded',
+        createNewTag: (args) => `Create tag: "${args.term}"`,
+        tagAdded: (args) => `Tag "${args.text}" added`,
+        loadMore: 'Load more results',
+        searchLabel: 'Search options',
+        clearSelection: 'Clear selection',
+        removeItem: (args) => `Remove ${args.text}`,
+        selectOptions: 'Select options',
+        noResultsAvailable: 'No results found',
+        resultsAvailable: {
+          one: '1 result available',
+          other: (args) => `${args.count} results available`
+        },
+        selected: (args) => `Selected: ${args.text}`
+      },
+      'pt-BR': {
+        noResults: 'Nenhum resultado encontrado',
+        searching: 'Buscando...',
+        searchPlaceholder: 'Buscar...',
+        inputTooShort: (args) => `Por favor, digite ${args.minimum} ou mais caracteres`,
+        inputTooLong: (args) => `Por favor, delete ${args.excess} caracteres`,
+        maximumSelected: (args) => `Você só pode selecionar ${args.maximum} ${args.maximum === 1 ? 'item' : 'itens'}`,
+        loading: 'Carregando...',
+        loadingMore: 'Carregando mais resultados...',
+        errorLoading: 'Os resultados não puderam ser carregados',
+        createNewTag: (args) => `Criar tag: "${args.term}"`,
+        tagAdded: (args) => `Tag "${args.text}" adicionada`,
+        loadMore: 'Carregar mais resultados',
+        searchLabel: 'Buscar opções',
+        clearSelection: 'Limpar seleção',
+        removeItem: (args) => `Remover ${args.text}`,
+        selectOptions: 'Selecionar opções',
+        noResultsAvailable: 'Nenhum resultado encontrado',
+        resultsAvailable: {
+          one: '1 resultado disponível',
+          other: (args) => `${args.count} resultados disponíveis`
+        },
+        selected: (args) => `Selecionado: ${args.text}`
+      },
+      'es': {
+        noResults: 'No se encontraron resultados',
+        searching: 'Buscando...',
+        searchPlaceholder: 'Buscar...',
+        inputTooShort: (args) => `Por favor, ingrese ${args.minimum} o más caracteres`,
+        inputTooLong: (args) => `Por favor, elimine ${args.excess} caracteres`,
+        maximumSelected: (args) => `Solo puede seleccionar ${args.maximum} ${args.maximum === 1 ? 'elemento' : 'elementos'}`,
+        loading: 'Cargando...',
+        loadingMore: 'Cargando más resultados...',
+        errorLoading: 'Los resultados no se pudieron cargar',
+        createNewTag: (args) => `Crear etiqueta: "${args.term}"`,
+        tagAdded: (args) => `Etiqueta "${args.text}" agregada`,
+        loadMore: 'Cargar más resultados',
+        searchLabel: 'Buscar opciones',
+        clearSelection: 'Limpiar selección',
+        removeItem: (args) => `Eliminar ${args.text}`,
+        selectOptions: 'Seleccionar opciones',
+        noResultsAvailable: 'No se encontraron resultados',
+        resultsAvailable: {
+          one: '1 resultado disponible',
+          other: (args) => `${args.count} resultados disponibles`
+        },
+        selected: (args) => `Seleccionado: ${args.text}`
+      }
+    };
+
+    function getLanguage(lang) {
+      return languages[lang] || languages['en'];
+    }
+
+    function detectBrowserLanguage() {
+      const browserLang = navigator.language || navigator.userLanguage;
+      if (browserLang.startsWith('pt')) return 'pt-BR';
+      if (browserLang.startsWith('es')) return 'es';
+      return 'en';
+    }
+
+    // Example 1: Auto-detect language
+    const fruitsData = [
+      { id: 'apple', text: 'Maçã' },
+      { id: 'banana', text: 'Banana' },
+      { id: 'orange', text: 'Laranja' },
+      { id: 'grape', text: 'Uva' },
+      { id: 'strawberry', text: 'Morango' },
+      { id: 'watermelon', text: 'Melancia' },
+      { id: 'pineapple', text: 'Abacaxi' }
+    ];
+
+    const autoSelect = new VanillaSmartSelect('#auto', {
+      data: fruitsData,
+      searchable: true,
+      placeholder: 'Selecione frutas...',
+      maximumSelectionLength: 3,
+      multiple: true
+    });
+
+    // Show detected language
+    const detectedLang = detectBrowserLanguage();
+    document.getElementById('detected-lang').textContent = detectedLang;
+
+    // Example 2: Dynamic language switching
+    const langData = [
+      { id: 'js', text: 'JavaScript' },
+      { id: 'py', text: 'Python' },
+      { id: 'java', text: 'Java' },
+      { id: 'cpp', text: 'C++' },
+      { id: 'rust', text: 'Rust' },
+      { id: 'go', text: 'Go' },
+      { id: 'php', text: 'PHP' },
+      { id: 'ruby', text: 'Ruby' }
+    ];
+
+    let currentLang = 'pt-BR';
+    const dynamicSelect = new VanillaSmartSelect('#dynamic', {
+      data: langData,
+      searchable: true,
+      placeholder: 'Selecione linguagens...',
+      language: getLanguage('pt-BR'),
+      multiple: true
+    });
+
+    window.changeLanguage = function(lang) {
+      currentLang = lang;
+
+      // Update button styles
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      const btnId = lang === 'pt-BR' ? 'btn-pt' : `btn-${lang}`;
+      const activeBtn = document.getElementById(btnId);
+      if (activeBtn) {
+        activeBtn.classList.add('active');
+      }
+
+      // Change language
+      dynamicSelect.updateLanguage(getLanguage(lang));
+
+      console.log(`Language changed to: ${lang}`);
+    };
+
+    // Example 3: Custom messages
+    const colorsData = [
+      { id: 'red', text: 'Vermelho' },
+      { id: 'blue', text: 'Azul' },
+      { id: 'green', text: 'Verde' },
+      { id: 'yellow', text: 'Amarelo' },
+      { id: 'purple', text: 'Roxo' },
+      { id: 'orange', text: 'Laranja' }
+    ];
+
+    const customSelect = new VanillaSmartSelect('#custom', {
+      data: colorsData,
+      searchable: true,
+      placeholder: 'Selecione cores...',
+      maximumSelectionLength: 2,
+      multiple: true,
+      language: {
+        ...getLanguage('pt-BR'),
+        maximumSelected: (args) => `🚫 Ops! Limite de ${args.maximum} ${args.maximum === 1 ? 'item' : 'itens'} atingido!`
+      }
+    });
+
+    console.log('✓ i18n examples ready!');
+    console.log('Available languages:', ['en', 'pt-BR', 'es']);
+    console.log('Browser language detected:', detectedLang);
+  </script>
+</body>
+</html>

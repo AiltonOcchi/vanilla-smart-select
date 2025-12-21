@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Exemplos básicos do Vanilla Smart Select - Single select, multi-select, grupos, clear button e validação HTML5">
+  <title>Exemplo Básico - Vanilla Smart Select</title>
+
+  <!-- Docs Styles -->
+  <link rel="stylesheet" href="../css/docs.css">
+
+  <!-- Vanilla Smart Select -->
+  <link rel="stylesheet" href="../../dist/vanilla-smart-select.min.css">
+
+  <!-- Prism.js for code highlighting -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+</head>
+<body>
+  <div class="docs-container">
+    <!-- Sidebar -->
+    <aside class="docs-sidebar">
+      <div class="sidebar-header">
+        <a href="index.html" class="sidebar-logo">
+          <div class="sidebar-logo-icon">VS</div>
+          <div class="sidebar-logo-text">
+            <div class="sidebar-logo-title">Vanilla Smart Select</div>
+            <div class="sidebar-logo-subtitle">v1.0.1</div>
+          </div>
+        </a>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Introdução</div>
+          <ul class="nav-links">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="getting-started.html" class="nav-link">Getting Started</a></li>
+          </ul>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Recursos</div>
+          <ul class="nav-links">
+            <li><a href="api-reference.html" class="nav-link">API Reference</a></li>
+            <li><a href="configuration.html" class="nav-link">Configuração</a></li>
+            <li><a href="events.html" class="nav-link">Eventos</a></li>
+          </ul>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Exemplos</div>
+          <ul class="nav-links">
+            <li><a href="example-basic.html" class="nav-link active">Básico</a></li>
+            <li><a href="example-api-programmatic.html" class="nav-link">API Programática</a></li>
+            <li><a href="example-ajax-basic.html" class="nav-link">AJAX Básico</a></li>
+            <li><a href="example-tags.html" class="nav-link">Tags</a></li>
+            <li><a href="example-pagination.html" class="nav-link">Paginação</a></li>
+            <li><a href="example-max-selection.html" class="nav-link">Limite de Seleção</a></li>
+            <li><a href="example-validation.html" class="nav-link">Validação Avançada</a></li>
+            <li><a href="example-templates.html" class="nav-link">Templates</a></li>
+            <li><a href="example-i18n.html" class="nav-link">i18n</a></li>
+            <li><a href="example-bootstrap.html" class="nav-link">Bootstrap</a></li>
+          </ul>
+        </div>
+
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="docs-main">
+      <header class="docs-topbar">
+        <button class="mobile-menu-toggle" aria-label="Toggle menu">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+        <h1 class="topbar-title">Exemplos Básicos</h1>
+        <div class="topbar-actions">
+          <div class="language-switcher">
+            <a href="example-basic.html" class="lang-link active">🇧🇷 PT</a>
+            <span class="lang-separator">|</span>
+            <a href="../en/example-basic.html" class="lang-link">🇺🇸 EN</a>
+          </div>
+          <a href="https://github.com/ailtonocchi/vanilla-smart-select" class="topbar-btn" target="_blank" rel="noopener noreferrer">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+            </svg>
+            GitHub
+          </a>
+        </div>
+      </header>
+
+      <div class="docs-content">
+        <section class="section-mb-lg">
+          <p class="lead">
+            Explore exemplos práticos e interativos demonstrando os recursos do Vanilla Smart Select.
+          Todos os exemplos são totalmente funcionais e incluem o código fonte completo.
+          </p>          
+        </section>
+
+        <div class="alert alert-info">
+          <strong>💡 Dica:</strong> Todos os exemplos abaixo estão funcionando ao vivo. Interaja com eles!
+          Você também pode encontrar mais exemplos navegando no menu lateral e exemplos completos independentes nas pastas
+            <code>examples/</code> e <code>examples-bootstrap/</code> do repositório. Esses arquivos podem ser abertos diretamente no navegador.
+        </div>
+
+                  
+
+        <!-- Example 1: Single Select -->
+        <section class="section-mb-lg">
+          <h2>Single Select com Busca</h2>
+          <p>Exemplo básico de single select com busca ativa e suporte completo a diacríticos.</p>
+
+          <div class="demo-container">
+            <label for="example1" class="demo-label">Selecione uma fruta:</label>
+            <select id="example1" class="demo-select">
+              <option value="">Selecione uma fruta...</option>
+              <option value="maca">Maçã</option>
+              <option value="banana">Banana</option>
+              <option value="laranja">Laranja</option>
+              <option value="uva">Uva</option>
+              <option value="abacaxi">Abacaxi</option>
+              <option value="morango">Morango</option>
+              <option value="melancia">Melancia</option>
+              <option value="manga">Manga</option>
+              <option value="pessego" disabled>Pêssego (Indisponível)</option>
+              <option value="limao">Limão</option>
+              <option value="coco">Coco</option>
+              <option value="acai">Açaí</option>
+            </select>
+
+            <details class="code-details">
+              <summary>Ver código</summary>
+              
+              <h3>HTML</h3>
+              <pre><code class="language-html">&lt;select id="example1"&gt;
+  &lt;option value=""&gt;Selecione uma fruta...&lt;/option&gt;
+  &lt;option value="maca"&gt;Maçã&lt;/option&gt;
+  &lt;option value="banana"&gt;Banana&lt;/option&gt;
+  &lt;option value="laranja"&gt;Laranja&lt;/option&gt;
+  &lt;!-- ... outras opções ... --&gt;
+&lt;/select&gt;</code></pre>
+
+              <h3>JavaScript</h3>
+              <pre><code class="language-javascript">const select = new VanillaSmartSelect('#example1', {
+  placeholder: 'Selecione uma fruta...',
+  searchable: true,
+  searchPlaceholder: 'Digite para buscar...'
+});</code></pre>
+            </details>
+          </div>
+
+          <div style="background: #e7f3ff; border: 1px solid #007bff; padding: 15px; border-radius: 4px; margin-top: 20px;">
+            <strong>Recursos:</strong>
+            <ul style="margin: 8px 0 0 0; padding-left: 20px;">
+              <li><strong>Busca:</strong> Digite para filtrar (suporta acentos - ex: "acai" encontra "Açaí")</li>
+              <li><strong>Teclado:</strong> ↑↓ para navegar, Enter para selecionar, ESC para fechar</li>
+              <li><strong>Acessibilidade:</strong> Totalmente acessível com screen readers (ARIA completo)</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- Example 2: Multi-Select -->
+        <section class="section-mb-lg">
+          <h2>Multi-Select com Busca</h2>
+          <p>Multi-seleção com busca integrada e remoção individual de itens.</p>
+
+          <div class="demo-container">
+            <label for="example2" class="demo-label">Selecione suas linguagens favoritas:</label>
+            <select id="example2" class="demo-select" multiple>
+              <option value="js" selected>JavaScript</option>
+              <option value="ts">TypeScript</option>
+              <option value="py">Python</option>
+              <option value="java">Java</option>
+              <option value="cpp">C++</option>
+              <option value="cs">C#</option>
+              <option value="go">Go</option>
+              <option value="rust">Rust</option>
+              <option value="php">PHP</option>
+              <option value="ruby">Ruby</option>
+              <option value="swift">Swift</option>
+              <option value="kotlin">Kotlin</option>
+            </select>
+
+            <details class="code-details">
+              <summary>Ver código</summary>
+              
+              <h3>HTML</h3>
+              <pre><code class="language-html">&lt;select id="example2" multiple&gt;
+  &lt;option value="js" selected&gt;JavaScript&lt;/option&gt;
+  &lt;option value="ts"&gt;TypeScript&lt;/option&gt;
+  &lt;option value="py"&gt;Python&lt;/option&gt;
+  &lt;!-- ... outras opções ... --&gt;
+&lt;/select&gt;</code></pre>
+
+              <h3>JavaScript</h3>
+              <pre><code class="language-javascript">const select = new VanillaSmartSelect('#example2', {
+  placeholder: 'Selecione linguagens...',
+  multiple: true,
+  searchable: true,
+  searchPlaceholder: 'Buscar linguagens...'
+});</code></pre>
+            </details>
+          </div>
+
+          <div style="background: #e7f3ff; border: 1px solid #007bff; padding: 15px; border-radius: 4px; margin-top: 20px;">
+            <strong>Recursos:</strong>
+            <ul style="margin: 8px 0 0 0; padding-left: 20px;">
+              <li><strong>Multi-seleção:</strong> Selecione múltiplos itens</li>
+              <li><strong>Remover:</strong> Clique no × para remover um item selecionado</li>
+              <li><strong>Busca:</strong> Digite para filtrar a lista</li>
+              <li><strong>Teclado:</strong> Tab dentro do dropdown é bloqueado - use Enter ou ESC</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- Example 3: Groups -->
+        <section class="section-mb-lg">
+          <h2>Select com Grupos (Optgroups)</h2>
+          <p>Opções organizadas em grupos lógicos com busca inteligente.</p>
+
+          <div class="demo-container">
+            <label for="example3" class="demo-label">Selecione um país:</label>
+            <select id="example3" class="demo-select">
+              <option value="">Selecione um país...</option>
+              <optgroup label="América do Sul">
+                <option value="br">Brasil</option>
+                <option value="ar">Argentina</option>
+                <option value="cl">Chile</option>
+                <option value="co">Colômbia</option>
+                <option value="pe">Peru</option>
+                <option value="uy">Uruguai</option>
+              </optgroup>
+              <optgroup label="Europa">
+                <option value="pt">Portugal</option>
+                <option value="es">Espanha</option>
+                <option value="fr">França</option>
+                <option value="it">Itália</option>
+                <option value="de">Alemanha</option>
+                <option value="uk">Reino Unido</option>
+              </optgroup>
+              <optgroup label="América do Norte">
+                <option value="us">Estados Unidos</option>
+                <option value="ca">Canadá</option>
+                <option value="mx">México</option>
+              </optgroup>
+              <optgroup label="Ásia">
+                <option value="jp">Japão</option>
+                <option value="cn">China</option>
+                <option value="kr">Coreia do Sul</option>
+                <option value="in">Índia</option>
+              </optgroup>
+            </select>
+
+            <details class="code-details">
+              <summary>Ver código</summary>
+              
+              <h3>HTML</h3>
+              <pre><code class="language-markup">&lt;select id="example3"&gt;
+  &lt;option value=""&gt;Selecione um país...&lt;/option&gt;
+  &lt;optgroup label="América do Sul"&gt;
+    &lt;option value="br"&gt;Brasil&lt;/option&gt;
+    &lt;option value="ar"&gt;Argentina&lt;/option&gt;
+  &lt;/optgroup&gt;
+  &lt;optgroup label="Europa"&gt;
+    &lt;option value="pt"&gt;Portugal&lt;/option&gt;
+    &lt;option value="es"&gt;Espanha&lt;/option&gt;
+  &lt;/optgroup&gt;
+&lt;/select&gt;</code></pre>
+
+              <h3>JavaScript</h3>
+              <pre><code class="language-javascript">const select = new VanillaSmartSelect('#example3', {
+  placeholder: 'Selecione um país...',
+  searchable: true,
+  searchPlaceholder: 'Buscar país...'
+});</code></pre>
+            </details>
+          </div>
+
+          <div style="background: #e7f3ff; border: 1px solid #007bff; padding: 15px; border-radius: 4px; margin-top: 20px;">
+            <strong>Recursos:</strong>
+            <ul style="margin: 8px 0 0 0; padding-left: 20px;">
+              <li><strong>Grupos:</strong> Opções organizadas por categoria</li>
+              <li><strong>Busca em grupos:</strong> Digite para buscar - mostra apenas grupos com resultados</li>
+              <li><strong>Navegação:</strong> Use Home/End para ir ao primeiro/último item</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- Example 4: Allow Clear -->
+        <section class="section-mb-lg">
+          <h2>Single Select com Clear Button</h2>
+          <p>Botão para limpar a seleção atual com evento dedicado.</p>
+
+          <div class="demo-container">
+            <label for="example4" class="demo-label">Selecione uma cor:</label>
+            <select id="example4" class="demo-select">
+              <option value="">Selecione uma cor...</option>
+              <option value="vermelho">Vermelho</option>
+              <option value="azul">Azul</option>
+              <option value="verde">Verde</option>
+              <option value="amarelo">Amarelo</option>
+              <option value="roxo">Roxo</option>
+              <option value="laranja">Laranja</option>
+              <option value="rosa">Rosa</option>
+              <option value="preto">Preto</option>
+              <option value="branco">Branco</option>
+            </select>
+            
+            <div style="margin-top: 15px;">
+              <button onclick="window.select4.clear()" class="btn-sm">
+                Limpar Seleção (Programático)
+              </button>
+            </div>
+
+            <details class="code-details">
+              <summary>Ver código</summary>
+              
+              <h3>HTML</h3>
+              <pre><code class="language-html">&lt;select id="example4"&gt;
+  &lt;option value=""&gt;Selecione uma cor...&lt;/option&gt;
+  &lt;option value="vermelho"&gt;Vermelho&lt;/option&gt;
+  &lt;option value="azul"&gt;Azul&lt;/option&gt;
+  &lt;!-- ... outras opções ... --&gt;
+&lt;/select&gt;</code></pre>
+
+              <h3>JavaScript</h3>
+              <pre><code class="language-javascript">const select4 = new VanillaSmartSelect('#example4', {
+  placeholder: 'Selecione uma cor...',
+  searchable: true,
+  allowClear: true,
+  searchPlaceholder: 'Buscar cor...'
+});
+
+// Listener para evento de clear
+document.querySelector('#example4').addEventListener('vs:clear', (e) => {
+  console.log('Seleção limpa!');
+});</code></pre>
+            </details>
+          </div>
+
+          <div style="background: #e7f3ff; border: 1px solid #007bff; padding: 15px; border-radius: 4px; margin-top: 20px;">
+            <strong>Recursos:</strong>
+            <ul style="margin: 8px 0 0 0; padding-left: 20px;">
+              <li><strong>Clear Button:</strong> Botão "×" aparece quando há seleção - clique para limpar</li>
+              <li><strong>API Programática:</strong> Use <code>select.clear()</code> para limpar via código</li>
+              <li><strong>Evento:</strong> Escuta o evento <code>vs:clear</code> quando limpar</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- Example 5: HTML5 Validation -->
+        <section class="section-mb-lg">
+          <h2>Validação HTML5 Automática</h2>
+          <p>Validação nativa do navegador funciona automaticamente, sem JavaScript adicional.</p>
+
+          <form id="simpleForm" class="demo-container">
+            <div style="margin-bottom: 20px;">
+              <label for="example5a" class="demo-label">Departamento: *</label>
+              <select id="example5a" class="demo-select" required>
+                <option value="">Selecione...</option>
+                <option value="ti">TI</option>
+                <option value="rh">RH</option>
+                <option value="vendas">Vendas</option>
+              </select>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+              <label for="example5b" class="demo-label">Nível: *</label>
+              <select id="example5b" class="demo-select" required>
+                <option value="">Selecione...</option>
+                <option value="junior">Júnior</option>
+                <option value="pleno">Pleno</option>
+                <option value="senior">Sênior</option>
+              </select>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+              <label for="example5c" class="demo-label">Turno (Opcional):</label>
+              <select id="example5c" class="demo-select">
+                <option value="">Selecione...</option>
+                <option value="manha">Manhã</option>
+                <option value="tarde">Tarde</option>
+                <option value="noite">Noite</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn-sm">Enviar</button>
+            <button type="reset" class="btn-sm" style="margin-left: 10px;">Limpar</button>
+
+            <details class="code-details">
+              <summary>Ver código</summary>
+              
+              <h3>HTML</h3>
+              <pre><code class="language-markup">&lt;!-- Basta usar atributo required --&gt;
+&lt;select id="example5a" required&gt;
+  &lt;option value=""&gt;Selecione...&lt;/option&gt;
+  &lt;option value="ti"&gt;TI&lt;/option&gt;
+  &lt;option value="rh"&gt;RH&lt;/option&gt;
+&lt;/select&gt;</code></pre>
+
+              <h3>JavaScript</h3>
+              <pre><code class="language-javascript">// Validação funciona automaticamente!
+new VanillaSmartSelect('#example5a', { searchable: true });
+new VanillaSmartSelect('#example5b', { searchable: true });
+new VanillaSmartSelect('#example5c', { searchable: true });</code></pre>
+            </details>
+          </form>
+
+          <div style="background: #d4edda; border: 1px solid #28a745; padding: 15px; border-radius: 4px; margin-top: 20px;">
+            <strong>✓ Validação 100% Automática - Sem JavaScript adicional!</strong>
+            <ul style="margin: 8px 0 0 0; padding-left: 20px;">
+              <li><strong>Borda vermelha automática</strong> quando campo <code>required</code> está vazio</li>
+              <li><strong>Mensagem nativa do navegador</strong> ao tentar submeter formulário inválido</li>
+              <li><strong>Select original sempre sincronizado</strong> - funciona com qualquer biblioteca de validação</li>
+              <li><strong>Funciona com formulários complexos</strong> - escala para dezenas de campos sem código extra</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- Example 6: Opções Desabilitadas -->
+        <section class="section-mb-lg">
+          <h2>Opções Desabilitadas</h2>
+          <p>Demonstração de opções indisponíveis usando o atributo <code>disabled</code>.</p>
+
+          <div class="demo-container">
+            <label for="disabled-options" class="demo-label">Selecione um item (alguns indisponíveis):</label>
+            <select id="disabled-options" class="demo-select">
+              <option value="">Selecione...</option>
+              <option value="opt1">Opção 1</option>
+              <option value="opt2" disabled>Opção 2 (Indisponível)</option>
+              <option value="opt3">Opção 3</option>
+              <option value="opt4" disabled>Opção 4 (Indisponível)</option>
+              <option value="opt5">Opção 5</option>
+            </select>
+
+            <details class="code-details">
+              <summary>Ver código</summary>
+
+              <h3>HTML</h3>
+              <pre><code class="language-html">&lt;select id="disabled-options"&gt;
+  &lt;option value=""&gt;Selecione...&lt;/option&gt;
+  &lt;option value="opt1"&gt;Opção 1&lt;/option&gt;
+  &lt;option value="opt2" disabled&gt;Opção 2 (Indisponível)&lt;/option&gt;
+  &lt;option value="opt3"&gt;Opção 3&lt;/option&gt;
+  &lt;option value="opt4" disabled&gt;Opção 4 (Indisponível)&lt;/option&gt;
+  &lt;option value="opt5"&gt;Opção 5&lt;/option&gt;
+&lt;/select&gt;</code></pre>
+
+              <h3>JavaScript</h3>
+              <pre><code class="language-javascript">new VanillaSmartSelect('#disabled-options', {
+  placeholder: 'Selecione...',
+  searchable: true
+});</code></pre>
+            </details>
+          </div>
+        </section>
+
+        <!-- Example 7: Eventos -->
+        <section class="section-mb-lg">
+          <h2>Eventos</h2>
+          <p>Exemplo com listeners para eventos principais do componente.</p>
+
+          <div class="demo-container">
+            <label for="events-demo" class="demo-label">Selecione uma opção:</label>
+            <select id="events-demo" class="demo-select">
+              <option value="">Selecione...</option>
+              <option value="a">Item A</option>
+              <option value="b">Item B</option>
+              <option value="c">Item C</option>
+            </select>
+
+            <div id="events-log" class="code-details" style="display: block; margin-top: 15px;">
+              <strong>Log de Eventos:</strong>
+              <div id="events-log-items" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 4px; padding: 12px; min-height: 100px; max-height: 300px; overflow-y: auto; margin-top: 8px;">
+                <div style="color: #999; font-style: italic;">Os eventos aparecerão aqui...</div>
+              </div>
+            </div>
+
+            <details class="code-details">
+              <summary>Ver código</summary>
+
+              <h3>HTML</h3>
+              <pre><code class="language-html">&lt;select id="events-demo"&gt;
+  &lt;option value=""&gt;Selecione...&lt;/option&gt;
+  &lt;option value="a"&gt;Item A&lt;/option&gt;
+  &lt;option value="b"&gt;Item B&lt;/option&gt;
+  &lt;option value="c"&gt;Item C&lt;/option&gt;
+&lt;/select&gt;
+
+&lt;div id="events-log"&gt;
+  &lt;div id="events-log-items"&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+              <h3>JavaScript</h3>
+              <pre><code class="language-javascript">const vsEvents = new VanillaSmartSelect('#events-demo', {
+  placeholder: 'Selecione...',
+  searchable: true
+});
+
+const logBox = document.getElementById('events-log-items');
+function addLog(message, color = '#333') {
+  const ts = new Date().toLocaleTimeString();
+  const div = document.createElement('div');
+  div.style.marginBottom = '6px';
+  div.innerHTML = `&lt;strong style="color: ${color};"&gt;[${ts}]&lt;/strong&gt; ${message}`;
+  logBox.insertBefore(div, logBox.firstChild);
+}
+
+const eventsEl = document.getElementById('events-demo');
+eventsEl.addEventListener('vs:init', () => addLog('vs:init - Select inicializado', '#6f42c1'));
+eventsEl.addEventListener('vs:open', () => addLog('vs:open - Dropdown aberto', '#17a2b8'));
+eventsEl.addEventListener('vs:close', () => addLog('vs:close - Dropdown fechado', '#6c757d'));
+eventsEl.addEventListener('vs:select', (e) => addLog(`vs:select - Selecionado: ${e.detail.data?.text || e.detail.value}`, '#28a745'));
+eventsEl.addEventListener('vs:change', (e) => addLog(`vs:change - Valor: ${e.detail.value}`, '#007bff'));</code></pre>
+            </details>
+          </div>
+        </section>
+
+        <!-- Keyboard Shortcuts -->
+        <section class="section-mb-lg">
+          <h2>Atalhos de Teclado</h2>
+          <p>Todos os exemplos acima suportam navegação completa por teclado.</p>
+
+          <div style="background: #f8f9fa; border: 1px solid #6c757d; padding: 15px; border-radius: 4px;">
+            <strong>Atalhos disponíveis:</strong>
+            <table>
+              <thead>
+                <tr>
+                  <th>Tecla</th>
+                  <th>Ação</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>Enter / Espaço</code></td>
+                  <td>Abre o dropdown (quando fechado)</td>
+                </tr>
+                <tr>
+                  <td><code>↑ / ↓</code></td>
+                  <td>Navega entre as opções</td>
+                </tr>
+                <tr>
+                  <td><code>Home</code></td>
+                  <td>Vai para a primeira opção</td>
+                </tr>
+                <tr>
+                  <td><code>End</code></td>
+                  <td>Vai para a última opção</td>
+                </tr>
+                <tr>
+                  <td><code>Enter</code></td>
+                  <td>Seleciona a opção destacada (quando dropdown aberto)</td>
+                </tr>
+                <tr>
+                  <td><code>ESC</code></td>
+                  <td>Fecha o dropdown sem selecionar</td>
+                </tr>
+                <tr>
+                  <td><code>Tab</code></td>
+                  <td>Dropdown fechado: sai do campo | Dropdown aberto: bloqueado (use Enter/ESC)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+
+        <!-- More Examples -->
+        <section>
+          <h2 id="more-examples">Mais Exemplos</h2>
+          <p>Explore exemplos mais avançados e específicos:</p>
+
+          <div class="feature-grid">
+            <div class="feature-card">
+              <h3>🎨 Templates Customizados</h3>
+              <p>Crie resultados ricos com avatares, ícones, badges e imagens.</p>
+              <a href="example-templates.html">Ver exemplos →</a>
+            </div>
+
+            <div class="feature-card">
+              <h3>🌐 AJAX & Dados Remotos</h3>
+              <p>Carregue opções de APIs externas com paginação e cache.</p>
+              <a href="example-ajax-basic.html">Ver exemplos →</a>
+            </div>
+
+            <div class="feature-card">
+              <h3>🏷️ Tags Dinâmicas</h3>
+              <p>Permita usuários criar novas opções enquanto digitam.</p>
+              <a href="example-tags.html">Ver exemplo →</a>
+            </div>
+
+            <div class="feature-card">
+              <h3>🌍 Internacionalização</h3>
+              <p>Suporte a múltiplos idiomas e mensagens customizadas.</p>
+              <a href="example-i18n.html">Ver exemplos →</a>
+            </div>
+
+            <div class="feature-card">
+              <h3>✓ Validação HTML5</h3>
+              <p>Integração com validação nativa de formulários.</p>
+              <a href="example-validation.html">Ver exemplo →</a>
+            </div>
+
+            <div class="feature-card">
+              <h3>🎭 Bootstrap 5</h3>
+              <p>Integração perfeita com componentes Bootstrap.</p>
+              <a href="example-bootstrap.html">Ver exemplos →</a>
+            </div>
+          </div>
+          
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
+  <script src="../../dist/vanilla-smart-select.min.js"></script>
+  <script src="../js/docs.js"></script>
+
+  <!-- Initialize examples -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      try {
+        const VanillaSmartSelectClass = VanillaSmartSelect.default || VanillaSmartSelect;
+
+        // Example 1: Single select com busca
+        const select1 = new VanillaSmartSelectClass('#example1', {
+          placeholder: 'Selecione uma fruta...',
+          searchable: true,
+          searchPlaceholder: 'Digite para buscar...'
+        });
+
+        // Example 2: Multi-select com busca
+        const select2 = new VanillaSmartSelectClass('#example2', {
+          placeholder: 'Selecione linguagens...',
+          multiple: true,
+          searchable: true,
+          searchPlaceholder: 'Buscar linguagens...'
+        });
+
+        // Example 3: Com grupos e busca
+        const select3 = new VanillaSmartSelectClass('#example3', {
+          placeholder: 'Selecione um país...',
+          searchable: true,
+          searchPlaceholder: 'Buscar país...'
+        });
+
+        // Example 4: Com allowClear
+        const select4 = new VanillaSmartSelectClass('#example4', {
+          placeholder: 'Selecione uma cor...',
+          searchable: true,
+          allowClear: true,
+          searchPlaceholder: 'Buscar cor...'
+        });
+
+        // Make select4 globally available for the button
+        window.select4 = select4;
+
+        // Event listener for clear event
+        document.querySelector('#example4').addEventListener('vs:clear', (e) => {
+          console.log('✓ vs:clear - Seleção limpa!');
+        });
+
+        // Example 5: HTML5 Validation
+        new VanillaSmartSelectClass('#example5a', { searchable: true });
+        new VanillaSmartSelectClass('#example5b', { searchable: true });
+        new VanillaSmartSelectClass('#example5c', { searchable: true });
+
+        // Example 6: Disabled options
+        new VanillaSmartSelectClass('#disabled-options', {
+          placeholder: 'Selecione...',
+          searchable: true
+        });
+
+        // Example 7: Events
+        const vsEvents = new VanillaSmartSelectClass('#events-demo', {
+          placeholder: 'Selecione...',
+          searchable: true
+        });
+
+        const logBox = document.getElementById('events-log-items');
+        function addLog(message, color = '#333') {
+          const ts = new Date().toLocaleTimeString();
+          const div = document.createElement('div');
+          div.style.marginBottom = '6px';
+          div.innerHTML = `<strong style="color: ${color};">[${ts}]</strong> ${message}`;
+          logBox.insertBefore(div, logBox.firstChild);
+        }
+
+        const eventsEl = document.getElementById('events-demo');
+        eventsEl.addEventListener('vs:init', () => addLog('vs:init - Select inicializado', '#6f42c1'));
+        eventsEl.addEventListener('vs:open', () => addLog('vs:open - Dropdown aberto', '#17a2b8'));
+        eventsEl.addEventListener('vs:close', () => addLog('vs:close - Dropdown fechado', '#6c757d'));
+        eventsEl.addEventListener('vs:select', (e) => addLog(`vs:select - Selecionado: ${e.detail.data?.text || e.detail.value}`, '#28a745'));
+        eventsEl.addEventListener('vs:change', (e) => addLog(`vs:change - Valor: ${e.detail.value}`, '#007bff'));
+
+        // Event listeners - demonstrando eventos disponíveis
+        document.querySelector('#example1').addEventListener('vs:select', (e) => {
+          console.log('✓ vs:select - Item selecionado:', e.detail);
+        });
+
+        document.querySelector('#example2').addEventListener('vs:unselect', (e) => {
+          console.log('✓ Multi-select - Item removido:', e.detail);
+        });
+
+        console.log('✓ Todos os exemplos inicializados com sucesso!');
+
+      } catch (error) {
+        console.error('❌ Initialization error:', error);
+      }
+    });
+  </script>
+</body>
+</html>

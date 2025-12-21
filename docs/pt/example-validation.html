@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Validação Avançada - Vanilla Smart Select</title>
+  <link rel="stylesheet" href="../css/docs.css">
+  <link rel="stylesheet" href="../../dist/vanilla-smart-select.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+</head>
+<body>
+  <div class="docs-container">
+    <aside class="docs-sidebar">
+      <div class="sidebar-header">
+        <a href="index.html" class="sidebar-logo">
+          <div class="sidebar-logo-icon">VS</div>
+          <div class="sidebar-logo-text">
+            <div class="sidebar-logo-title">Vanilla Smart Select</div>
+            <div class="sidebar-logo-subtitle">v1.0.1</div>
+          </div>
+        </a>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Introdução</div>
+          <ul class="nav-links">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="getting-started.html" class="nav-link">Getting Started</a></li>
+          </ul>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Recursos</div>
+          <ul class="nav-links">
+            <li><a href="api-reference.html" class="nav-link">API Reference</a></li>
+            <li><a href="configuration.html" class="nav-link">Configuração</a></li>
+            <li><a href="events.html" class="nav-link">Eventos</a></li>
+          </ul>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Exemplos</div>
+          <ul class="nav-links">
+            <li><a href="example-basic.html" class="nav-link">Básico</a></li>
+            <li><a href="example-api-programmatic.html" class="nav-link">API Programática</a></li>
+            <li><a href="example-ajax-basic.html" class="nav-link">AJAX Básico</a></li>
+            <li><a href="example-tags.html" class="nav-link">Tags</a></li>
+            <li><a href="example-pagination.html" class="nav-link">Paginação</a></li>
+            <li><a href="example-max-selection.html" class="nav-link">Limite de Seleção</a></li>
+            <li><a href="example-validation.html" class="nav-link active">Validação Avançada</a></li>
+            <li><a href="example-templates.html" class="nav-link">Templates</a></li>
+            <li><a href="example-i18n.html" class="nav-link">i18n</a></li>
+            <li><a href="example-bootstrap.html" class="nav-link">Bootstrap</a></li>
+          </ul>
+        </div>
+      </nav>
+    </aside>
+    <main class="docs-main">
+      <header class="docs-topbar">
+        <button class="mobile-menu-toggle" aria-label="Toggle menu">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+        <h1 class="topbar-title">Validação Avançada</h1>
+        <div class="topbar-actions">
+          <div class="language-switcher">
+            <a href="example-validation.html" class="lang-link active">🇧🇷 PT</a>
+            <span class="lang-separator">|</span>
+            <a href="../en/example-validation.html" class="lang-link">🇺🇸 EN</a>
+          </div>
+          <a href="https://github.com/ailtonocchi/vanilla-smart-select" class="topbar-btn" target="_blank" rel="noopener noreferrer">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+            </svg>
+            GitHub
+          </a>
+        </div>
+      </header>
+      <div class="docs-content">
+        <section class="section-mb-lg">
+          <p class="lead">
+            A validação HTML5 nativa funciona automaticamente com o VanillaSmartSelect. O select original permanece 
+            sincronizado, permitindo usar atributos padrão como <code>required</code> sem nenhum código adicional.
+          </p>
+        </section>
+
+        <!-- Example: Form Validation -->
+        <section class="section-mb-lg">
+          <h2>Formulário com Validação HTML5</h2>
+          <p>Exemplo completo de formulário com campos obrigatórios e validação nativa do navegador.</p>
+
+          <div class="demo-container">
+            <form id="customForm">
+              <div style="margin-bottom: 20px;">
+                <label for="department" class="demo-label">Departamento: *</label>
+                <select id="department" required>
+                  <option value="">Selecione...</option>
+                  <option value="ti">TI</option>
+                  <option value="rh">RH</option>
+                  <option value="vendas">Vendas</option>
+                  <option value="marketing">Marketing</option>
+                </select>
+              </div>
+
+              <div style="margin-bottom: 20px;">
+                <label for="level" class="demo-label">Nível: *</label>
+                <select id="level" required>
+                  <option value="">Selecione...</option>
+                  <option value="junior">Júnior</option>
+                  <option value="pleno">Pleno</option>
+                  <option value="senior">Sênior</option>
+                </select>
+              </div>
+
+              <div style="margin-bottom: 20px;">
+                <label for="shift" class="demo-label">Turno:</label>
+                <select id="shift">
+                  <option value="">Selecione...</option>
+                  <option value="morning">Manhã</option>
+                  <option value="afternoon">Tarde</option>
+                  <option value="night">Noite</option>
+                </select>
+              </div>
+
+              <button type="submit" style="padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: 500;">
+                Enviar
+              </button>
+            </form>
+
+            <div id="result" style="padding: 15px; border-radius: 4px; margin-top: 15px; display: none;"></div>
+            <details class="code-details">
+            <summary>Ver código</summary>
+            
+            <div class="code-example">
+              <h3>HTML</h3>
+              <pre><code class="language-html">&lt;form id="customForm"&gt;
+  &lt;div&gt;
+    &lt;label for="department"&gt;Departamento: *&lt;/label&gt;
+    &lt;select id="department" required&gt;
+      &lt;option value=""&gt;Selecione...&lt;/option&gt;
+      &lt;option value="ti"&gt;TI&lt;/option&gt;
+      &lt;option value="rh"&gt;RH&lt;/option&gt;
+      &lt;option value="vendas"&gt;Vendas&lt;/option&gt;
+      &lt;option value="marketing"&gt;Marketing&lt;/option&gt;
+    &lt;/select&gt;
+  &lt;/div&gt;
+
+  &lt;div&gt;
+    &lt;label for="level"&gt;Nível: *&lt;/label&gt;
+    &lt;select id="level" required&gt;
+      &lt;option value=""&gt;Selecione...&lt;/option&gt;
+      &lt;option value="junior"&gt;Júnior&lt;/option&gt;
+      &lt;option value="pleno"&gt;Pleno&lt;/option&gt;
+      &lt;option value="senior"&gt;Sênior&lt;/option&gt;
+    &lt;/select&gt;
+  &lt;/div&gt;
+
+  &lt;div&gt;
+    &lt;label for="shift"&gt;Turno:&lt;/label&gt;
+    &lt;select id="shift"&gt;
+      &lt;option value=""&gt;Selecione...&lt;/option&gt;
+      &lt;option value="morning"&gt;Manhã&lt;/option&gt;
+      &lt;option value="afternoon"&gt;Tarde&lt;/option&gt;
+      &lt;option value="night"&gt;Noite&lt;/option&gt;
+    &lt;/select&gt;
+  &lt;/div&gt;
+
+  &lt;button type="submit"&gt;Enviar&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+          </div>
+
+          <div class="code-example">
+            <h3>JavaScript</h3>
+            <pre><code class="language-javascript">// Inicializa os selects
+new VanillaSmartSelect('#department', { searchable: true });
+new VanillaSmartSelect('#level', { searchable: true });
+new VanillaSmartSelect('#shift', { searchable: true });
+
+// Validação customizada simples
+const form = document.getElementById('customForm');
+const resultDiv = document.getElementById('result');
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  if (form.checkValidity()) {
+    // Válido - processar
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData);
+
+    resultDiv.className = 'result success';
+    resultDiv.style.display = 'block';
+    resultDiv.style.background = '#d4edda';
+    resultDiv.style.border = '1px solid #28a745';
+    resultDiv.style.color = '#155724';
+    resultDiv.innerHTML = `
+      &lt;strong&gt;✓ Formulário Válido!&lt;/strong&gt;&lt;br&gt;      
+    `;
+
+    console.log('Dados válidos:', data);
+  } else {
+    // Inválido - mostrar erro
+    form.reportValidity(); // Mensagem nativa do navegador
+
+    resultDiv.style.display = 'block';
+    resultDiv.style.background = '#f8d7da';
+    resultDiv.style.border = '1px solid #dc3545';
+    resultDiv.style.color = '#721c24';
+    resultDiv.innerHTML = '&lt;strong&gt;✗ Erro!&lt;/strong&gt; Preencha todos os campos obrigatórios.';
+  }
+});</code></pre>
+            </div>
+            </details>
+          </div>
+        </section>
+
+        <!-- Advanced Validation -->
+        <section class="section-mb-lg">
+          <h2>Validação Customizada com API HTML5</h2>
+          <p>Use a API de validação do HTML5 para definir regras e mensagens de erro customizadas.</p>
+
+          <div class="demo-container">
+            <form id="customValidationForm">
+              <div style="margin-bottom: 20px;">
+                <label for="custom-validation" class="demo-label">Selecione uma prioridade: *</label>
+                <select id="custom-validation" required>
+                  <option value="">Selecione...</option>
+                  <option value="low">Baixa</option>
+                  <option value="medium">Média</option>
+                  <option value="high">Alta</option>
+                  <option value="critical">Crítica</option>
+                </select>
+                <small style="display: block; margin-top: 5px; color: #666;">
+                  Apenas "Alta" ou "Crítica" são aceitas
+                </small>
+              </div>
+
+              <div style="display: flex; gap: 10px;">
+                <button type="submit" style="padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: 500;">
+                  Enviar
+                </button>
+                <button type="button" id="checkValidityBtn" style="padding: 10px 20px; background: #6c757d; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: 500;">
+                  Verificar Validade
+                </button>
+                <button type="button" id="showErrorBtn" style="padding: 10px 20px; background: #ffc107; color: #000; border: none; border-radius: 4px; cursor: pointer; font-weight: 500;">
+                  Mostrar Mensagem
+                </button>
+              </div>
+            </form>
+
+            <div id="custom-validation-result" style="padding: 15px; border-radius: 4px; margin-top: 15px; display: none;"></div>
+            <details class="code-details">
+            <summary>Ver código</summary>
+            
+            <h3>HTML</h3>
+            <pre><code class="language-html">&lt;form id="customValidationForm"&gt;
+  &lt;div&gt;
+    &lt;label for="custom-validation"&gt;Selecione uma prioridade: *&lt;/label&gt;
+    &lt;select id="custom-validation" required&gt;
+      &lt;option value=""&gt;Selecione...&lt;/option&gt;
+      &lt;option value="low"&gt;Baixa&lt;/option&gt;
+      &lt;option value="medium"&gt;Média&lt;/option&gt;
+      &lt;option value="high"&gt;Alta&lt;/option&gt;
+      &lt;option value="critical"&gt;Crítica&lt;/option&gt;
+    &lt;/select&gt;
+  &lt;/div&gt;
+
+  &lt;button type="submit"&gt;Enviar&lt;/button&gt;
+  &lt;button type="button" id="checkValidityBtn"&gt;Verificar Validade&lt;/button&gt;
+  &lt;button type="button" id="showErrorBtn"&gt;Mostrar Mensagem&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+
+          <h3>JavaScript</h3>
+          <pre><code class="language-javascript">const selectElement = document.querySelector('#custom-validation');
+const select = new VanillaSmartSelect('#custom-validation');
+
+// Validar quando o valor mudar
+selectElement.addEventListener('change', () => {
+  const value = selectElement.value;
+  
+  // Apenas "high" ou "critical" são válidos
+  if (value && value !== 'high' && value !== 'critical') {
+    selectElement.setCustomValidity('Apenas prioridades "Alta" ou "Crítica" são permitidas');
+  } else {
+    selectElement.setCustomValidity(''); // Limpa o erro
+  }
+});
+
+// Verificar validade programaticamente
+document.getElementById('checkValidityBtn').addEventListener('click', () => {
+  if (selectElement.checkValidity()) {
+    console.log('✓ Campo válido!');
+  } else {
+    console.log('✗ Campo inválido!');
+  }
+});
+
+// Mostrar mensagem de validação
+document.getElementById('showErrorBtn').addEventListener('click', () => {
+  selectElement.reportValidity(); // Mostra mensagem nativa do navegador
+});</code></pre>
+            </details>
+          </div>
+
+        </section>
+
+        <!-- Use Cases -->
+        <section class="section-mb-lg">
+          <h2>Validação de Dependência Entre Campos</h2>
+          <p>Campo "Cidade" só pode ser selecionado após escolher um "Estado".</p>
+
+          <div class="demo-container">
+            <form id="dependencyForm">
+              <div style="margin-bottom: 20px;">
+                <label for="state" class="demo-label">Estado: *</label>
+                <select id="state" required>
+                  <option value="">Selecione um estado...</option>
+                  <option value="sp">São Paulo</option>
+                  <option value="rj">Rio de Janeiro</option>
+                  <option value="mg">Minas Gerais</option>
+                  <option value="rs">Rio Grande do Sul</option>
+                </select>
+              </div>
+
+              <div style="margin-bottom: 20px;">
+                <label for="city" class="demo-label">Cidade: *</label>
+                <select id="city" required disabled>
+                  <option value="">Selecione um estado primeiro...</option>
+                </select>
+              </div>
+
+              <button type="submit" style="padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: 500;">
+                Enviar
+              </button>
+            </form>
+
+            <div id="dependency-result" style="padding: 15px; border-radius: 4px; margin-top: 15px; display: none;"></div>
+            <details class="code-details">
+            <summary>Ver código</summary>
+            
+            <h3>HTML</h3>
+            <pre><code class="language-html">&lt;form id="dependencyForm"&gt;
+  &lt;div&gt;
+    &lt;label for="state"&gt;Estado: *&lt;/label&gt;
+    &lt;select id="state" required&gt;
+      &lt;option value=""&gt;Selecione um estado...&lt;/option&gt;
+      &lt;option value="sp"&gt;São Paulo&lt;/option&gt;
+      &lt;option value="rj"&gt;Rio de Janeiro&lt;/option&gt;
+      &lt;option value="mg"&gt;Minas Gerais&lt;/option&gt;
+      &lt;option value="rs"&gt;Rio Grande do Sul&lt;/option&gt;
+    &lt;/select&gt;
+  &lt;/div&gt;
+
+  &lt;div&gt;
+    &lt;label for="city"&gt;Cidade: *&lt;/label&gt;
+    &lt;select id="city" required disabled&gt;
+      &lt;option value=""&gt;Selecione um estado primeiro...&lt;/option&gt;
+    &lt;/select&gt;
+  &lt;/div&gt;
+
+  &lt;button type="submit"&gt;Enviar&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+
+          <h3>JavaScript</h3>
+          <pre><code class="language-javascript">// Inicializar selects
+new VanillaSmartSelect('#state');
+new VanillaSmartSelect('#city');
+
+// Dados das cidades por estado
+const citiesByState = {
+  sp: ['São Paulo', 'Campinas', 'Santos', 'Ribeirão Preto'],
+  rj: ['Rio de Janeiro', 'Niterói', 'Petrópolis', 'Cabo Frio'],
+  mg: ['Belo Horizonte', 'Uberlândia', 'Contagem', 'Juiz de Fora'],
+  rs: ['Porto Alegre', 'Caxias do Sul', 'Pelotas', 'Canoas']
+};
+
+const stateSelect = document.querySelector('#state');
+const citySelect = document.querySelector('#city');
+
+stateSelect.addEventListener('change', () => {
+  if (!stateSelect.value) {
+    citySelect.disabled = true;
+    citySelect.innerHTML = '&lt;option value=""&gt;Selecione um estado primeiro...&lt;/option&gt;';
+    citySelect.setCustomValidity('Selecione um estado primeiro');
+  } else {
+    citySelect.disabled = false;
+    citySelect.setCustomValidity('');
+    
+    // Preencher cidades do estado selecionado
+    const cities = citiesByState[stateSelect.value];
+    citySelect.innerHTML = '&lt;option value=""&gt;Selecione uma cidade...&lt;/option&gt;' +
+      cities.map(city => `&lt;option value="${city}"&gt;${city}&lt;/option&gt;`).join('');
+  }
+});</code></pre>
+            </details>
+          </div>
+        </section>
+
+        <section class="section-mb-lg">
+          <h2>Validação Customizada com Regex</h2>
+          <p>Validar se o código do produto segue um padrão específico (XXX-9999).</p>
+
+          <div class="demo-container">
+            <form id="regexForm">
+              <div style="margin-bottom: 20px;">
+                <label for="product-code" class="demo-label">Código do Produto: *</label>
+                <select id="product-code" required>
+                  <option value="">Selecione um código...</option>
+                  <option value="ABC-1234">ABC-1234 ✓</option>
+                  <option value="XYZ-5678">XYZ-5678 ✓</option>
+                  <option value="DEF-9012">DEF-9012 ✓</option>
+                  <option value="INVALID">INVALID ✗</option>
+                  <option value="123-ABC">123-ABC ✗</option>
+                  <option value="AB-1234">AB-1234 ✗</option>
+                </select>
+                <small style="display: block; margin-top: 5px; color: #666;">
+                  Formato válido: 3 letras maiúsculas + hífen + 4 números (ex: ABC-1234)
+                </small>
+              </div>
+
+              <button type="submit" style="padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: 500;">
+                Validar
+              </button>
+            </form>
+
+            <div id="regex-result" style="padding: 15px; border-radius: 4px; margin-top: 15px; display: none;"></div>
+            <details class="code-details">
+            <summary>Ver código</summary>
+            
+            <h3>HTML</h3>
+            <pre><code class="language-html">&lt;form id="regexForm"&gt;
+  &lt;div&gt;
+    &lt;label for="product-code"&gt;Código do Produto: *&lt;/label&gt;
+    &lt;select id="product-code" required&gt;
+      &lt;option value=""&gt;Selecione um código...&lt;/option&gt;
+      &lt;option value="ABC-1234"&gt;ABC-1234 ✓&lt;/option&gt;
+      &lt;option value="XYZ-5678"&gt;XYZ-5678 ✓&lt;/option&gt;
+      &lt;option value="DEF-9012"&gt;DEF-9012 ✓&lt;/option&gt;
+      &lt;option value="INVALID"&gt;INVALID ✗&lt;/option&gt;
+      &lt;option value="123-ABC"&gt;123-ABC ✗&lt;/option&gt;
+      &lt;option value="AB-1234"&gt;AB-1234 ✗&lt;/option&gt;
+    &lt;/select&gt;
+  &lt;/div&gt;
+
+  &lt;button type="submit"&gt;Validar&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+
+          <h3>JavaScript</h3>
+          <pre><code class="language-javascript">// Inicializar select
+new VanillaSmartSelect('#product-code');
+
+const codeSelect = document.querySelector('#product-code');
+
+// Validar quando o valor mudar
+codeSelect.addEventListener('change', () => {
+  const value = codeSelect.value;
+  const pattern = /^[A-Z]{3}-\d{4}$/; // Ex: ABC-1234
+
+  if (value && !pattern.test(value)) {
+    codeSelect.setCustomValidity('Código inválido. Use o formato: XXX-9999');
+  } else {
+    codeSelect.setCustomValidity('');
+  }
+});</code></pre>
+            </details>
+          </div>
+        </section>
+
+        <!-- How It Works -->
+        <section class="section-mb-lg">
+          <h2>Como Funciona</h2>
+          
+          <div class="info-callout">
+            <strong>📋 Princípios da Validação:</strong>
+            <ul style="margin: 10px 0 0 0; padding-left: 20px;">
+              <li><strong>Select Original Sincronizado:</strong> O VanillaSmartSelect mantém o select original sempre atualizado</li>
+              <li><strong>Atributo <code>required</code>:</strong> Funciona nativamente sem código adicional</li>
+              <li><strong>Borda Vermelha Automática:</strong> Feedback visual quando campo obrigatório está vazio</li>
+              <li><strong>form.checkValidity():</strong> Valida todos os campos de uma vez</li>
+              <li><strong>form.reportValidity():</strong> Mostra mensagens de erro nativas do navegador</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- Integration -->
+        <section class="section-mb-lg">
+          <h2>Integração com Bibliotecas de Validação</h2>
+          <p>Como o select original permanece sincronizado, você pode usar qualquer biblioteca de validação que trabalhe com o DOM:</p>
+
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Biblioteca</th>
+                  <th>Compatibilidade</th>
+                  <th>Observação</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>HTML5 Validation</strong></td>
+                  <td>✅ Total</td>
+                  <td>Funciona nativamente, sem configuração</td>
+                </tr>
+                <tr>
+                  <td><strong>Vuelidate</strong></td>
+                  <td>✅ Total</td>
+                  <td>Acessa o select original diretamente</td>
+                </tr>
+                <tr>
+                  <td><strong>Yup</strong></td>
+                  <td>✅ Total</td>
+                  <td>Validação baseada em schema funciona perfeitamente</td>
+                </tr>
+                <tr>
+                  <td><strong>Joi</strong></td>
+                  <td>✅ Total</td>
+                  <td>Lê valores do FormData automaticamente</td>
+                </tr>
+                <tr>
+                  <td><strong>Zod</strong></td>
+                  <td>✅ Total</td>
+                  <td>TypeScript-first, funciona com DOM</td>
+                </tr>
+                <tr>
+                  <td><strong>jQuery Validation</strong></td>
+                  <td>✅ Total</td>
+                  <td>Valida o select original, não o wrapper</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="info-callout info-callout-success">
+            <strong>✅ Por que funciona:</strong> O VanillaSmartSelect é um wrapper visual que mantém o 
+            select HTML original no DOM e sempre sincronizado. Bibliotecas de validação podem acessar 
+            e validar o select original normalmente.
+          </div>
+        </section>
+
+        <!-- Best Practices -->
+        <section class="section-mb-lg">
+          <h2>Boas Práticas</h2>
+
+          <div class="info-callout info-callout-info">
+            <strong>📌 Recomendações:</strong>
+            <ul style="margin: 10px 0 0 0; padding-left: 20px;">
+              <li><strong>Use HTML5 Primeiro:</strong> Na maioria dos casos, validação nativa é suficiente</li>
+              <li><strong>Feedback Visual:</strong> Campos obrigatórios já mostram borda vermelha automaticamente</li>
+              <li><strong>Mensagens Claras:</strong> Use <code>setCustomValidity()</code> para mensagens específicas</li>
+              <li><strong>Valide no Submit:</strong> Sempre valide no evento submit do formulário</li>
+              <li><strong>Sincronização Garantida:</strong> O select original está sempre atualizado</li>
+              <li><strong>Escala Bem:</strong> Mesma abordagem funciona para 10 ou 100 campos</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- Navigation -->
+        <section class="section-mb-lg">
+          <div style="display: flex; justify-content: space-between; padding-top: 20px; border-top: 1px solid #e5e7eb;">
+            <a href="example-max-selection.html" class="btn btn-secondary">← Limite de Seleção</a>
+            <a href="example-templates.html" class="btn btn-secondary">Templates →</a>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+  <script src="../../dist/vanilla-smart-select.min.js"></script>
+  <script src="../js/docs.js"></script>
+  
+  <script>
+    // Inicializa os selects
+    new VanillaSmartSelect('#department', { searchable: true });
+    new VanillaSmartSelect('#level', { searchable: true });
+    new VanillaSmartSelect('#shift', { searchable: true });
+
+    // Validação customizada simples
+    const form = document.getElementById('customForm');
+    const resultDiv = document.getElementById('result');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      if (form.checkValidity()) {
+        // Válido - processar
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData);
+
+        resultDiv.style.display = 'block';
+        resultDiv.style.background = '#d4edda';
+        resultDiv.style.border = '1px solid #28a745';
+        resultDiv.style.color = '#155724';
+        resultDiv.innerHTML = `
+          <strong>✓ Formulário Válido!</strong>          
+        `;
+
+        console.log('Dados válidos:', data);
+      } else {
+        // Inválido - mostrar erro
+        form.reportValidity(); // Mensagem nativa do navegador
+
+        resultDiv.style.display = 'block';
+        resultDiv.style.background = '#f8d7da';
+        resultDiv.style.border = '1px solid #dc3545';
+        resultDiv.style.color = '#721c24';
+        resultDiv.innerHTML = '<strong>✗ Erro!</strong> Preencha todos os campos obrigatórios.';
+      }
+    });
+
+    console.log('✓ Validation example ready!');
+
+    // Example 2: Validação Customizada com API HTML5
+    const customValidationSelect = new VanillaSmartSelect('#custom-validation');
+    const customSelectElement = document.querySelector('#custom-validation');
+    const customValidationForm = document.getElementById('customValidationForm');
+    const customValidationResult = document.getElementById('custom-validation-result');
+
+    // Validar quando o valor mudar
+    customSelectElement.addEventListener('change', () => {
+      const value = customSelectElement.value;
+      
+      // Apenas "high" ou "critical" são válidos
+      if (value && value !== 'high' && value !== 'critical') {
+        customSelectElement.setCustomValidity('Apenas prioridades "Alta" ou "Crítica" são permitidas');
+        
+        customValidationResult.style.display = 'block';
+        customValidationResult.style.background = '#fff3cd';
+        customValidationResult.style.border = '1px solid #ffc107';
+        customValidationResult.style.color = '#856404';
+        customValidationResult.innerHTML = `
+          <strong>⚠️ Validação Customizada:</strong><br>
+          O valor "${customSelectElement.options[customSelectElement.selectedIndex].text}" não é aceito.<br>
+          <small>Apenas "Alta" ou "Crítica" são permitidas.</small>
+        `;
+      } else {
+        customSelectElement.setCustomValidity(''); // Limpa o erro
+        
+        if (value) {
+          customValidationResult.style.display = 'block';
+          customValidationResult.style.background = '#d4edda';
+          customValidationResult.style.border = '1px solid #28a745';
+          customValidationResult.style.color = '#155724';
+          customValidationResult.innerHTML = `
+            <strong>✓ Valor Válido:</strong> ${customSelectElement.options[customSelectElement.selectedIndex].text}
+          `;
+        } else {
+          customValidationResult.style.display = 'none';
+        }
+      }
+    });
+
+    // Verificar validade programaticamente
+    document.getElementById('checkValidityBtn').addEventListener('click', () => {
+      if (customSelectElement.checkValidity()) {
+        customValidationResult.style.display = 'block';
+        customValidationResult.style.background = '#d4edda';
+        customValidationResult.style.border = '1px solid #28a745';
+        customValidationResult.style.color = '#155724';
+        customValidationResult.innerHTML = '<strong>✓ checkValidity():</strong> Campo válido!';
+        console.log('✓ Campo válido!');
+      } else {
+        customValidationResult.style.display = 'block';
+        customValidationResult.style.background = '#f8d7da';
+        customValidationResult.style.border = '1px solid #dc3545';
+        customValidationResult.style.color = '#721c24';
+        customValidationResult.innerHTML = '<strong>✗ checkValidity():</strong> Campo inválido!';
+        console.log('✗ Campo inválido!');
+      }
+    });
+
+    // Mostrar mensagem de validação
+    document.getElementById('showErrorBtn').addEventListener('click', () => {
+      customSelectElement.reportValidity(); // Mostra mensagem nativa do navegador
+    });
+
+    // Submit do formulário
+    customValidationForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      if (customValidationForm.checkValidity()) {
+        customValidationResult.style.display = 'block';
+        customValidationResult.style.background = '#d4edda';
+        customValidationResult.style.border = '1px solid #28a745';
+        customValidationResult.style.color = '#155724';
+        customValidationResult.innerHTML = `
+          <strong>✓ Formulário Enviado!</strong><br>
+          Prioridade: ${customSelectElement.options[customSelectElement.selectedIndex].text}
+        `;
+      } else {
+        customValidationForm.reportValidity();
+      }
+    });
+
+    // Example 3: Validação de Dependência Entre Campos
+    const stateVS = new VanillaSmartSelect('#state');
+    let cityVS = new VanillaSmartSelect('#city');
+
+    const citiesByState = {
+      sp: ['São Paulo', 'Campinas', 'Santos', 'Ribeirão Preto'],
+      rj: ['Rio de Janeiro', 'Niterói', 'Petrópolis', 'Cabo Frio'],
+      mg: ['Belo Horizonte', 'Uberlândia', 'Contagem', 'Juiz de Fora'],
+      rs: ['Porto Alegre', 'Caxias do Sul', 'Pelotas', 'Canoas']
+    };
+
+    const stateSelect = document.querySelector('#state');
+    const citySelect = document.querySelector('#city');
+    const dependencyForm = document.getElementById('dependencyForm');
+    const dependencyResult = document.getElementById('dependency-result');
+
+    stateSelect.addEventListener('change', () => {
+      // Limpar a seleção atual da cidade
+      citySelect.value = '';
+      
+      if (!stateSelect.value) {
+        citySelect.disabled = true;
+        citySelect.innerHTML = '<option value="">Selecione um estado primeiro...</option>';
+        citySelect.setCustomValidity('Selecione um estado primeiro');
+        
+        // Destruir e recriar com disabled
+        if (cityVS) {
+          cityVS.destroy();
+        }
+        cityVS = new VanillaSmartSelect('#city');
+      } else {
+        // Preencher cidades do estado selecionado
+        const cities = citiesByState[stateSelect.value];
+        citySelect.innerHTML = '<option value="">Selecione uma cidade...</option>' +
+          cities.map(city => `<option value="${city}">${city}</option>`).join('');
+        
+        citySelect.disabled = false;
+        citySelect.setCustomValidity('');
+        
+        // Destruir e recriar para atualizar as opções
+        if (cityVS) {
+          cityVS.destroy();
+        }
+        cityVS = new VanillaSmartSelect('#city');
+      }
+    });
+
+    dependencyForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      if (dependencyForm.checkValidity()) {
+        dependencyResult.style.display = 'block';
+        dependencyResult.style.background = '#d4edda';
+        dependencyResult.style.border = '1px solid #28a745';
+        dependencyResult.style.color = '#155724';
+        dependencyResult.innerHTML = `
+          <strong>✓ Formulário Válido!</strong><br>
+          Estado: ${stateSelect.options[stateSelect.selectedIndex].text}<br>
+          Cidade: ${citySelect.value}
+        `;
+      } else {
+        dependencyForm.reportValidity();
+        
+        dependencyResult.style.display = 'block';
+        dependencyResult.style.background = '#f8d7da';
+        dependencyResult.style.border = '1px solid #dc3545';
+        dependencyResult.style.color = '#721c24';
+        dependencyResult.innerHTML = '<strong>✗ Erro!</strong> Preencha todos os campos obrigatórios.';
+      }
+    });
+
+    // Example 3: Validação Customizada com Regex
+    new VanillaSmartSelect('#product-code');
+
+    const codeSelect = document.querySelector('#product-code');
+    const regexForm = document.getElementById('regexForm');
+    const regexResult = document.getElementById('regex-result');
+
+    codeSelect.addEventListener('change', () => {
+      const value = codeSelect.value;
+      const pattern = /^[A-Z]{3}-\d{4}$/; // Ex: ABC-1234
+
+      if (value && !pattern.test(value)) {
+        codeSelect.setCustomValidity('Código inválido. Use o formato: XXX-9999');
+        regexResult.style.display = 'block';
+        regexResult.style.background = '#fff3cd';
+        regexResult.style.border = '1px solid #ffc107';
+        regexResult.style.color = '#856404';
+        regexResult.innerHTML = `
+          <strong>⚠️ Código Inválido:</strong> "${value}"<br>
+          <small>O formato correto é: 3 letras maiúsculas + hífen + 4 números (ex: ABC-1234)</small>
+        `;
+      } else {
+        codeSelect.setCustomValidity('');
+        if (value) {
+          regexResult.style.display = 'block';
+          regexResult.style.background = '#d4edda';
+          regexResult.style.border = '1px solid #28a745';
+          regexResult.style.color = '#155724';
+          regexResult.innerHTML = `<strong>✓ Código Válido:</strong> ${value}`;
+        } else {
+          regexResult.style.display = 'none';
+        }
+      }
+    });
+
+    regexForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      if (regexForm.checkValidity()) {
+        regexResult.style.display = 'block';
+        regexResult.style.background = '#d4edda';
+        regexResult.style.border = '1px solid #28a745';
+        regexResult.style.color = '#155724';
+        regexResult.innerHTML = `<strong>✓ Formulário Validado!</strong><br>Código: ${codeSelect.value}`;
+      } else {
+        regexForm.reportValidity();
+      }
+    });
+
+    console.log('✓ All validation examples ready!');
+  </script>
+</body>
+</html>
+

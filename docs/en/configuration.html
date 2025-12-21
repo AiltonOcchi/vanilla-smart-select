@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configuration - Vanilla Smart Select</title>
+  <link rel="stylesheet" href="../css/docs.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+</head>
+<body>
+  <div class="docs-container">
+    <aside class="docs-sidebar">
+      <div class="sidebar-header">
+        <a href="index.html" class="sidebar-logo">
+          <div class="sidebar-logo-icon">VS</div>
+          <div class="sidebar-logo-text">
+            <div class="sidebar-logo-title">Vanilla Smart Select</div>
+            <div class="sidebar-logo-subtitle">v1.0.1</div>
+          </div>
+        </a>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Introduction</div>
+          <ul class="nav-links">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="getting-started.html" class="nav-link">Getting Started</a></li>
+          </ul>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Resources</div>
+          <ul class="nav-links">
+            <li><a href="api-reference.html" class="nav-link">API Reference</a></li>
+            <li><a href="configuration.html" class="nav-link">Configuration</a></li>
+            <li><a href="events.html" class="nav-link">Events</a></li>
+          </ul>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Examples</div>
+          <ul class="nav-links">
+            <li><a href="example-basic.html" class="nav-link">Basic</a></li>
+            <li><a href="example-api-programmatic.html" class="nav-link">Programmatic API</a></li>
+            <li><a href="example-ajax-basic.html" class="nav-link">Basic AJAX</a></li>
+            <li><a href="example-tags.html" class="nav-link">Tags</a></li>
+            <li><a href="example-pagination.html" class="nav-link">Pagination</a></li>
+            <li><a href="example-max-selection.html" class="nav-link">Selection Limit</a></li>
+            <li><a href="example-validation.html" class="nav-link">Advanced Validation</a></li>
+            <li><a href="example-templates.html" class="nav-link">Templates</a></li>
+            <li><a href="example-i18n.html" class="nav-link">i18n</a></li>
+            <li><a href="example-bootstrap.html" class="nav-link">Bootstrap</a></li>
+          </ul>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="docs-main">
+      <header class="docs-topbar">
+        <button class="mobile-menu-toggle" aria-label="Toggle menu">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+        <h1 class="topbar-title">Configuration</h1>
+        <div class="topbar-actions">
+          <div class="language-switcher">
+            <a href="../pt/configuration.html" class="lang-link">🇧🇷 PT</a>
+            <span class="lang-separator">|</span>
+            <a href="configuration.html" class="lang-link active">🇺🇸 EN</a>
+          </div>
+          <a href="https://github.com/ailtonocchi/vanilla-smart-select" class="topbar-btn" target="_blank">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+            </svg>
+            GitHub
+          </a>
+        </div>
+      </header>
+
+      <div class="docs-content">
+        <h1>Configuration Options</h1>
+        <p class="lead">
+          Complete reference for all 40+ available configuration options.
+        </p>
+
+        <section>
+          <h2>Display Options</h2>
+          <table class="api-table">
+            <thead>
+              <tr><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>placeholder</code></td>
+                <td>String</td>
+                <td><code>''</code></td>
+                <td>Text displayed when nothing is selected</td>
+              </tr>
+              <tr>
+                <td><code>theme</code></td>
+                <td>String</td>
+                <td><code>'default'</code></td>
+                <td>CSS theme name to apply</td>
+              </tr>
+              <tr>
+                <td><code>width</code></td>
+                <td>String</td>
+                <td><code>'resolve'</code></td>
+                <td>Element width ('100%', '300px', 'resolve', 'element')</td>
+              </tr>
+              <tr>
+                <td><code>containerCssClass</code></td>
+                <td>String</td>
+                <td><code>''</code></td>
+                <td>Additional CSS classes for the container</td>
+              </tr>
+              <tr>
+                <td><code>dropdownCssClass</code></td>
+                <td>String</td>
+                <td><code>''</code></td>
+                <td>Additional CSS classes for the dropdown</td>
+              </tr>
+            </tbody>
+          </table>
+          <pre><code class="language-javascript">new VanillaSmartSelect('#select', {
+  placeholder: 'Choose an option...',
+  theme: 'bootstrap',
+  width: '100%',
+  containerCssClass: 'my-custom-class'
+});</code></pre>
+        </section>
+
+        <section>
+          <h2>Behavior Options</h2>
+          <table class="api-table">
+            <thead>
+              <tr><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>multiple</code></td>
+                <td>Boolean</td>
+                <td><code>false</code></td>
+                <td>Enables multiple selection</td>
+              </tr>
+              <tr>
+                <td><code>searchable</code></td>
+                <td>Boolean</td>
+                <td><code>true</code></td>
+                <td>Enables search field</td>
+              </tr>
+              <tr>
+                <td><code>allowClear</code></td>
+                <td>Boolean</td>
+                <td><code>false</code></td>
+                <td>Shows button to clear selection</td>
+              </tr>
+              <tr>
+                <td><code>disabled</code></td>
+                <td>Boolean</td>
+                <td><code>false</code></td>
+                <td>Initial disabled state</td>
+              </tr>
+              <tr>
+                <td><code>closeOnSelect</code></td>
+                <td>Boolean</td>
+                <td><code>true</code></td>
+                <td>Closes dropdown after selecting (false in multi)</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section>
+          <h2>Search Options</h2>
+          <table class="api-table">
+            <thead>
+              <tr><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>searchMinimumLength</code></td>
+                <td>Number</td>
+                <td><code>0</code></td>
+                <td>Minimum characters to start search</td>
+              </tr>
+              <tr>
+                <td><code>searchDelay</code></td>
+                <td>Number</td>
+                <td><code>250</code></td>
+                <td>Debounce delay for search (ms)</td>
+              </tr>
+              <tr>
+                <td><code>matchStrategy</code></td>
+                <td>String</td>
+                <td><code>'contains'</code></td>
+                <td>Search strategy: 'startsWith', 'contains', 'exact'</td>
+              </tr>
+              <tr>
+                <td><code>matcher</code></td>
+                <td>Function</td>
+                <td><code>null</code></td>
+                <td>Custom search function</td>
+              </tr>
+            </tbody>
+          </table>
+          <pre><code class="language-javascript">new VanillaSmartSelect('#select', {
+  searchMinimumLength: 2,
+  searchDelay: 300,
+  matchStrategy: 'startsWith',
+  matcher: function(params, data) {
+    // Custom search logic
+    if (data.text.toLowerCase().indexOf(params.term.toLowerCase()) > -1) {
+      return data;
+    }
+    return null;
+  }
+});</code></pre>
+        </section>
+
+        <section>
+          <h2>Templates</h2>
+          <table class="api-table">
+            <thead>
+              <tr><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>templateResult</code></td>
+                <td>Function</td>
+                <td><code>null</code></td>
+                <td>Template to render results in dropdown</td>
+              </tr>
+              <tr>
+                <td><code>templateSelection</code></td>
+                <td>Function</td>
+                <td><code>null</code></td>
+                <td>Template to render selected item</td>
+              </tr>
+              <tr>
+                <td><code>escapeMarkup</code></td>
+                <td>Function</td>
+                <td><code>(markup) => markup</code></td>
+                <td>Function to escape HTML (return string or null)</td>
+              </tr>
+            </tbody>
+          </table>
+          <pre><code class="language-javascript">new VanillaSmartSelect('#select', {
+  templateResult: function(item) {
+    if (!item.id) return item.text;
+    return `
+      <div class="custom-option">
+        <img src="avatar-${item.id}.jpg" width="32" />
+        <span>${item.text}</span>
+      </div>
+    `;
+  },
+  templateSelection: function(item) {
+    return `<strong>${item.text}</strong>`;
+  }
+});</code></pre>
+          <p>See more at <a href="example-templates.html">Custom Templates</a>.</p>
+        </section>
+
+        <section>
+          <h2>AJAX & Remote Data</h2>
+          <table class="api-table">
+            <thead>
+              <tr><th>Option</th><th>Type</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>ajax.url</code></td>
+                <td>String | Function</td>
+                <td>API URL or function that returns the URL</td>
+              </tr>
+              <tr>
+                <td><code>ajax.method</code></td>
+                <td>String</td>
+                <td>HTTP method (GET, POST, etc.)</td>
+              </tr>
+              <tr>
+                <td><code>ajax.delay</code></td>
+                <td>Number</td>
+                <td>Debounce delay (default: 250ms)</td>
+              </tr>
+              <tr>
+                <td><code>ajax.data</code></td>
+                <td>Function</td>
+                <td>Function that returns request parameters</td>
+              </tr>
+              <tr>
+                <td><code>ajax.processResults</code></td>
+                <td>Function</td>
+                <td>Processes API response</td>
+              </tr>
+              <tr>
+                <td><code>ajax.cache</code></td>
+                <td>Boolean</td>
+                <td>Enables request caching (default: true)</td>
+              </tr>
+            </tbody>
+          </table>
+          <pre><code class="language-javascript">new VanillaSmartSelect('#select', {
+  ajax: {
+    url: 'https://api.example.com/search',
+    method: 'GET',
+    delay: 300,
+    data: function(params) {
+      return {
+        q: params.term, // Search term
+        page: params.page || 1
+      };
+    },
+    processResults: function(data, params) {
+      return {
+        results: data.items,
+        pagination: {
+          more: data.hasMore
+        }
+      };
+    }
+  }
+});</code></pre>
+          <p>See more at <a href="example-ajax-basic.html">AJAX & Remote Data</a>.</p>
+        </section>
+
+        <section>
+          <h2>Tagging (Dynamic Creation)</h2>
+          <table class="api-table">
+            <thead>
+              <tr><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>tags</code></td>
+                <td>Boolean</td>
+                <td><code>false</code></td>
+                <td>Allows creating new options</td>
+              </tr>
+              <tr>
+                <td><code>createTag</code></td>
+                <td>Function</td>
+                <td><code>null</code></td>
+                <td>Function to create new item</td>
+              </tr>
+              <tr>
+                <td><code>insertTag</code></td>
+                <td>Function</td>
+                <td><code>null</code></td>
+                <td>Where to insert the new tag in the list</td>
+              </tr>
+            </tbody>
+          </table>
+          <pre><code class="language-javascript">new VanillaSmartSelect('#select', {
+  tags: true,
+  createTag: function(params) {
+    const term = params.term.trim();
+    if (term === '') return null;
+    return {
+      id: term,
+      text: term,
+      newTag: true
+    };
+  }
+});</code></pre>
+        </section>
+
+        <section>
+          <h2>Selection Limit</h2>
+          <table class="api-table">
+            <thead>
+              <tr><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>maximumSelectionLength</code></td>
+                <td>Number</td>
+                <td><code>0</code></td>
+                <td>Maximum number of selections (0 = unlimited)</td>
+              </tr>
+            </tbody>
+          </table>
+          <pre><code class="language-javascript">new VanillaSmartSelect('#select', {
+  multiple: true,
+  maximumSelectionLength: 5,
+  language: {
+    maximumSelected: function(args) {
+      return `Maximum of ${args.maximum} items allowed`;
+    }
+  }
+});</code></pre>
+        </section>
+
+        <section>
+          <h2>Internationalization</h2>
+          <table class="api-table">
+            <thead>
+              <tr><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>language</code></td>
+                <td>Object | String</td>
+                <td><code>'auto'</code></td>
+                <td>Language object or code ('en', 'pt-BR', 'es', 'auto')</td>
+              </tr>
+            </tbody>
+          </table>
+          <p>See all customizable messages at <a href="i18n.html">Internationalization</a>.</p>
+        </section>
+
+        <section>
+          <h2>Accessibility</h2>
+          <table class="api-table">
+            <thead>
+              <tr><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>ariaLabel</code></td>
+                <td>String</td>
+                <td><code>null</code></td>
+                <td>Custom aria-label attribute</td>
+              </tr>
+              <tr>
+                <td><code>ariaDescribedBy</code></td>
+                <td>String</td>
+                <td><code>null</code></td>
+                <td>ID of element describing the select</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section>
+          <h2>Callbacks</h2>
+          <table class="api-table">
+            <thead>
+              <tr><th>Option</th><th>Type</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>onOpen</code></td>
+                <td>Function</td>
+                <td>Called when dropdown opens</td>
+              </tr>
+              <tr>
+                <td><code>onClose</code></td>
+                <td>Function</td>
+                <td>Called when dropdown closes</td>
+              </tr>
+              <tr>
+                <td><code>onChange</code></td>
+                <td>Function</td>
+                <td>Called when value changes</td>
+              </tr>
+              <tr>
+                <td><code>onSelect</code></td>
+                <td>Function</td>
+                <td>Called when an item is selected</td>
+              </tr>
+              <tr>
+                <td><code>onUnselect</code></td>
+                <td>Function</td>
+                <td>Called when an item is deselected</td>
+              </tr>
+              <tr>
+                <td><code>onClear</code></td>
+                <td>Function</td>
+                <td>Called when selection is cleared</td>
+              </tr>
+            </tbody>
+          </table>
+          <pre><code class="language-javascript">new VanillaSmartSelect('#select', {
+  onChange: function() {
+    console.log('Value changed:', this.val());
+  },
+  onSelect: function(e) {
+    console.log('Item selected:', e.detail);
+  }
+});</code></pre>
+          <p><strong>Note:</strong> Callbacks are equivalent to events. Use <code>select.on()</code> for more flexibility.</p>
+        </section>
+
+        <section>
+          <h2>Complete Example</h2>
+          <pre><code class="language-javascript">const select = new VanillaSmartSelect('#my-select', {
+  // Display
+  placeholder: 'Choose an option...',
+  width: '100%',
+  theme: 'default',
+
+  // Behavior
+  searchable: true,
+  multiple: false,
+  allowClear: true,
+  closeOnSelect: true,
+
+  // Search
+  searchMinimumLength: 0,
+  searchDelay: 250,
+  matchStrategy: 'contains',
+
+  // Templates
+  templateResult: function(item) {
+    return item.text;
+  },
+
+  // Language
+  language: 'pt-BR',
+
+  // Callbacks
+  onChange: function() {
+    console.log('Changed to:', this.val());
+  }
+});</code></pre>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+  <script src="../js/docs.js"></script>
+</body>
+</html>
