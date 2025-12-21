@@ -1,0 +1,316 @@
+/**
+ * Vanilla-Smart-Select Styles
+ * Complete styles with core structure and default theme
+ */
+
+/* ===== CORE STYLES ===== */
+/* Container */
+.vs-container {
+  position: relative;
+  box-sizing: border-box;
+  display: inline-block;
+}
+
+.vs-container *,
+.vs-container *::before,
+.vs-container *::after {
+  box-sizing: border-box;
+}
+
+/* Selection container */
+.vs-selection {
+  display: block;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+}
+
+.vs-container--disabled .vs-selection {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Dropdown */
+.vs-dropdown {
+  position: fixed;
+  z-index: 9999;
+  overflow: hidden;
+  display: none;
+}
+
+.vs-dropdown--open {
+  display: block;
+}
+
+/* Results container */
+.vs-results {
+  overflow-y: auto;
+  max-height: 300px;
+}
+
+/* Result items */
+.vs-result {
+  cursor: pointer;
+  user-select: none;
+}
+
+.vs-result--disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Search box */
+.vs-search {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Screen reader only (accessibility) */
+.vs-sr-only {
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Loading state */
+.vs-results--loading {
+  text-align: center;
+  padding: 10px;
+}
+
+/* No results */
+.vs-results--no-results {
+  text-align: center;
+  padding: 10px;
+}
+
+/* Focus states */
+.vs-selection:focus {
+  outline: none;
+}
+
+/* Multiple select */
+.vs-selection--multiple {
+  min-height: 36px;
+}
+
+.vs-selection__choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.vs-selection__choice {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.vs-selection__choice__remove {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== DEFAULT THEME ===== */
+/* Container */
+.vs-container--default {
+  font-size: 14px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.5;
+}
+
+/* Selection */
+.vs-container--default .vs-selection {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 8px 12px;
+  background: #fff;
+  min-height: 38px;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.vs-container--default .vs-selection:hover {
+  border-color: #aaa;
+}
+
+.vs-container--default .vs-selection:focus,
+.vs-container--default .vs-selection:focus-within {
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+  outline: none;
+}
+
+/* Disabled state */
+.vs-container--default.vs-container--disabled .vs-selection {
+  background-color: #f5f5f5;
+  border-color: #ddd;
+}
+
+/* Dropdown */
+.vs-dropdown.vs-container--default {
+  position: fixed;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 4px;
+}
+
+/* Search */
+.vs-dropdown.vs-container--default .vs-search {
+  border: none;
+  border-bottom: 1px solid #eee;
+  padding: 8px 12px;
+  font-size: 14px;
+}
+
+.vs-dropdown.vs-container--default .vs-search:focus {
+  outline: none;
+  border-bottom-color: #007bff;
+}
+
+/* Results */
+.vs-dropdown.vs-container--default .vs-result {
+  padding: 8px 12px;
+  transition: background-color 0.15s ease;
+}
+
+.vs-dropdown.vs-container--default .vs-result:hover {
+  background: #f5f5f5;
+  color: #333;
+}
+
+.vs-dropdown.vs-container--default .vs-result[aria-selected="true"] {
+  background: #e9ecef;
+}
+
+.vs-dropdown.vs-container--default .vs-result--highlighted {
+  background: #007bff;
+  color: #fff;
+}
+
+.vs-dropdown.vs-container--default .vs-result--disabled {
+  color: #999;
+  background: transparent;
+}
+
+/* Multi-select choices/tags */
+.vs-container--default .vs-selection__choice {
+  background: #e9ecef;
+  border-radius: 3px;
+  padding: 4px 8px;
+  font-size: 13px;
+  color: #333;
+}
+
+.vs-container--default .vs-selection__choice__remove {
+  color: #666;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 1;
+  padding: 0 4px;
+}
+
+.vs-container--default .vs-selection__choice__remove:hover {
+  color: #c00;
+}
+
+/* Placeholder */
+.vs-container--default .vs-selection__placeholder {
+  color: #999;
+  font-style: italic;
+  user-select: none;
+}
+
+/* Clear button */
+.vs-container--default .vs-selection__clear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 8px;
+  padding: 0 4px;
+  cursor: pointer;
+  color: #999;
+  font-size: 20px;
+  line-height: 1;
+  font-weight: normal;
+  user-select: none;
+  transition: color 0.15s ease;
+  flex-shrink: 0;
+}
+
+.vs-container--default .vs-selection__clear:hover {
+  color: #c00;
+}
+
+.vs-container--default .vs-selection__clear:focus {
+  outline: 2px solid #007bff;
+  outline-offset: 2px;
+}
+
+/* Rendered text with proper overflow */
+.vs-container--default .vs-selection__rendered {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+/* Group labels */
+.vs-dropdown.vs-container--default .vs-result--group {
+  font-weight: bold;
+  padding: 8px 12px;
+  color: #666;
+  background: #f9f9f9;
+}
+
+.vs-dropdown.vs-container--default .vs-result--group-child {
+  padding-left: 24px;
+}
+
+/* Loading and messages */
+.vs-dropdown.vs-container--default .vs-results--loading,
+.vs-dropdown.vs-container--default .vs-results--no-results {
+  color: #999;
+  font-style: italic;
+}
+
+/* Selection limit message */
+.vs-container--default .vs-results__limit-message {
+  padding: 8px 12px;
+  background: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffc107;
+  border-radius: 4px;
+  margin: 8px;
+  font-size: 13px;
+  text-align: center;
+  animation: vs-fade-in 0.2s ease-in;
+}
+
+@keyframes vs-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/*# sourceMappingURL=vanilla-smart-select.css.map */
