@@ -7,11 +7,19 @@
   "module": "dist/vanilla-smart-select.esm.js",
   "browser": "dist/vanilla-smart-select.js",
   "style": "dist/vanilla-smart-select.css",
+  "exports": {
+    ".": {
+      "import": "./dist/vanilla-smart-select.esm.js",
+      "require": "./dist/vanilla-smart-select.cjs.js",
+      "browser": "./dist/vanilla-smart-select.js",
+      "default": "./dist/vanilla-smart-select.js"
+    },
+    "./style.css": "./dist/vanilla-smart-select.css"
+  },
   "files": [
-    "dist",
-    "src"
+    "dist"
   ],
-  "scripts": {
+    "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "test": "jest",
@@ -46,7 +54,7 @@
   "bugs": {
     "url": "https://github.com/AiltonOcchi/vanilla-smart-select/issues"
   },
-  "homepage": "https://github.com/AiltonOcchi/vanilla-smart-select#readme",
+  "homepage": "https://github.com/AiltonOcchi/vanilla-smart-select",
   "devDependencies": {
     "@babel/core": "^7.23.0",
     "@babel/preset-env": "^7.23.0",
@@ -70,6 +78,6 @@
     "not dead"
   ],
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=18.0.0"
   }
 }
