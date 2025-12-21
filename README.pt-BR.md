@@ -91,10 +91,10 @@ yarn add vanilla-smart-select
 ### CDN
 ```html
 <!-- CSS -->
-<link rel="stylesheet" href="https://unpkg.com/vanilla-smart-select/dist/vanilla-smart-select.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanilla-smart-select@1.0.1/dist/vanilla-smart-select.min.css">
 
 <!-- JavaScript -->
-<script src="https://unpkg.com/vanilla-smart-select/dist/vanilla-smart-select.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanilla-smart-select@1.0.1/dist/vanilla-smart-select.min.js"></script>
 ```
 
 ### ES Modules
