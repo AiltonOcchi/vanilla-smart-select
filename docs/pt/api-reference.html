@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Referência completa da API do Vanilla Smart Select">
+  <title>API Reference - Vanilla Smart Select</title>
+  <link rel="stylesheet" href="../css/docs.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+</head>
+<body>
+  <div class="docs-container">
+    <aside class="docs-sidebar">
+      <div class="sidebar-header">
+        <a href="index.html" class="sidebar-logo">
+          <div class="sidebar-logo-icon">VS</div>
+          <div class="sidebar-logo-text">
+            <div class="sidebar-logo-title">Vanilla Smart Select</div>
+            <div class="sidebar-logo-subtitle">v1.0.1</div>
+          </div>
+        </a>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Introdução</div>
+          <ul class="nav-links">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="getting-started.html" class="nav-link">Getting Started</a></li>
+          </ul>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Recursos</div>
+          <ul class="nav-links">
+            <li><a href="api-reference.html" class="nav-link">API Reference</a></li>
+            <li><a href="configuration.html" class="nav-link">Configuração</a></li>
+            <li><a href="events.html" class="nav-link">Eventos</a></li>
+          </ul>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Exemplos</div>
+          <ul class="nav-links">
+            <li><a href="example-basic.html" class="nav-link">Básico</a></li>
+            <li><a href="example-api-programmatic.html" class="nav-link">API Programática</a></li>
+            <li><a href="example-ajax-basic.html" class="nav-link">AJAX Básico</a></li>
+            <li><a href="example-tags.html" class="nav-link">Tags</a></li>
+            <li><a href="example-pagination.html" class="nav-link">Paginação</a></li>
+            <li><a href="example-max-selection.html" class="nav-link">Limite de Seleção</a></li>
+            <li><a href="example-validation.html" class="nav-link">Validação Avançada</a></li>
+            <li><a href="example-templates.html" class="nav-link">Templates</a></li>
+            <li><a href="example-i18n.html" class="nav-link">i18n</a></li>
+            <li><a href="example-bootstrap.html" class="nav-link">Bootstrap</a></li>
+          </ul>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="docs-main">
+      <header class="docs-topbar">
+        <button class="mobile-menu-toggle" aria-label="Toggle menu">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+        <h1 class="topbar-title">API Reference</h1>
+        <div class="topbar-actions">
+          <div class="language-switcher">
+            <a href="api-reference.html" class="lang-link active">🇧🇷 PT</a>
+            <span class="lang-separator">|</span>
+            <a href="../en/api-reference.html" class="lang-link">🇺🇸 EN</a>
+          </div>
+          <a href="https://github.com/ailtonocchi/vanilla-smart-select" class="topbar-btn" target="_blank">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+            </svg>
+            GitHub
+          </a>
+        </div>
+      </header>
+
+      <div class="docs-content">
+        <h1>API Reference</h1>
+        <p class="lead">
+          Referência completa de todos os métodos, propriedades e APIs disponíveis no Vanilla Smart Select.
+        </p>
+
+        <section>
+          <h2>Inicialização</h2>
+          <div class="method-signature">new VanillaSmartSelect(element, options)</div>
+          <p>Cria uma nova instância do Vanilla Smart Select.</p>
+          <table class="api-table">
+            <thead>
+              <tr><th>Parâmetro</th><th>Tipo</th><th>Descrição</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>element</code></td>
+                <td>String | Element</td>
+                <td>Seletor CSS ou elemento DOM do select</td>
+              </tr>
+              <tr>
+                <td><code>options</code></td>
+                <td>Object</td>
+                <td>Objeto de configuração (ver <a href="configuration.html">Configuração</a>)</td>
+              </tr>
+            </tbody>
+          </table>
+          <pre><code class="language-javascript">const select = new VanillaSmartSelect('#my-select', {
+  placeholder: 'Selecione...',
+  searchable: true
+});</code></pre>
+        </section>
+
+        <section>
+          <h2>Gerenciamento de Valores</h2>
+
+          <h3><code>val([value])</code></h3>
+          <p>Obtém ou define o valor selecionado.</p>
+          <pre><code class="language-javascript">// Obter valor
+const value = select.val(); // "1"
+
+// Definir valor (single)
+select.val('2');
+
+// Definir valores (multiple)
+select.val(['1', '3', '5']);
+
+// Retorna null se nada estiver selecionado
+</code></pre>
+
+          <h3><code>getSelected()</code></h3>
+          <p>Retorna o objeto completo dos itens selecionados.</p>
+          <pre><code class="language-javascript">const selected = select.getSelected();
+// Single: { id: "1", text: "Opção 1", element: HTMLElement, ... }
+// Multiple: [{ id: "1", ... }, { id: "2", ... }]
+</code></pre>
+
+          <h3><code>clear()</code></h3>
+          <p>Limpa toda a seleção.</p>
+          <pre><code class="language-javascript">select.clear();</code></pre>
+        </section>
+
+        <section>
+          <h2>Seleção de Itens</h2>
+
+          <h3><code>select(id)</code></h3>
+          <p>Seleciona um item específico pelo ID.</p>
+          <pre><code class="language-javascript">select.select('3'); // Seleciona o item com value="3"</code></pre>
+
+          <h3><code>unselect(id)</code></h3>
+          <p>Remove a seleção de um item (apenas multi-select).</p>
+          <pre><code class="language-javascript">select.unselect('3'); // Remove item com value="3"</code></pre>
+        </section>
+
+        <section>
+          <h2>Gerenciamento de Dados</h2>
+
+          <h3><code>data([newData])</code></h3>
+          <p>Obtém ou substitui todos os dados/opções.</p>
+          <pre><code class="language-javascript">// Obter dados atuais
+const currentData = select.data();
+
+// Substituir todos os dados
+select.data([
+  { id: '1', text: 'Novo Item 1' },
+  { id: '2', text: 'Novo Item 2' },
+  { id: '3', text: 'Novo Item 3', disabled: true }
+]);</code></pre>
+
+          <h3><code>addOption(option)</code></h3>
+          <p>Adiciona uma nova opção ao select.</p>
+          <pre><code class="language-javascript">select.addOption({
+  id: '99',
+  text: 'Nova Opção',
+  selected: false,
+  disabled: false
+});</code></pre>
+
+          <h3><code>removeOption(id)</code></h3>
+          <p>Remove uma opção pelo ID.</p>
+          <pre><code class="language-javascript">select.removeOption('99');</code></pre>
+        </section>
+
+        <section>
+          <h2>Controle do Dropdown</h2>
+
+          <h3><code>open()</code></h3>
+          <p>Abre o dropdown.</p>
+          <pre><code class="language-javascript">select.open();</code></pre>
+
+          <h3><code>close()</code></h3>
+          <p>Fecha o dropdown.</p>
+          <pre><code class="language-javascript">select.close();</code></pre>
+
+          <h3><code>toggle()</code></h3>
+          <p>Alterna entre aberto e fechado.</p>
+          <pre><code class="language-javascript">select.toggle();</code></pre>
+
+          <h3><code>isOpen()</code></h3>
+          <p>Verifica se o dropdown está aberto.</p>
+          <pre><code class="language-javascript">if (select.isOpen()) {
+  console.log('Dropdown está aberto');
+}</code></pre>
+        </section>
+
+        <section>
+          <h2>Estado e Controle</h2>
+
+          <h3><code>enable()</code></h3>
+          <p>Habilita o select.</p>
+          <pre><code class="language-javascript">select.enable();</code></pre>
+
+          <h3><code>disable()</code></h3>
+          <p>Desabilita o select.</p>
+          <pre><code class="language-javascript">select.disable();</code></pre>
+
+          <h3><code>focus()</code></h3>
+          <p>Define o foco no select.</p>
+          <pre><code class="language-javascript">select.focus();</code></pre>
+
+          <h3><code>destroy()</code></h3>
+          <p>Destrói a instância e restaura o select original.</p>
+          <pre><code class="language-javascript">select.destroy(); // Remove completamente o plugin</code></pre>
+        </section>
+
+        <section>
+          <h2>Validação</h2>
+
+          <h3><code>checkValidity()</code></h3>
+          <p>Verifica se o elemento é válido segundo as regras HTML5.</p>
+          <pre><code class="language-javascript">const isValid = select.checkValidity(); // true/false</code></pre>
+
+          <h3><code>reportValidity()</code></h3>
+          <p>Mostra mensagem de validação se inválido.</p>
+          <pre><code class="language-javascript">select.reportValidity(); // Mostra mensagem ao usuário</code></pre>
+
+          <h3><code>setCustomValidity(message)</code></h3>
+          <p>Define uma mensagem de erro customizada.</p>
+          <pre><code class="language-javascript">select.setCustomValidity('Por favor selecione uma opção válida');</code></pre>
+
+          <h3><code>validationMessage()</code></h3>
+          <p>Obtém a mensagem de validação atual.</p>
+          <pre><code class="language-javascript">const message = select.validationMessage();</code></pre>
+
+          <h3><code>willValidate()</code></h3>
+          <p>Verifica se o elemento participa da validação.</p>
+          <pre><code class="language-javascript">const willValidate = select.willValidate(); // true/false</code></pre>
+        </section>
+
+        <section>
+          <h2>Internacionalização</h2>
+
+          <h3><code>updateLanguage(language)</code></h3>
+          <p>Atualiza as mensagens de idioma dinamicamente.</p>
+          <pre><code class="language-javascript">select.updateLanguage({
+  noResults: 'Nenhum resultado encontrado',
+  searching: 'Buscando...',
+  searchPlaceholder: 'Digite para buscar...'
+  // ... outras mensagens
+});</code></pre>
+          <p>Veja mais em <a href="example-i18n.html">Internacionalização</a>.</p>
+        </section>
+
+        <section>
+          <h2>Eventos</h2>
+
+          <h3><code>on(event, handler)</code></h3>
+          <p>Adiciona um listener de evento.</p>
+          <pre><code class="language-javascript">select.on('vs:select', function(e) {
+  console.log('Item selecionado:', e.detail);
+});
+
+select.on('vs:change', function() {
+  console.log('Valor mudou para:', this.val());
+});</code></pre>
+
+          <h3><code>off(event, handler)</code></h3>
+          <p>Remove um listener de evento.</p>
+          <pre><code class="language-javascript">function myHandler(e) {
+  console.log(e);
+}
+
+select.on('vs:select', myHandler);
+select.off('vs:select', myHandler); // Remove o listener</code></pre>
+
+          <p>Veja todos os eventos disponíveis em <a href="events.html">Eventos</a>.</p>
+        </section>
+
+        <section>
+          <h2>Propriedades</h2>
+          <table class="api-table">
+            <thead>
+              <tr><th>Propriedade</th><th>Tipo</th><th>Descrição</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>element</code></td>
+                <td>HTMLElement</td>
+                <td>O elemento select original</td>
+              </tr>
+              <tr>
+                <td><code>options</code></td>
+                <td>Object</td>
+                <td>Opções de configuração da instância</td>
+              </tr>
+              <tr>
+                <td><code>container</code></td>
+                <td>HTMLElement</td>
+                <td>Elemento container principal do plugin</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section>
+          <h2>Exemplo Completo</h2>
+          <pre><code class="language-javascript">// Criar instância
+const select = new VanillaSmartSelect('#my-select', {
+  placeholder: 'Selecione...',
+  searchable: true,
+  allowClear: true
+});
+
+// Definir valor inicial
+select.val('2');
+
+// Adicionar evento
+select.on('vs:change', function() {
+  console.log('Novo valor:', this.val());
+  console.log('Item selecionado:', this.getSelected());
+});
+
+// Adicionar nova opção
+select.addOption({
+  id: '99',
+  text: 'Opção Extra'
+});
+
+// Abrir programaticamente
+select.open();
+
+// Limpar após 5 segundos
+setTimeout(() => {
+  select.clear();
+  select.close();
+}, 5000);
+
+// Destruir quando não precisar mais
+// select.destroy();</code></pre>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+  <script src="../js/docs.js"></script>
+</body>
+</html>

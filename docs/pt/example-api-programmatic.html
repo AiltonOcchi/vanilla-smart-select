@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="API Programática do Vanilla Smart Select - Manipule selects via JavaScript">
+  <title>API Programática - Vanilla Smart Select</title>
+  <link rel="stylesheet" href="../css/docs.css">
+  <link rel="stylesheet" href="../../dist/vanilla-smart-select.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+</head>
+<body>
+  <div class="docs-container">
+    <aside class="docs-sidebar">
+      <div class="sidebar-header">
+        <a href="index.html" class="sidebar-logo">
+          <div class="sidebar-logo-icon">VS</div>
+          <div class="sidebar-logo-text">
+            <div class="sidebar-logo-title">Vanilla Smart Select</div>
+            <div class="sidebar-logo-subtitle">v1.0.1</div>
+          </div>
+        </a>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Introdução</div>
+          <ul class="nav-links">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="getting-started.html" class="nav-link">Getting Started</a></li>
+          </ul>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Recursos</div>
+          <ul class="nav-links">
+            <li><a href="api-reference.html" class="nav-link">API Reference</a></li>
+            <li><a href="configuration.html" class="nav-link">Configuração</a></li>
+            <li><a href="events.html" class="nav-link">Eventos</a></li>
+          </ul>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Exemplos</div>
+          <ul class="nav-links">
+            <li><a href="example-basic.html" class="nav-link">Básico</a></li>
+            <li><a href="example-api-programmatic.html" class="nav-link active">API Programática</a></li>
+            <li><a href="example-ajax-basic.html" class="nav-link">AJAX Básico</a></li>
+            <li><a href="example-tags.html" class="nav-link">Tags</a></li>
+            <li><a href="example-pagination.html" class="nav-link">Paginação</a></li>
+            <li><a href="example-max-selection.html" class="nav-link">Limite de Seleção</a></li>
+            <li><a href="example-validation.html" class="nav-link">Validação Avançada</a></li>
+            <li><a href="example-templates.html" class="nav-link">Templates</a></li>
+            <li><a href="example-i18n.html" class="nav-link">i18n</a></li>
+            <li><a href="example-bootstrap.html" class="nav-link">Bootstrap</a></li>
+          </ul>
+        </div>
+
+      </nav>
+    </aside>
+
+    <main class="docs-main">
+      <header class="docs-topbar">
+        <button class="mobile-menu-toggle" aria-label="Toggle menu">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+        <h1 class="topbar-title">API Programática</h1>
+        <div class="topbar-actions">
+          <div class="language-switcher">
+            <a href="example-api-programmatic.html" class="lang-link active">🇧🇷 PT</a>
+            <span class="lang-separator">|</span>
+            <a href="../en/example-api-programmatic.html" class="lang-link">🇺🇸 EN</a>
+          </div>
+          <a href="https://github.com/ailtonocchi/vanilla-smart-select" class="topbar-btn" target="_blank" rel="noopener noreferrer">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+            </svg>
+            GitHub
+          </a>
+        </div>
+      </header>
+
+      <div class="docs-content">
+        <section class="section-mb-lg">
+          <p class="lead">
+            Controle completo do Vanilla Smart Select via JavaScript. Manipule seleções, adicione/remova opções dinamicamente,
+            controle o estado do dropdown e muito mais.
+          </p>
+        </section>
+
+        <!-- Example 1 -->
+        <section class="section-mb-lg">
+          <h2>Single Select - API Básica</h2>
+          
+          <div class="demo-container">
+            <label for="fruits" class="demo-label">Frutas:</label>
+            <select id="fruits" class="demo-select">
+              <option value="">Selecione uma fruta...</option>
+              <option value="apple">Maçã</option>
+              <option value="banana">Banana</option>
+              <option value="orange">Laranja</option>
+              <option value="grape">Uva</option>
+            </select>
+
+            <div class="btn-container">
+              <button onclick="fruitsAPI.val('banana')" class="btn btn-sm" style="background: #007bff; color: white; border: none;">Selecionar Banana</button>
+              <button onclick="fruitsAPI.select('apple')" class="btn btn-sm" style="background: #007bff; color: white; border: none;">Selecionar Maçã</button>
+              <button onclick="fruitsAPI.clear()" class="btn btn-sm" style="background: #007bff; color: white; border: none;">Limpar</button>
+              <button onclick="showFruitsValue()" class="btn btn-sm" style="background: #007bff; color: white; border: none;">Mostrar Valor</button>
+            </div>
+
+            <div class="code-details" style="margin-top: 15px;">
+              <strong>Resultado:</strong>
+              <pre id="fruits-output" style="margin-top: 10px; background: #2d2d2d; padding: 10px; border-radius: 4px; overflow-x: auto; color: #ccc; font-size: 0.75rem;">Clique nos botões para testar...</pre>
+            </div>
+
+            <details class="code-details">
+              <summary>Ver código</summary>
+              
+              <h3>HTML</h3>
+              <pre><code class="language-html">&lt;select id="fruits"&gt;
+  &lt;option value=""&gt;Selecione uma fruta...&lt;/option&gt;
+  &lt;option value="apple"&gt;Maçã&lt;/option&gt;
+  &lt;option value="banana"&gt;Banana&lt;/option&gt;
+  &lt;option value="orange"&gt;Laranja&lt;/option&gt;
+  &lt;option value="grape"&gt;Uva&lt;/option&gt;
+&lt;/select&gt;</code></pre>
+
+              <h3>JavaScript</h3>
+              <pre><code class="language-javascript">// Criar instância
+const fruitsAPI = new VanillaSmartSelect('#fruits', {
+  searchable: true
+});
+
+// Selecionar por valor
+fruitsAPI.val('banana');
+
+// Selecionar por ID
+fruitsAPI.select('apple');
+
+// Limpar seleção
+fruitsAPI.clear();
+
+// Obter valor atual
+const value = fruitsAPI.val();
+
+// Obter item completo selecionado
+const selected = fruitsAPI.getSelected();</code></pre>
+            </details>
+          </div>
+
+        </section>
+
+        <!-- Example 2 -->
+        <section class="section-mb-lg">
+          <h2>Multi-Select - Adicionar/Remover</h2>
+          
+          <div class="demo-container">
+            <label for="languages" class="demo-label">Linguagens de Programação:</label>
+            <select id="languages" class="demo-select" multiple>
+              <option value="js">JavaScript</option>
+              <option value="py">Python</option>
+              <option value="java">Java</option>
+              <option value="cpp">C++</option>
+              <option value="rust">Rust</option>
+            </select>
+
+            <div class="btn-container">
+              <button onclick="languagesAPI.select('js')" class="btn btn-sm" style="background: #007bff; color: white; border: none;">Adicionar JavaScript</button>
+              <button onclick="languagesAPI.select('py')" class="btn btn-sm" style="background: #007bff; color: white; border: none;">Adicionar Python</button>
+              <button onclick="languagesAPI.unselect('js')" class="btn btn-sm" style="background: #007bff; color: white; border: none;">Remover JavaScript</button>
+              <button onclick="languagesAPI.clear()" class="btn btn-sm" style="background: #007bff; color: white; border: none;">Limpar Tudo</button>
+              <button onclick="showLanguagesSelected()" class="btn btn-sm" style="background: #007bff; color: white; border: none;">Mostrar Selecionados</button>
+            </div>
+
+            <div class="code-details" style="margin-top: 15px;">
+              <strong>Resultado:</strong>
+              <pre id="languages-output" style="margin-top: 10px; background: #2d2d2d; padding: 10px; border-radius: 4px; overflow-x: auto; color: #ccc; font-size: 0.75rem;">Clique nos botões para testar...</pre>
+            </div>
+
+            <details class="code-details">
+              <summary>Ver código</summary>
+              
+              <h3>HTML</h3>
+              <pre><code class="language-html">&lt;select id="languages" multiple&gt;
+  &lt;option value="js"&gt;JavaScript&lt;/option&gt;
+  &lt;option value="py"&gt;Python&lt;/option&gt;
+  &lt;option value="java"&gt;Java&lt;/option&gt;
+  &lt;option value="cpp"&gt;C++&lt;/option&gt;
+  &lt;option value="rust"&gt;Rust&lt;/option&gt;
+&lt;/select&gt;</code></pre>
+
+              <h3>JavaScript</h3>
+              <pre><code class="language-javascript">// Multi-select
+const languagesAPI = new VanillaSmartSelect('#languages', {
+  multiple: true,
+  searchable: true
+});
+
+// Adicionar à seleção
+languagesAPI.select('js');
+
+// Remover da seleção
+languagesAPI.unselect('js');
+
+// Obter todos os selecionados
+const selected = languagesAPI.getSelected(); // Array</code></pre>
+            </details>
+          </div>
+
+        </section>
+
+        <!-- Example 3 -->
+        <section class="section-mb-lg">
+          <h2>Opções Dinâmicas</h2>
+          
+          <div class="demo-container">
+            <label for="dynamic" class="demo-label">Opções Dinâmicas:</label>
+            <select id="dynamic" class="demo-select">
+              <option value="">Selecione...</option>
+              <option value="opt1">Opção 1</option>
+              <option value="opt2">Opção 2</option>
+            </select>
+
+            <div class="btn-container">
+              <button onclick="addNewOption()" class="btn btn-sm" style="background: #007bff; color: white; border: none;">Adicionar Opção</button>
+              <button onclick="removeOption('opt2')" class="btn btn-sm" style="background: #007bff; color: white; border: none;">Remover Opção 2</button>
+              <button onclick="showDynamicData()" class="btn btn-sm" style="background: #007bff; color: white; border: none;">Mostrar Dados</button>
+            </div>
+
+            <div class="code-details" style="margin-top: 15px;">
+              <strong>Resultado:</strong>
+              <pre id="dynamic-output" style="margin-top: 10px; background: #2d2d2d; padding: 10px; border-radius: 4px; overflow-x: auto; color: #ccc; font-size: 0.75rem;">Clique nos botões para testar...</pre>
+            </div>
+
+            <details class="code-details">
+              <summary>Ver código</summary>
+              
+              <h3>HTML</h3>
+              <pre><code class="language-html">&lt;select id="dynamic"&gt;
+  &lt;option value=""&gt;Selecione...&lt;/option&gt;
+  &lt;option value="opt1"&gt;Opção 1&lt;/option&gt;
+  &lt;option value="opt2"&gt;Opção 2&lt;/option&gt;
+&lt;/select&gt;</code></pre>
+
+              <h3>JavaScript</h3>
+              <pre><code class="language-javascript">// Adicionar opção
+dynamicAPI.addOption({
+  id: 'new1',
+  text: 'Nova Opção'
+});
+
+// Remover opção
+dynamicAPI.removeOption('opt2');
+
+// Obter todos os dados
+const data = dynamicAPI.data();
+
+// Definir novos dados
+dynamicAPI.data([
+  { id: '1', text: 'Item 1' },
+  { id: '2', text: 'Item 2' }
+]);</code></pre>
+            </details>
+          </div>
+
+        </section>
+
+        <!-- Example 4 -->
+        <section class="section-mb-lg">
+          <h2>Controle de Estado</h2>
+          
+          <div class="demo-container">
+            <div class="btn-container">
+              <button onclick="stateAPI.open()" class="btn btn-sm" style="background: #007bff; color: white; border: none;">Abrir</button>
+              <button onclick="stateAPI.close()" class="btn btn-sm" style="background: #007bff; color: white; border: none;">Fechar</button>
+              <button onclick="stateAPI.toggle()" class="btn btn-sm" style="background: #007bff; color: white; border: none;">Alternar</button>
+              <button onclick="stateAPI.focus()" class="btn btn-sm" style="background: #007bff; color: white; border: none;">Focar</button>
+              <button onclick="stateAPI.disable()" class="btn btn-sm" style="background: #007bff; color: white; border: none;">Desabilitar</button>
+              <button onclick="stateAPI.enable()" class="btn btn-sm" style="background: #007bff; color: white; border: none;">Habilitar</button>
+            </div>
+
+            <label for="state" class="demo-label">Estado do Select:</label>
+            <select id="state" class="demo-select">
+              <option value="">Selecione...</option>
+              <option value="1">Item 1</option>
+              <option value="2">Item 2</option>
+              <option value="3">Item 3</option>
+            </select>
+
+            <details class="code-details">
+              <summary>Ver código</summary>
+              
+              <h3>HTML</h3>
+              <pre><code class="language-html">&lt;select id="state"&gt;
+  &lt;option value=""&gt;Selecione...&lt;/option&gt;
+  &lt;option value="1"&gt;Item 1&lt;/option&gt;
+  &lt;option value="2"&gt;Item 2&lt;/option&gt;
+  &lt;option value="3"&gt;Item 3&lt;/option&gt;
+&lt;/select&gt;</code></pre>
+
+              <h3>JavaScript</h3>
+              <pre><code class="language-javascript">// Controlar dropdown
+stateAPI.open();
+stateAPI.close();
+stateAPI.toggle();
+
+// Controlar foco
+stateAPI.focus();
+
+// Habilitar/Desabilitar
+stateAPI.enable();
+stateAPI.disable();
+
+// Verificar estado
+const isOpen = stateAPI.isOpen();</code></pre>
+            </details>
+          </div>
+
+        </section>
+
+        <!-- API Summary -->
+        <section class="section-mb-lg">
+          <h2>Resumo Completo da API</h2>
+          
+          <table>
+            <thead>
+              <tr>
+                <th>Método</th>
+                <th>Descrição</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>val(value?)</code></td>
+                <td>Get/set valor por ID</td>
+              </tr>
+              <tr>
+                <td><code>select(id)</code></td>
+                <td>Seleciona item por ID</td>
+              </tr>
+              <tr>
+                <td><code>unselect(id)</code></td>
+                <td>Remove seleção (multi-select)</td>
+              </tr>
+              <tr>
+                <td><code>getSelected()</code></td>
+                <td>Obtém item(s) selecionado(s) completo(s)</td>
+              </tr>
+              <tr>
+                <td><code>clear()</code></td>
+                <td>Limpa seleção</td>
+              </tr>
+              <tr>
+                <td><code>data(data?)</code></td>
+                <td>Get/set todos os dados</td>
+              </tr>
+              <tr>
+                <td><code>addOption(option)</code></td>
+                <td>Adiciona opção dinamicamente</td>
+              </tr>
+              <tr>
+                <td><code>removeOption(id)</code></td>
+                <td>Remove opção por ID</td>
+              </tr>
+              <tr>
+                <td><code>open()</code></td>
+                <td>Abre dropdown</td>
+              </tr>
+              <tr>
+                <td><code>close()</code></td>
+                <td>Fecha dropdown</td>
+              </tr>
+              <tr>
+                <td><code>toggle()</code></td>
+                <td>Alterna aberto/fechado</td>
+              </tr>
+              <tr>
+                <td><code>focus()</code></td>
+                <td>Foca no select</td>
+              </tr>
+              <tr>
+                <td><code>enable()</code> / <code>disable()</code></td>
+                <td>Habilita/desabilita</td>
+              </tr>
+              <tr>
+                <td><code>isOpen()</code></td>
+                <td>Verifica se está aberto</td>
+              </tr>
+              <tr>
+                <td><code>destroy()</code></td>
+                <td>Destrói a instância</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+  <script src="../../dist/vanilla-smart-select.min.js"></script>
+  <script src="../js/docs.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      try {
+        const VanillaSmartSelectClass = VanillaSmartSelect.default || VanillaSmartSelect;
+
+        // Example 1
+        const fruitsAPI = new VanillaSmartSelectClass('#fruits', { searchable: true });
+        window.fruitsAPI = fruitsAPI;
+
+        // Example 2
+        const languagesAPI = new VanillaSmartSelectClass('#languages', { multiple: true, searchable: true });
+        window.languagesAPI = languagesAPI;
+
+        // Example 3
+        const dynamicAPI = new VanillaSmartSelectClass('#dynamic', { searchable: true });
+        window.dynamicAPI = dynamicAPI;
+
+        // Example 4
+        const stateAPI = new VanillaSmartSelectClass('#state', { searchable: true });
+        window.stateAPI = stateAPI;
+
+        // Helper functions
+        window.showFruitsValue = function() {
+          const value = fruitsAPI.val();
+          const selected = fruitsAPI.getSelected();
+          document.getElementById('fruits-output').textContent = 
+            `Valor: ${value}\nItem: ${JSON.stringify(selected, null, 2)}`;
+        };
+
+        window.showLanguagesSelected = function() {
+          const selected = languagesAPI.getSelected();
+          document.getElementById('languages-output').textContent = 
+            `Selecionados (${selected.length}):\n${JSON.stringify(selected, null, 2)}`;
+        };
+
+        let optionCounter = 3;
+        window.addNewOption = function() {
+          dynamicAPI.addOption({
+            id: `opt${optionCounter}`,
+            text: `Opção ${optionCounter}`
+          });
+          document.getElementById('dynamic-output').textContent = 
+            `Adicionada: Opção ${optionCounter}`;
+          optionCounter++;
+        };
+
+        window.removeOption = function(id) {
+          dynamicAPI.removeOption(id);
+          document.getElementById('dynamic-output').textContent = 
+            `Removida: ${id}`;
+        };
+
+        window.showDynamicData = function() {
+          const data = dynamicAPI.data();
+          document.getElementById('dynamic-output').textContent = 
+            `Dados:\n${JSON.stringify(data, null, 2)}`;
+        };
+
+        console.log('✓ API Programática - Exemplos inicializados!');
+
+      } catch (error) {
+        console.error('❌ Initialization error:', error);
+      }
+    });
+  </script>
+</body>
+</html>

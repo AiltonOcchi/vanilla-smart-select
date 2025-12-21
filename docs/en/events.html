@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Events - Vanilla Smart Select</title>
+  <link rel="stylesheet" href="../css/docs.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+</head>
+<body>
+  <div class="docs-container">
+    <aside class="docs-sidebar">
+      <div class="sidebar-header">
+        <a href="index.html" class="sidebar-logo">
+          <div class="sidebar-logo-icon">VS</div>
+          <div class="sidebar-logo-text">
+            <div class="sidebar-logo-title">Vanilla Smart Select</div>
+            <div class="sidebar-logo-subtitle">v1.0.1</div>
+          </div>
+        </a>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Introduction</div>
+          <ul class="nav-links">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="getting-started.html" class="nav-link">Getting Started</a></li>
+          </ul>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Resources</div>
+          <ul class="nav-links">
+            <li><a href="api-reference.html" class="nav-link">API Reference</a></li>
+            <li><a href="configuration.html" class="nav-link">Configuration</a></li>
+            <li><a href="events.html" class="nav-link">Events</a></li>
+          </ul>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Examples</div>
+          <ul class="nav-links">
+            <li><a href="example-basic.html" class="nav-link">Basic</a></li>
+            <li><a href="example-api-programmatic.html" class="nav-link">Programmatic API</a></li>
+            <li><a href="example-ajax-basic.html" class="nav-link">Basic AJAX</a></li>
+            <li><a href="example-tags.html" class="nav-link">Tags</a></li>
+            <li><a href="example-pagination.html" class="nav-link">Pagination</a></li>
+            <li><a href="example-max-selection.html" class="nav-link">Selection Limit</a></li>
+            <li><a href="example-validation.html" class="nav-link">Advanced Validation</a></li>
+            <li><a href="example-templates.html" class="nav-link">Templates</a></li>
+            <li><a href="example-i18n.html" class="nav-link">i18n</a></li>
+            <li><a href="example-bootstrap.html" class="nav-link">Bootstrap</a></li>
+          </ul>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="docs-main">
+      <header class="docs-topbar">
+        <button class="mobile-menu-toggle" aria-label="Toggle menu">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+        <h1 class="topbar-title">Events</h1>
+        <div class="topbar-actions">
+          <div class="language-switcher">
+            <a href="../pt/events.html" class="lang-link">🇧🇷 PT</a>
+            <span class="lang-separator">|</span>
+            <a href="events.html" class="lang-link active">🇺🇸 EN</a>
+          </div>
+          <a href="https://github.com/ailtonocchi/vanilla-smart-select" class="topbar-btn" target="_blank">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+            </svg>
+            GitHub
+          </a>
+        </div>
+      </header>
+
+      <div class="docs-content">
+        <h1>Event System</h1>
+        <p class="lead">
+          Vanilla Smart Select emits various events that allow you to react to user interactions and state changes.
+        </p>
+
+        <div class="alert alert-info">
+          <strong>💡 Event Prefix:</strong> All events are prefixed with <code>vs:</code> to avoid conflicts with other plugins.
+        </div>
+
+        <section>
+          <h2>Basic Events</h2>
+
+          <h3><code>vs:select</code></h3>
+          <p>Fired when an item is selected.</p>
+          <pre><code class="language-javascript">select.on('vs:select', function(e) {
+  console.log('Item selected:', e.detail);
+  // e.detail contains: { id, text, element, ... }
+});</code></pre>
+
+          <h3><code>vs:unselect</code></h3>
+          <p>Fired when an item is deselected (multi-select only).</p>
+          <pre><code class="language-javascript">select.on('vs:unselect', function(e) {
+  console.log('Item removed:', e.detail);
+});</code></pre>
+
+          <h3><code>vs:change</code></h3>
+          <p>Fired when the select value changes.</p>
+          <pre><code class="language-javascript">select.on('vs:change', function(e) {
+  console.log('Value changed to:', this.val());
+  console.log('Complete data:', this.getSelected());
+});</code></pre>
+
+          <h3><code>vs:clear</code></h3>
+          <p>Fired when selection is cleared (via X button or <code>clear()</code>).</p>
+          <pre><code class="language-javascript">select.on('vs:clear', function(e) {
+  console.log('Selection cleared');
+});</code></pre>
+        </section>
+
+        <section>
+          <h2>Dropdown Events</h2>
+
+          <h3><code>vs:open</code></h3>
+          <p>Fired when the dropdown is opened.</p>
+          <pre><code class="language-javascript">select.on('vs:open', function(e) {
+  console.log('Dropdown opened');
+});</code></pre>
+
+          <h3><code>vs:close</code></h3>
+          <p>Fired when the dropdown is closed.</p>
+          <pre><code class="language-javascript">select.on('vs:close', function(e) {
+  console.log('Dropdown closed');
+});</code></pre>
+        </section>
+
+        <section>
+          <h2>Search Events</h2>
+
+          <h3><code>vs:query</code></h3>
+          <p>Fired when the user types in the search field.</p>
+          <pre><code class="language-javascript">select.on('vs:query', function(e) {
+  console.log('Search term:', e.detail.query);
+});</code></pre>
+
+          <h3><code>vs:results</code></h3>
+          <p>Fired when search results are displayed.</p>
+          <pre><code class="language-javascript">select.on('vs:results', function(e) {
+  console.log('Results found:', e.detail.results.length);
+});</code></pre>
+        </section>
+
+        <section>
+          <h2>Lifecycle Events</h2>
+
+          <h3><code>vs:init</code></h3>
+          <p>Fired when the plugin is initialized.</p>
+          <pre><code class="language-javascript">select.on('vs:init', function(e) {
+  console.log('Plugin initialized');
+});</code></pre>
+
+          <h3><code>vs:destroy</code></h3>
+          <p>Fired when the plugin is destroyed.</p>
+          <pre><code class="language-javascript">select.on('vs:destroy', function(e) {
+  console.log('Plugin destroyed');
+});</code></pre>
+        </section>
+
+        <section>
+          <h2>AJAX Events</h2>
+
+          <h3><code>vs:ajaxLoading</code></h3>
+          <p>Fired when an AJAX request is started.</p>
+          <pre><code class="language-javascript">select.on('vs:ajaxLoading', function(e) {
+  console.log('Loading data...');
+});</code></pre>
+
+          <h3><code>vs:ajaxSuccess</code></h3>
+          <p>Fired when an AJAX request is successful.</p>
+          <pre><code class="language-javascript">select.on('vs:ajaxSuccess', function(e) {
+  console.log('Data loaded:', e.detail.data);
+});</code></pre>
+
+          <h3><code>vs:ajaxError</code></h3>
+          <p>Fired when an AJAX request fails.</p>
+          <pre><code class="language-javascript">select.on('vs:ajaxError', function(e) {
+  console.error('Error loading data:', e.detail.error);
+});</code></pre>
+
+          <h3><code>vs:dataLoaded</code></h3>
+          <p>Fired when data is loaded (AJAX or local).</p>
+          <pre><code class="language-javascript">select.on('vs:dataLoaded', function(e) {
+  console.log('Data available:', e.detail.data.length);
+});</code></pre>
+        </section>
+
+        <section>
+          <h2>Special Events</h2>
+
+          <h3><code>vs:selectionLimitReached</code></h3>
+          <p>Fired when the maximum selection limit is reached.</p>
+          <pre><code class="language-javascript">select.on('vs:selectionLimitReached', function(e) {
+  console.log('Limit reached:', e.detail.maximum);
+  alert('You can only select ' + e.detail.maximum + ' items');
+});</code></pre>
+        </section>
+
+        <section>
+          <h2>Preventive Events</h2>
+          <p>Some events can be canceled by calling <code>e.preventDefault()</code>:</p>
+
+          <h3><code>vs:selecting</code></h3>
+          <p>Fired before an item is selected. Can be canceled.</p>
+          <pre><code class="language-javascript">select.on('vs:selecting', function(e) {
+  // Prevent selection of items with odd ID
+  if (parseInt(e.detail.id) % 2 !== 0) {
+    e.preventDefault();
+    alert('Only even IDs can be selected');
+  }
+});</code></pre>
+
+          <h3><code>vs:unselecting</code></h3>
+          <p>Fired before an item is deselected. Can be canceled.</p>
+          <pre><code class="language-javascript">select.on('vs:unselecting', function(e) {
+  if (!confirm('Are you sure you want to remove this item?')) {
+    e.preventDefault();
+  }
+});</code></pre>
+
+          <h3><code>vs:clearing</code></h3>
+          <p>Fired before selection is cleared. Can be canceled.</p>
+          <pre><code class="language-javascript">select.on('vs:clearing', function(e) {
+  if (!confirm('Clear entire selection?')) {
+    e.preventDefault();
+  }
+});</code></pre>
+
+          <h3><code>vs:opening</code></h3>
+          <p>Fired before the dropdown opens. Can be canceled.</p>
+          <pre><code class="language-javascript">select.on('vs:opening', function(e) {
+  // Load data before opening
+  if (!dataLoaded) {
+    e.preventDefault();
+    loadData().then(() => select.open());
+  }
+});</code></pre>
+
+          <h3><code>vs:closing</code></h3>
+          <p>Fired before the dropdown closes. Can be canceled.</p>
+          <pre><code class="language-javascript">select.on('vs:closing', function(e) {
+  // Keep open if search is still active
+  if (isSearching) {
+    e.preventDefault();
+  }
+});</code></pre>
+        </section>
+
+        <section>
+          <h2>Listening to Events</h2>
+
+          <h3>Add Listener</h3>
+          <pre><code class="language-javascript">function myHandler(e) {
+  console.log('Event fired:', e.type);
+  console.log('Data:', e.detail);
+}
+
+select.on('vs:select', myHandler);</code></pre>
+
+          <h3>Remove Listener</h3>
+          <pre><code class="language-javascript">select.off('vs:select', myHandler);</code></pre>
+
+          <h3>Multiple Events</h3>
+          <pre><code class="language-javascript">// Listen to multiple events
+select
+  .on('vs:select', handleSelect)
+  .on('vs:unselect', handleUnselect)
+  .on('vs:change', handleChange);</code></pre>
+
+          <h3>Event Delegation (Native DOM)</h3>
+          <p>You can also use native DOM events:</p>
+          <pre><code class="language-javascript">document.getElementById('my-select').addEventListener('vs:select', function(e) {
+  console.log('Item selected via DOM:', e.detail);
+});</code></pre>
+        </section>
+
+        <section>
+          <h2>Event Data Structure</h2>
+          <p>The <code>e.detail</code> property contains specific information for each event:</p>
+
+          <h3>vs:select / vs:unselect</h3>
+          <pre><code class="language-javascript">{
+  id: "1",
+  text: "Option 1",
+  element: HTMLOptionElement,
+  disabled: false,
+  selected: true,
+  // ... other custom fields
+}</code></pre>
+
+          <h3>vs:query</h3>
+          <pre><code class="language-javascript">{
+  query: "search term",
+  term: "search term" // alias
+}</code></pre>
+
+          <h3>vs:results</h3>
+          <pre><code class="language-javascript">{
+  results: [
+    { id: "1", text: "Option 1" },
+    { id: "2", text: "Option 2" }
+  ],
+  query: "term"
+}</code></pre>
+
+          <h3>vs:ajaxSuccess</h3>
+          <pre><code class="language-javascript">{
+  data: { ... }, // API response
+  status: 200,
+  xhr: XMLHttpRequest
+}</code></pre>
+
+          <h3>vs:selectionLimitReached</h3>
+          <pre><code class="language-javascript">{
+  maximum: 5,
+  current: 5
+}</code></pre>
+        </section>
+
+        <section>
+          <h2>Complete Example</h2>
+          <pre><code class="language-javascript">const select = new VanillaSmartSelect('#my-select', {
+  multiple: true,
+  maximumSelectionLength: 3
+});
+
+// Basic events
+select.on('vs:select', function(e) {
+  console.log('✅ Selected:', e.detail.text);
+  updateUI();
+});
+
+select.on('vs:unselect', function(e) {
+  console.log('❌ Removed:', e.detail.text);
+  updateUI();
+});
+
+select.on('vs:change', function() {
+  const values = this.val();
+  console.log('📝 Current values:', values);
+  saveToLocalStorage(values);
+});
+
+// Dropdown events
+select.on('vs:open', function() {
+  console.log('📂 Dropdown opened');
+  trackEvent('dropdown_opened');
+});
+
+select.on('vs:close', function() {
+  console.log('📁 Dropdown closed');
+});
+
+// Search
+select.on('vs:query', function(e) {
+  console.log('🔍 Searching:', e.detail.query);
+  trackSearchQuery(e.detail.query);
+});
+
+// Selection limit
+select.on('vs:selectionLimitReached', function(e) {
+  alert(`You can only select ${e.detail.maximum} items!`);
+});
+
+// Preventive events
+select.on('vs:selecting', function(e) {
+  // Validate before selecting
+  if (!isValidChoice(e.detail.id)) {
+    e.preventDefault();
+    showError('This option is not available for you');
+  }
+});
+
+// Cleanup
+select.on('vs:destroy', function() {
+  console.log('🗑️ Plugin destroyed');
+  cleanup();
+});</code></pre>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+  <script src="../js/docs.js"></script>
+</body>
+</html>

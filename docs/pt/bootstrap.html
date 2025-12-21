@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Integração Bootstrap - Vanilla Smart Select</title>
+  <link rel="stylesheet" href="../css/docs.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+</head>
+<body>
+  <div class="docs-container">
+    <aside class="docs-sidebar">
+      <div class="sidebar-header">
+        <a href="index.html" class="sidebar-logo">
+          <div class="sidebar-logo-icon">VS</div>
+          <div class="sidebar-logo-text">
+            <div class="sidebar-logo-title">Vanilla Smart Select</div>
+            <div class="sidebar-logo-subtitle">v1.0.1</div>
+          </div>
+        </a>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Introdução</div>
+          <ul class="nav-links">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="getting-started.html" class="nav-link">Getting Started</a></li>
+          </ul>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Recursos</div>
+          <ul class="nav-links">
+            <li><a href="api-reference.html" class="nav-link">API Reference</a></li>
+            <li><a href="configuration.html" class="nav-link">Configuração</a></li>
+            <li><a href="events.html" class="nav-link">Eventos</a></li>
+          </ul>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Exemplos</div>
+          <ul class="nav-links">
+            <li><a href="example-basic.html" class="nav-link">Básico</a></li>
+            <li><a href="example-api-programmatic.html" class="nav-link">API Programática</a></li>
+            <li><a href="example-ajax-basic.html" class="nav-link">AJAX Básico</a></li>
+            <li><a href="example-tags.html" class="nav-link">Tags</a></li>
+            <li><a href="example-pagination.html" class="nav-link">Paginação</a></li>
+            <li><a href="example-max-selection.html" class="nav-link">Limite de Seleção</a></li>
+            <li><a href="example-validation.html" class="nav-link">Validação Avançada</a></li>
+            <li><a href="example-templates.html" class="nav-link">Templates</a></li>
+            <li><a href="example-i18n.html" class="nav-link">i18n</a></li>
+            <li><a href="example-bootstrap.html" class="nav-link">Bootstrap</a></li>
+          </ul>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="docs-main">
+      <header class="docs-topbar">
+        <button class="mobile-menu-toggle" aria-label="Toggle menu">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+        <h1 class="topbar-title">Bootstrap Integration</h1>
+        <div class="topbar-actions">
+          <div class="language-switcher">
+            <a href="bootstrap.html" class="lang-link active">🇧🇷 PT</a>
+            <span class="lang-separator">|</span>
+            <a href="../en/bootstrap.html" class="lang-link">🇺🇸 EN</a>
+          </div>
+          <a href="https://github.com/ailtonocchi/vanilla-smart-select" class="topbar-btn" target="_blank" rel="noopener noreferrer">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+            </svg>
+            GitHub
+          </a>
+        </div>
+      </header>
+
+      <div class="docs-content">
+        <h1>Integração Bootstrap 5</h1>
+        <p class="lead">
+          Vanilla Smart Select funciona perfeitamente com Bootstrap 5 sem conflitos de CSS.
+        </p>
+
+        <section>
+          <h2>Compatibilidade</h2>
+          <p>Testado e totalmente compatível com:</p>
+          <ul>
+            <li>Bootstrap 5.3.x</li>
+            <li>Bootstrap 5.2.x</li>
+            <li>Bootstrap 5.1.x</li>
+          </ul>
+
+          <div class="alert alert-success">
+            <strong>✅ Zero Conflitos:</strong> Todas as classes CSS do Vanilla Smart Select usam o prefixo <code>.vs-</code> para evitar conflitos com Bootstrap.
+          </div>
+        </section>
+
+        <section>
+          <h2>Ordem de Inclusão</h2>
+          <p>Recomendamos a seguinte ordem para incluir os arquivos:</p>
+          <pre><code class="language-html">&lt;!-- 1. Bootstrap CSS --&gt;
+&lt;link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"&gt;
+
+&lt;!-- 2. Vanilla Smart Select CSS --&gt;
+&lt;link href="vanilla-smart-select.min.css" rel="stylesheet"&gt;
+
+&lt;!-- ... seu conteúdo ... --&gt;
+
+&lt;!-- 3. Bootstrap JS Bundle --&gt;
+&lt;script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"&gt;&lt;/script&gt;
+
+&lt;!-- 4. Vanilla Smart Select JS --&gt;
+&lt;script src="vanilla-smart-select.min.js"&gt;&lt;/script&gt;</code></pre>
+        </section>
+
+        <section>
+          <h2>Exemplo Básico com Bootstrap</h2>
+          <pre><code class="language-html">&lt;div class="container"&gt;
+  &lt;div class="row"&gt;
+    &lt;div class="col-md-6"&gt;
+      &lt;div class="mb-3"&gt;
+        &lt;label for="my-select" class="form-label"&gt;Escolha uma opção&lt;/label&gt;
+        &lt;select id="my-select" class="form-select"&gt;
+          &lt;option value=""&gt;Selecione...&lt;/option&gt;
+          &lt;option value="1"&gt;Opção 1&lt;/option&gt;
+          &lt;option value="2"&gt;Opção 2&lt;/option&gt;
+        &lt;/select&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+  new VanillaSmartSelect('#my-select', {
+    placeholder: 'Selecione uma opção...',
+    searchable: true
+  });
+&lt;/script&gt;</code></pre>
+        </section>
+
+        <section>
+          <h2>Validação de Formulários Bootstrap</h2>
+          <pre><code class="language-html">&lt;form class="needs-validation" novalidate&gt;
+  &lt;div class="mb-3"&gt;
+    &lt;label for="required-select" class="form-label"&gt;Campo Obrigatório&lt;/label&gt;
+    &lt;select id="required-select" class="form-select" required&gt;
+      &lt;option value=""&gt;Selecione...&lt;/option&gt;
+      &lt;option value="1"&gt;Opção 1&lt;/option&gt;
+    &lt;/select&gt;
+    &lt;div class="invalid-feedback"&gt;
+      Por favor, selecione uma opção.
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;button class="btn btn-primary" type="submit"&gt;Enviar&lt;/button&gt;
+&lt;/form&gt;
+
+&lt;script&gt;
+  const select = new VanillaSmartSelect('#required-select');
+
+  // Validação Bootstrap
+  const form = document.querySelector('.needs-validation');
+  form.addEventListener('submit', function(e) {
+    if (!form.checkValidity()) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    form.classList.add('was-validated');
+  });
+&lt;/script&gt;</code></pre>
+        </section>
+
+        <section>
+          <h2>Grid System</h2>
+          <p>Use o grid system do Bootstrap normalmente:</p>
+          <pre><code class="language-html">&lt;div class="row"&gt;
+  &lt;div class="col-md-4"&gt;
+    &lt;select id="select1" class="form-select"&gt;...&lt;/select&gt;
+  &lt;/div&gt;
+  &lt;div class="col-md-4"&gt;
+    &lt;select id="select2" class="form-select"&gt;...&lt;/select&gt;
+  &lt;/div&gt;
+  &lt;div class="col-md-4"&gt;
+    &lt;select id="select3" class="form-select"&gt;...&lt;/select&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+
+        <section>
+          <h2>Componentes Bootstrap</h2>
+          <p>Vanilla Smart Select funciona bem dentro de componentes Bootstrap como Cards, Modals, etc:</p>
+          <pre><code class="language-html">&lt;div class="card"&gt;
+  &lt;div class="card-header"&gt;
+    Configurações
+  &lt;/div&gt;
+  &lt;div class="card-body"&gt;
+    &lt;label class="form-label"&gt;Categoria&lt;/label&gt;
+    &lt;select id="category-select" class="form-select"&gt;...&lt;/select&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </section>
+
+        <section>
+          <h2>Temas</h2>
+          <p>Vanilla Smart Select se adapta automaticamente ao tema do Bootstrap:</p>
+          <ul>
+            <li>Respeita as variáveis CSS do Bootstrap quando disponíveis</li>
+            <li>Classes <code>.form-select</code> são preservadas</li>
+            <li>Cores e espaçamentos seguem o padrão Bootstrap</li>
+          </ul>
+        </section>
+
+        <div class="alert alert-info">
+          <strong>📁 Exemplos Completos:</strong> Todos os arquivos na pasta <code>examples-bootstrap/</code> demonstram integração com Bootstrap 5. São 10+ exemplos prontos para uso!
+        </div>
+
+        <section>
+          <h2>Problemas Conhecidos</h2>
+          <p>Nenhum problema de compatibilidade conhecido com Bootstrap 5. Se encontrar algum, por favor <a href="https://github.com/ailtonocchi/vanilla-smart-select/issues">abra uma issue</a>.</p>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
+  <script src="../js/docs.js"></script>
+</body>
+</html>

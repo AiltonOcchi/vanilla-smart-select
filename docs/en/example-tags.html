@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Tags in Vanilla Smart Select - Dynamic creation of custom options">
+  <title>Tags - Vanilla Smart Select</title>
+  <link rel="stylesheet" href="../css/docs.css">
+  <link rel="stylesheet" href="../../dist/vanilla-smart-select.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+</head>
+<body>
+  <div class="docs-container">
+    <aside class="docs-sidebar">
+      <div class="sidebar-header">
+        <a href="index.html" class="sidebar-logo">
+          <div class="sidebar-logo-icon">VS</div>
+          <div class="sidebar-logo-text">
+            <div class="sidebar-logo-title">Vanilla Smart Select</div>
+            <div class="sidebar-logo-subtitle">v1.0.1</div>
+          </div>
+        </a>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Introduction</div>
+          <ul class="nav-links">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="getting-started.html" class="nav-link">Getting Started</a></li>
+          </ul>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Resources</div>
+          <ul class="nav-links">
+            <li><a href="api-reference.html" class="nav-link">API Reference</a></li>
+            <li><a href="configuration.html" class="nav-link">Configuration</a></li>
+            <li><a href="events.html" class="nav-link">Events</a></li>
+          </ul>
+        </div>
+        <div class="nav-section">
+          <div class="nav-section-title">Examples</div>
+          <ul class="nav-links">
+            <li><a href="example-basic.html" class="nav-link">Basic</a></li>
+            <li><a href="example-api-programmatic.html" class="nav-link">Programmatic API</a></li>
+            <li><a href="example-ajax-basic.html" class="nav-link">Basic AJAX</a></li>
+            <li><a href="example-tags.html" class="nav-link active">Tags</a></li>
+            <li><a href="example-pagination.html" class="nav-link">Pagination</a></li>
+            <li><a href="example-max-selection.html" class="nav-link">Selection Limit</a></li>
+            <li><a href="example-validation.html" class="nav-link">Advanced Validation</a></li>
+            <li><a href="example-templates.html" class="nav-link">Templates</a></li>
+            <li><a href="example-i18n.html" class="nav-link">i18n</a></li>
+            <li><a href="example-bootstrap.html" class="nav-link">Bootstrap</a></li>
+          </ul>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="docs-main">
+      <header class="docs-topbar">
+        <button class="mobile-menu-toggle" aria-label="Toggle menu">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+        <h1 class="topbar-title">Tags</h1>
+        <div class="topbar-actions">
+          <div class="language-switcher">
+            <a href="../pt/example-tags.html" class="lang-link">🇧🇷 PT</a>
+            <span class="lang-separator">|</span>
+            <a href="example-tags.html" class="lang-link active">🇺🇸 EN</a>
+          </div>
+          <a href="https://github.com/ailtonocchi/vanilla-smart-select" class="topbar-btn" target="_blank" rel="noopener noreferrer">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+            </svg>
+            GitHub
+          </a>
+        </div>
+      </header>
+
+      <div class="docs-content">
+        <section class="section-mb-lg">
+          <p class="lead">
+            The Tags feature allows users to create new options dynamically as they type.
+            Ideal for email fields, categories, tags, and user mentions.
+          </p>          
+        </section>
+
+        <!-- Example 1: Email Tags -->
+        <section class="section-mb-lg">
+          <h2>Email Tags with Validation</h2>
+          <p>Tags with email format validation and multiple selection:</p>
+
+          <div class="demo-container">
+            <label for="emails" class="demo-label">Select or type emails:</label>
+            <select id="emails" class="demo-select" multiple></select>
+
+            <div id="emails-result" class="code-details" style="display: none; margin-top: 15px;">
+              <strong>Selected Emails:</strong>
+              <pre id="emails-data" style="margin-top: 10px; background: #2d2d2d; padding: 10px; border-radius: 4px; overflow-x: auto; color: #ccc; font-size: 0.75rem;"></pre>
+            </div>
+            <details class="code-details">
+            <summary>View code</summary>
+            
+            <h3>HTML</h3>
+            <pre><code class="language-html">&lt;select id="emails" multiple&gt;&lt;/select&gt;</code></pre>
+
+            <h3>JavaScript</h3>
+            <pre><code class="language-javascript">const emailsData = [
+  { id: '1', text: 'joao@exemplo.com' },
+  { id: '2', text: 'maria@exemplo.com' },
+  { id: '3', text: 'pedro@exemplo.com' }
+];
+
+const emailsSelect = new VanillaSmartSelect('#emails', {
+  data: emailsData,
+  multiple: true,
+  placeholder: 'Digite emails...',
+  tags: true,
+  createTag: (params) => {
+    const term = params.term?.trim();
+    if (!term) return null;
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(term)) {
+      return null; // Invalid email
+    }
+
+    return {
+      id: term,
+      text: term
+    };
+  },
+  insertTag: (data, tag) => {
+    // Insert at the beginning
+    data.unshift(tag);
+  },
+  templateResult: (item) => {
+    if (item._isTag) {
+      return `&lt;div style="font-weight: 500;"&gt;➕ Adicionar email: &lt;strong&gt;${item.text}&lt;/strong&gt;&lt;/div&gt;`;
+    }
+    return `&lt;div&gt;📧 ${item.text}&lt;/div&gt;`;
+  }
+});</code></pre>
+            </details>
+        </section>
+
+        <!-- Example 2: Categories -->
+        <section class="section-mb-lg">
+          <h2>Custom Categories</h2>
+          <p>Dynamic creation of categories with automatic formatting:</p>
+
+          <div class="demo-container">
+            <label for="categories" class="demo-label">Select or create categories:</label>
+            <select id="categories" class="demo-select" multiple></select>
+
+            <div id="categories-result" class="code-details" style="display: none; margin-top: 15px;">
+              <strong>Selected Categories:</strong>
+              <pre id="categories-data" style="margin-top: 10px; background: #2d2d2d; padding: 10px; border-radius: 4px; overflow-x: auto; color: #ccc; font-size: 0.75rem;"></pre>
+            </div>
+            <details class="code-details">
+            <summary>View code</summary>
+            
+            <h3>HTML</h3>
+            <pre><code class="language-html">&lt;select id="categories" multiple&gt;&lt;/select&gt;</code></pre>
+
+            <h3>JavaScript</h3>
+            <pre><code class="language-javascript">const categoriesData = [
+  { id: 'javascript', text: 'JavaScript' },
+  { id: 'python', text: 'Python' },
+  { id: 'css', text: 'CSS' },
+  { id: 'html', text: 'HTML' }
+];
+
+const categoriesSelect = new VanillaSmartSelect('#categories', {
+  data: categoriesData,
+  multiple: true,
+  placeholder: 'Select or create categories...',
+  tags: true,
+  createTag: (params) => {
+    const term = params.term?.trim();
+    if (!term) return null;
+
+    // Convert to lowercase and replace spaces with hyphens
+    const id = term.toLowerCase().replace(/\s+/g, '-');
+
+    return {
+      id: id,
+      text: term
+    };
+  },
+  templateResult: (item) => {
+    if (item._isTag) {
+      return `&lt;div style="font-weight: 500;"&gt;✨ Criar nova categoria: "${item.text}"&lt;/div&gt;`;
+    }
+    return `&lt;div&gt;🏷️ ${item.text}&lt;/div&gt;`;
+  },
+  templateSelection: (item) => {
+    return item.text;
+  }
+});</code></pre>
+            </details>
+          </section>
+
+        <!-- Example 3: Custom Tags with Validation -->
+        <section class="section-mb-lg">
+          <h2>Tags with Custom Validation</h2>
+          <p>Tags with selection limit, alphanumeric validation and custom colors:</p>
+
+          <div class="demo-container">
+            <label for="custom-tags" class="demo-label">Type tags (alphanumeric, max. 5):</label>
+            <select id="custom-tags" class="demo-select" multiple></select>
+
+            <div id="custom-result" class="code-details" style="display: none; margin-top: 15px;">
+              <strong>Selected Tags:</strong>
+              <pre id="custom-data" style="margin-top: 10px; background: #2d2d2d; padding: 10px; border-radius: 4px; overflow-x: auto; color: #ccc; font-size: 0.75rem;"></pre>
+            </div>
+            <details class="code-details">
+            <summary>View code</summary>
+            
+            <h3>HTML</h3>
+            <pre><code class="language-html">&lt;select id="custom-tags" multiple&gt;&lt;/select&gt;</code></pre>
+
+            <h3>JavaScript</h3>
+            <pre><code class="language-javascript">const customTagsData = [
+  { id: 'important', text: 'important', color: '#dc3545' },
+  { id: 'urgent', text: 'urgent', color: '#ffc107' },
+  { id: 'bug', text: 'bug', color: '#6f42c1' },
+  { id: 'feature', text: 'feature', color: '#28a745' }
+];
+
+const customTagsSelect = new VanillaSmartSelect('#custom-tags', {
+  data: customTagsData,
+  multiple: true,
+  placeholder: 'Type tags (alphanumeric)...',
+  tags: true,
+  maximumSelectionLength: 5,
+  createTag: (params) => {
+    const term = params.term?.trim();
+    if (!term) return null;
+
+    // Only alphanumeric characters and hyphens
+    const validTag = /^[a-zA-Z0-9-]+$/;
+    if (!validTag.test(term)) {
+      return null; // Invalid format
+    }
+
+    // Generate random color
+    const colors = ['#007bff', '#28a745', '#dc3545', '#ffc107', '#17a2b8', '#6f42c1'];
+    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+
+    return {
+      id: term.toLowerCase(),
+      text: term.toLowerCase(),
+      color: randomColor
+    };
+  },
+  templateResult: (item) => {
+    if (item._isTag) {
+      return `&lt;div style="font-weight: 500;"&gt;
+        &lt;span style="font-size: 18px;"&gt;+&lt;/span&gt; Criar tag: &lt;strong&gt;${item.text}&lt;/strong&gt;
+        &lt;div style="font-size: 11px; margin-top: 4px; color: #999;"&gt;Apenas letras, números e hífens&lt;/div&gt;
+      &lt;/div&gt;`;
+    }
+    return `&lt;div&gt;
+      &lt;span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: ${item.color}; margin-right: 8px;"&gt;&lt;/span&gt;
+      ${item.text}
+    &lt;/div&gt;`;
+  },
+  templateSelection: (item) => {
+    return `&lt;span style="color: ${item.color}"&gt;🏷️ ${item.text}&lt;/span&gt;`;
+  }
+});</code></pre>
+            </details>
+        </section>
+
+        <!-- Example 4: User Mentions -->
+        <section class="section-mb-lg">
+          <h2>User Mentions (Single Select)</h2>
+          <p>Mention system with @ for single selection:</p>
+
+          <div class="demo-container">
+            <label for="mentions" class="demo-label">Type @username:</label>
+            <select id="mentions" class="demo-select"></select>
+
+            <div id="mentions-result" class="code-details" style="display: none; margin-top: 15px;">
+              <strong>Mentioned User:</strong>
+              <pre id="mentions-data" style="margin-top: 10px; background: #2d2d2d; padding: 10px; border-radius: 4px; overflow-x: auto; color: #ccc; font-size: 0.75rem;"></pre>
+            </div>
+            <details class="code-details">
+            <summary>View code</summary>
+            
+            <h3>HTML</h3>
+            <pre><code class="language-html">&lt;select id="mentions"&gt;&lt;/select&gt;</code></pre>
+
+            <h3>JavaScript</h3>
+            <pre><code class="language-javascript">const mentionsData = [
+  { id: 'john', text: '@john', name: 'John Doe' },
+  { id: 'jane', text: '@jane', name: 'Jane Smith' },
+  { id: 'bob', text: '@bob', name: 'Bob Johnson' }
+];
+
+const mentionsSelect = new VanillaSmartSelect('#mentions', {
+  data: mentionsData,
+  placeholder: 'Type @username...',
+  allowClear: true,
+  tags: true,
+  createTag: (params) => {
+    let term = params.term?.trim();
+    if (!term) return null;
+
+    // Ensure it starts with @
+    if (!term.startsWith('@')) {
+      term = '@' + term;
+    }
+
+    // Remove @ for the ID
+    const username = term.substring(1);
+
+    // Only alphanumeric and underscores
+    if (!/^[a-zA-Z0-9_]+$/.test(username)) {
+      return null;
+    }
+
+    return {
+      id: username,
+      text: term,
+      name: term // No real name for new users
+    };
+  },
+  templateResult: (item) => {
+    if (item._isTag) {
+      return `&lt;div style="font-weight: 500;"&gt;
+        ➕ Mencionar novo usuário: &lt;strong&gt;${item.text}&lt;/strong&gt;
+      &lt;/div&gt;`;
+    }
+    return `&lt;div&gt;
+      &lt;div style="font-weight: 500;"&gt;${item.text}&lt;/div&gt;
+      &lt;div style="font-size: 12px; color: #666;"&gt;${item.name}&lt;/div&gt;
+    &lt;/div&gt;`;
+  },
+  templateSelection: (item) => {
+    return item.text;
+  }
+});</code></pre>
+            </details>
+          </section>
+
+        <!-- Configuration Section -->
+        <section class="section-mb-lg">
+          <h2>Tags Configuration</h2>
+          
+          <h3>Main Options</h3>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Option</th>
+                  <th>Type</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>tags</code></td>
+                  <td>Boolean</td>
+                  <td>Enables dynamic tag creation</td>
+                </tr>
+                <tr>
+                  <td><code>createTag</code></td>
+                  <td>Function</td>
+                  <td>Function that validates and creates new tag objects</td>
+                </tr>
+                <tr>
+                  <td><code>insertTag</code></td>
+                  <td>Function</td>
+                  <td>Function that defines where to insert the new tag in the data array</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>_isTag Property</h3>
+          <p>When a tag is created dynamically, the object has the <code>_isTag: true</code> property. Use this in <code>templateResult</code> to display a different message during creation.</p>
+
+          <h3>createTag Parameters</h3>
+          <pre><code class="language-javascript">createTag: (params) => {
+  // params.term: text typed by the user
+  
+  // Return null to reject the tag
+  if (/* validation failed */) {
+    return null;
+  }
+  
+  // Return object with id and text to create the tag
+  return {
+    id: '...',
+    text: '...',
+    // ... other custom fields
+  };
+}</code></pre>
+        </section>
+
+        <!-- Tips Section -->
+        <section class="section-mb-lg">
+          <div class="info-callout info-callout-success">
+            <div class="info-callout-title">✅ Usage Tips</div>
+            <ul>
+              <li>Use <code>createTag</code> to validate format before creating the tag</li>
+              <li>Combine tags with <code>maximumSelectionLength</code> to limit selections</li>
+              <li>Use <code>insertTag</code> to control the position of new tags</li>
+              <li>Add custom fields (like colors) to tag objects</li>
+              <li>Tags can be used in single or multiple mode</li>
+            </ul>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+  <script src="../../dist/vanilla-smart-select.min.js"></script>
+  <script src="../js/docs.js"></script>
+  <script>
+    // Example 1: Email Tags
+    const emailsData = [
+      { id: '1', text: 'joao@exemplo.com' },
+      { id: '2', text: 'maria@exemplo.com' },
+      { id: '3', text: 'pedro@exemplo.com' },
+      { id: '4', text: 'ana@exemplo.com' },
+      { id: '5', text: 'carlos@exemplo.com' }
+    ];
+
+    const emailsSelect = new VanillaSmartSelect('#emails', {
+      data: emailsData,
+      multiple: true,
+      placeholder: 'Digite emails...',
+      tags: true,
+      createTag: (params) => {
+        const term = params.term?.trim();
+        if (!term) return null;
+
+        // Simple email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(term)) {
+          return null; // Invalid email
+        }
+
+        return {
+          id: term,
+          text: term
+        };
+      },
+      insertTag: (data, tag) => {
+        // Insert at the beginning
+        data.unshift(tag);
+      },
+      templateResult: (item) => {
+        if (item._isTag) {
+          return `<div style="font-weight: 500;">➕ Adicionar email: <strong>${item.text}</strong></div>`;
+        }
+        return `<div>📧 ${item.text}</div>`;
+      }
+    });
+
+    document.getElementById('emails').addEventListener('vs:change', (e) => {
+      const resultDiv = document.getElementById('emails-result');
+      const dataDiv = document.getElementById('emails-data');
+      const selected = emailsSelect.getSelected();
+      resultDiv.style.display = 'block';
+      dataDiv.textContent = JSON.stringify(selected.map(s => s.text), null, 2);
+    });
+
+    // Example 2: Category Tags
+    const categoriesData = [
+      { id: 'javascript', text: 'JavaScript' },
+      { id: 'python', text: 'Python' },
+      { id: 'css', text: 'CSS' },
+      { id: 'html', text: 'HTML' }
+    ];
+
+    const categoriesSelect = new VanillaSmartSelect('#categories', {
+      data: categoriesData,
+      multiple: true,
+      placeholder: 'Selecione ou crie categorias...',
+      tags: true,
+      createTag: (params) => {
+        const term = params.term?.trim();
+        if (!term) return null;
+
+        // Convert to lowercase and replace spaces with hyphens
+        const id = term.toLowerCase().replace(/\s+/g, '-');
+
+        return {
+          id: id,
+          text: term
+        };
+      },
+      templateResult: (item) => {
+        if (item._isTag) {
+          return `<div style="font-weight: 500;">✨ Criar nova categoria: "${item.text}"</div>`;
+        }
+        return `<div>🏷️ ${item.text}</div>`;
+      },
+      templateSelection: (item) => {
+        return item.text;
+      }
+    });
+
+    document.getElementById('categories').addEventListener('vs:change', (e) => {
+      const resultDiv = document.getElementById('categories-result');
+      const dataDiv = document.getElementById('categories-data');
+      const selected = categoriesSelect.getSelected();
+      resultDiv.style.display = 'block';
+      dataDiv.textContent = JSON.stringify(selected, null, 2);
+    });
+
+    // Example 3: Custom Tags with Validation
+    const customTagsData = [
+      { id: 'important', text: 'important', color: '#dc3545' },
+      { id: 'urgent', text: 'urgent', color: '#ffc107' },
+      { id: 'bug', text: 'bug', color: '#6f42c1' },
+      { id: 'feature', text: 'feature', color: '#28a745' }
+    ];
+
+    const customTagsSelect = new VanillaSmartSelect('#custom-tags', {
+      data: customTagsData,
+      multiple: true,
+      placeholder: 'Digite tags (alfanuméricas)...',
+      tags: true,
+      maximumSelectionLength: 5,
+      createTag: (params) => {
+        const term = params.term?.trim();
+        if (!term) return null;
+
+        // Only allow alphanumeric characters and hyphens
+        const validTag = /^[a-zA-Z0-9-]+$/;
+        if (!validTag.test(term)) {
+          return null; // Invalid tag format
+        }
+
+        // Generate a random color
+        const colors = ['#007bff', '#28a745', '#dc3545', '#ffc107', '#17a2b8', '#6f42c1'];
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+
+        return {
+          id: term.toLowerCase(),
+          text: term.toLowerCase(),
+          color: randomColor
+        };
+      },
+      templateResult: (item) => {
+        if (item._isTag) {
+          return `<div style="font-weight: 500;">
+            <span style="font-size: 18px;">+</span> Criar tag: <strong>${item.text}</strong>
+            <div style="font-size: 11px; margin-top: 4px; color: #999;">Apenas letras, números e hífens</div>
+          </div>`;
+        }
+        return `<div>
+          <span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: ${item.color}; margin-right: 8px;"></span>
+          ${item.text}
+        </div>`;
+      },
+      templateSelection: (item) => {
+        return `<span style="color: ${item.color}">🏷️ ${item.text}</span>`;
+      }
+    });
+
+    document.getElementById('custom-tags').addEventListener('vs:change', (e) => {
+      const resultDiv = document.getElementById('custom-result');
+      const dataDiv = document.getElementById('custom-data');
+      const selected = customTagsSelect.getSelected();
+      resultDiv.style.display = 'block';
+      dataDiv.textContent = JSON.stringify(selected, null, 2);
+    });
+
+    // Example 4: User Mentions (Single Select)
+    const mentionsData = [
+      { id: 'john', text: '@john', name: 'John Doe' },
+      { id: 'jane', text: '@jane', name: 'Jane Smith' },
+      { id: 'bob', text: '@bob', name: 'Bob Johnson' }
+    ];
+
+    const mentionsSelect = new VanillaSmartSelect('#mentions', {
+      data: mentionsData,
+      placeholder: 'Digite @usuario...',
+      allowClear: true,
+      tags: true,
+      createTag: (params) => {
+        let term = params.term?.trim();
+        if (!term) return null;
+
+        // Ensure it starts with @
+        if (!term.startsWith('@')) {
+          term = '@' + term;
+        }
+
+        // Remove @ for ID, keep for text
+        const username = term.substring(1);
+
+        // Only allow alphanumeric and underscores
+        if (!/^[a-zA-Z0-9_]+$/.test(username)) {
+          return null;
+        }
+
+        return {
+          id: username,
+          text: term,
+          name: term // No real name for new users
+        };
+      },
+      templateResult: (item) => {
+        if (item._isTag) {
+          return `<div style="font-weight: 500;">
+            ➕ Mencionar novo usuário: <strong>${item.text}</strong>
+          </div>`;
+        }
+        return `<div>
+          <div style="font-weight: 500;">${item.text}</div>
+          <div style="font-size: 12px; color: #666;">${item.name}</div>
+        </div>`;
+      },
+      templateSelection: (item) => {
+        return item.text;
+      }
+    });
+
+    document.getElementById('mentions').addEventListener('vs:change', (e) => {
+      const resultDiv = document.getElementById('mentions-result');
+      const dataDiv = document.getElementById('mentions-data');
+      const selected = mentionsSelect.getSelected();
+      resultDiv.style.display = 'block';
+      dataDiv.textContent = JSON.stringify(selected, null, 2);
+    });
+
+    // Log all tag events
+    document.querySelectorAll('select').forEach(select => {
+      select.addEventListener('vs:select', (e) => {
+        if (e.detail.data && e.detail.data._isTag) {
+          console.log('✨ Nova tag criada:', e.detail.data);
+        } else {
+          console.log('✅ Item selecionado:', e.detail.data);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
