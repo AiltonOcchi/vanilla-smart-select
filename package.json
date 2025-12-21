@@ -54,7 +54,7 @@
   "bugs": {
     "url": "https://github.com/AiltonOcchi/vanilla-smart-select/issues"
   },
-  "homepage": "https://github.com/AiltonOcchi/vanilla-smart-select",
+  "homepage": "https://ailtonocchi.github.io/vanilla-smart-select/",
   "devDependencies": {
     "@babel/core": "^7.23.0",
     "@babel/preset-env": "^7.23.0",
