@@ -124,7 +124,7 @@ new VanillaSmartSelect('#countries', {
     return div;
   },
   templateSelection: (item) => {
-    return `${item.icon} ${item.text} - R$ ${item.price.toFixed(2).replace('.', ',')}`;
+    return `${item.flag} ${item.text} (${item.code})`;
   }
 });</code></pre>
             </details>
