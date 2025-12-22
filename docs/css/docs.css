@@ -280,11 +280,12 @@ li, .nav-links {
   border-bottom: 1px solid var(--gray-200);
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   padding: 0 var(--spacing-xl);
   position: sticky;
   top: 0;
   z-index: 50;
+  gap: var(--spacing-md);
 }
 
 .topbar-title {
@@ -384,11 +385,25 @@ li, .nav-links {
   background: transparent;
   cursor: pointer;
   color: var(--gray-700);
+  z-index: 300;
+  position: relative;
+}
+
+.mobile-menu-toggle:hover {
+  color: var(--primary-blue);
+}
+
+.mobile-menu-toggle:active {
+  color: var(--primary-blue-dark);
 }
 
 .mobile-menu-toggle svg {
   width: 24px;
   height: 24px;
+}
+
+.mobile-menu-overlay {
+  transition: opacity var(--transition-base);
 }
 
 /* ================================
@@ -944,6 +959,7 @@ a.link-card:hover {
 @media (max-width: 768px) {
   .docs-sidebar {
     transform: translateX(-100%);
+    z-index: 200;
   }
 
   .docs-sidebar.mobile-open {
@@ -957,6 +973,32 @@ a.link-card:hover {
 
   .mobile-menu-toggle {
     display: block;
+    margin-right: auto;
+  }
+
+  /* Ocultar título no mobile para evitar quebra de layout */
+  .topbar-title {
+    display: none;
+  }
+
+  /* Ajustar topbar para mobile */
+  .docs-topbar {
+    gap: var(--spacing-sm);
+    justify-content: space-between;
+  }
+
+  .topbar-actions {
+    gap: var(--spacing-sm);
+  }
+
+  .language-switcher {
+    padding: var(--spacing-sm);
+    font-size: 0.75rem;
+  }
+
+  /* Esconder texto do botão GitHub no mobile */
+  .topbar-btn:not(.primary) svg + * {
+    display: none;
   }
 
   .docs-content {
@@ -1015,7 +1057,17 @@ a.link-card:hover {
 
 @media (max-width: 480px) {
   .docs-topbar {
-    padding: 0 var(--spacing-md);
+    padding: 0 var(--spacing-sm);
+  }
+
+  /* Simplificar language switcher em telas muito pequenas */
+  .language-switcher {
+    padding: 0.25rem 0.5rem;
+  }
+
+  .topbar-btn.primary {
+    padding: var(--spacing-sm);
+    font-size: 0.75rem;
   }
 
   .docs-content {
