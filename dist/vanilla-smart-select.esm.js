@@ -1,6 +1,6 @@
 /*!
  * VanillaSmartSelect v1.0.1
- * (c) 2025 Ailton Occhi <ailton.occhi@hotmail.com>
+ * (c) 2026 Ailton Occhi <ailton.occhi@hotmail.com>
  * Released under the MIT License.
  */
 /**
@@ -2638,13 +2638,6 @@ class DropdownAdapter extends BaseAdapter {
    * Close the dropdown
    */
   close() {
-    // Save the active element BEFORE closing
-    const activeElement = document.activeElement;
-    const wasDropdownFocused =
-      this.dropdown.container &&
-      this.dropdown.container.contains(activeElement);
-    const wasSearchFocused = activeElement === this.searchBox?.getInput();
-
     // Close dropdown
     this.dropdown.close();
 
@@ -2655,15 +2648,14 @@ class DropdownAdapter extends BaseAdapter {
       this.instance.emit(EVENTS.QUERY, { term: "" });
     }
 
-    // Update ARIA
+    // Update ARIA and restore focus
     if (this.anchorElement) {
       this.anchorElement.setAttribute("aria-expanded", "false");
 
-      // Return focus to selection element if focus was in dropdown
-      // This must be synchronous for Tab key to work correctly
-      if (wasDropdownFocused || wasSearchFocused) {
-        this.anchorElement.focus();
-      }
+      // Always return focus to selection element when dropdown closes
+      // This ensures consistent behavior between mouse and keyboard interactions
+      // and allows Tab key to navigate to the next form field correctly
+      this.anchorElement.focus();
     }
   }
 
