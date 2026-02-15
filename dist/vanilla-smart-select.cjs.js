@@ -1,5 +1,5 @@
 /*!
- * VanillaSmartSelect v1.0.2
+ * VanillaSmartSelect v1.0.3
  * (c) 2026 Ailton Occhi <ailton.occhi@hotmail.com>
  * Released under the MIT License.
  */
@@ -4143,9 +4143,9 @@ class ResultsAdapter extends BaseAdapter {
     // Update results list
     this.results.update(filteredResults);
 
-    // Auto-highlight first non-disabled item when there are results
+    // Auto-highlight selected item if exists, otherwise first non-disabled item
     if (filteredResults && filteredResults.length > 0) {
-      this._autoHighlightFirst(filteredResults);
+      this._autoHighlightSelectedOrFirst(filteredResults);
     }
 
     // Emit results event for accessibility announcements
@@ -4201,13 +4201,13 @@ class ResultsAdapter extends BaseAdapter {
         // Update results list
         this.results.update(this.accumulatedResults);
 
-        // Auto-highlight first non-disabled item when there are results
+        // Auto-highlight selected item if exists, otherwise first non-disabled item
         if (
           this.accumulatedResults &&
           this.accumulatedResults.length > 0 &&
           !append
         ) {
-          this._autoHighlightFirst(this.accumulatedResults);
+          this._autoHighlightSelectedOrFirst(this.accumulatedResults);
         }
 
         // Emit results event for accessibility announcements
@@ -4343,6 +4343,71 @@ class ResultsAdapter extends BaseAdapter {
     }
 
     return null;
+  }
+
+  /**
+   * Auto-highlight selected item if exists, otherwise first non-disabled item
+   * @param {Array} results - Filtered results
+   * @private
+   */
+  _autoHighlightSelectedOrFirst(results) {
+    // Try to highlight the currently selected item first
+    if (this.dataAdapter) {
+      const currentSelection = this.dataAdapter.current();
+      
+      // If there's a selection, try to find and highlight it
+      if (currentSelection && currentSelection.length > 0) {
+        const selectedItem = currentSelection[0]; // Use first selected item
+        const flatIndex = this._findFlatIndexOfItem(results, selectedItem.id);
+        
+        if (flatIndex !== -1) {
+          this.results.highlight(flatIndex);
+          
+          // Update ARIA activedescendant
+          if (this.instance.accessibilityManager) {
+            this.instance.accessibilityManager.updateActiveDescendant(flatIndex);
+          }
+          return; // Successfully highlighted selected item
+        }
+      }
+    }
+    
+    // No selection or selected item not found - highlight first non-disabled item
+    this._autoHighlightFirst(results);
+  }
+
+  /**
+   * Find the flat index of an item by ID in results (including groups)
+   * @param {Array} results - Results array (may contain groups)
+   * @param {string|number} itemId - Item ID to find
+   * @returns {number} Flat index or -1 if not found
+   * @private
+   */
+  _findFlatIndexOfItem(results, itemId) {
+    let flatIndex = 0;
+    
+    for (let i = 0; i < results.length; i++) {
+      const item = results[i];
+      
+      // Check if it's a group
+      if (item.children && Array.isArray(item.children)) {
+        // Search in group children
+        for (let j = 0; j < item.children.length; j++) {
+          if (String(item.children[j].id) === String(itemId)) {
+            return flatIndex;
+          }
+          flatIndex++;
+        }
+      } else {
+        // Regular item - check if it matches
+        if (String(item.id) === String(itemId)) {
+          return flatIndex;
+        }
+        flatIndex++;
+      }
+    }
+    
+    return -1; // Not found
   }
 
   /**
@@ -6306,7 +6371,7 @@ var decorators$1 = /*#__PURE__*/Object.freeze({
  * Vanilla-Smart-Select
  * Modern JavaScript dropdown enhancement library without jQuery dependencies
  *
- * @version 1.0.2
+ * @version 1.0.3
  * @author Ailton Occhi <ailton.occhi@hotmail.com>
  * @license MIT
  */

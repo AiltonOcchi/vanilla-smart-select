@@ -2,7 +2,7 @@
  * Vanilla-Smart-Select
  * Modern JavaScript dropdown enhancement library without jQuery dependencies
  *
- * @version 1.0.2
+ * @version 1.0.3
  * @author Ailton Occhi <ailton.occhi@hotmail.com>
  * @license MIT
  */
