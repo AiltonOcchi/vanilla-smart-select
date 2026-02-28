@@ -119,6 +119,16 @@ class ResultsAdapter extends BaseAdapter {
     };
     resultsContainer.addEventListener("mouseover", this._mouseoverHandler);
 
+    // For AJAX selects: trigger the initial load when the dropdown opens.
+    // Without this, results would only appear after the user types, because
+    // the update() fired from bind() is now intentionally skipped (dropdown
+    // is still closed at that point).
+    this.instance.on(EVENTS.OPEN, () => {
+      if (this.ajaxAdapter) {
+        this.update(this.currentSearchTerm);
+      }
+    });
+
     // Listen to data changes
     this.instance.on(EVENTS.QUERY, (data) => {
       this.update(data.term);
@@ -153,8 +163,27 @@ class ResultsAdapter extends BaseAdapter {
   update(term = "") {
     if (!this.dataAdapter) return;
 
+    // Check minimum input length
+    const minimumLength = this.options.get("searchMinimumLength") || 0;
+    if (minimumLength > 0 && term.length < minimumLength) {
+      // Clear results WITHOUT rendering "no results", then show hint message.
+      // Using clear() avoids stacking "Nenhum resultado" + hint together.
+      this.results.clear();
+      this._hideInputTooShortMessage();
+      this._showInputTooShortMessage(minimumLength);
+      return;
+    }
+
+    // Remove any leftover "input too short" message
+    this._hideInputTooShortMessage();
+
     // If AJAX adapter is configured, use it for remote data
     if (this.ajaxAdapter) {
+      // Only fire AJAX when the dropdown is open — prevents requests on
+      // initial bind() and on the QUERY emitted by close() clean-up.
+      if (this.dropdownAdapter && !this.dropdownAdapter.isOpen()) {
+        return;
+      }
       this._updateWithAjax(term);
     } else {
       this._updateWithLocalData(term);
@@ -673,6 +702,49 @@ class ResultsAdapter extends BaseAdapter {
   }
 
   /**
+   * Show "input too short" hint message
+   * @param {number} minimum - Required minimum length
+   * @private
+   */
+  _showInputTooShortMessage(minimum) {
+    const resultsContainer = this.results.getContainer();
+    if (!resultsContainer) return;
+
+    const language = this.options.get("language");
+    const message =
+      typeof language.inputTooShort === "function"
+        ? language.inputTooShort({ minimum })
+        : `Please enter ${minimum} or more characters`;
+
+    const messageEl = document.createElement("div");
+    // Reuse the same class as "no results" so the hint
+    // appears centered with identical styling.
+    messageEl.className = "vs-results--no-results";
+    messageEl.dataset.vsTooShort = "true";
+    messageEl.setAttribute("role", "status");
+    messageEl.setAttribute("aria-live", "polite");
+    messageEl.textContent = message;
+
+    resultsContainer.appendChild(messageEl);
+  }
+
+  /**
+   * Hide "input too short" hint message
+   * @private
+   */
+  _hideInputTooShortMessage() {
+    const resultsContainer = this.results.getContainer();
+    if (!resultsContainer) return;
+
+    const existing = resultsContainer.querySelector(
+      "[data-vs-too-short='true']",
+    );
+    if (existing) {
+      existing.remove();
+    }
+  }
+
+  /**
    * Show error message
    * @param {Error} error - Error object
    */
@@ -732,6 +804,9 @@ class ResultsAdapter extends BaseAdapter {
       clearTimeout(this._errorMessageTimeout);
       this._errorMessageTimeout = null;
     }
+
+    // Remove any leftover input-too-short message
+    this._hideInputTooShortMessage();
 
     // Properly remove event listeners to prevent memory leaks
     if (this.resultsContainer) {

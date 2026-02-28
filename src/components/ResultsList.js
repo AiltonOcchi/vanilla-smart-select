@@ -151,6 +151,20 @@ class ResultsList {
   }
 
   /**
+   * Clear results without rendering the "no results" message.
+   * Use this when a different status message (e.g. "input too short")
+   * will be injected right after.
+   */
+  clear() {
+    this.results = [];
+    this.flatResults = [];
+    this.highlightedIndex = -1;
+    if (this.container) {
+      emptyElement(this.container);
+    }
+  }
+
+  /**
    * Highlight item at index (flat index)
    * @param {number} index - Flat index to highlight
    */
