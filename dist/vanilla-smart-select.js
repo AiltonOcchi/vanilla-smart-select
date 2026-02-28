@@ -1,5 +1,5 @@
 /*!
- * VanillaSmartSelect v1.0.3
+ * VanillaSmartSelect v1.0.4
  * (c) 2026 Ailton Occhi <ailton.occhi@hotmail.com>
  * Released under the MIT License.
  */
@@ -6091,7 +6091,7 @@
    * Vanilla-Smart-Select
    * Modern JavaScript dropdown enhancement library without jQuery dependencies
    *
-   * @version 1.0.3
+   * @version 1.0.4
    * @author Ailton Occhi <ailton.occhi@hotmail.com>
    * @license MIT
    */

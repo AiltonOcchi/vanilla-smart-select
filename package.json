@@ -1,6 +1,6 @@
 {
   "name": "vanilla-smart-select",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Modern JavaScript dropdown enhancement library without jQuery dependencies",
   "type": "module",
   "main": "dist/vanilla-smart-select.cjs.js",

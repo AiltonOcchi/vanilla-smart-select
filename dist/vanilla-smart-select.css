@@ -135,7 +135,7 @@
 .vs-container--default .vs-selection {
   border: 1px solid #ddd;
   border-radius: 4px;
-  padding: 8px 12px; /* right side reserved for the dropdown arrow */
+  padding: 8px 12px; /* arrow is absolutely positioned, no extra padding needed */
   background: #fff;
   min-height: 38px;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
