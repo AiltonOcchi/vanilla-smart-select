@@ -154,14 +154,14 @@ new VanillaSmartSelect('#select', {
 });
 ```
 
-#### `minimumInputLength`
+#### `searchMinimumLength`
 - **Type:** `Number`
 - **Default:** `0`
 - **Description:** Minimum characters before search starts
 
 ```javascript
 new VanillaSmartSelect('#select', {
-  minimumInputLength: 2
+  searchMinimumLength: 2
 });
 ```
 
