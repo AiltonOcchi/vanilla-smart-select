@@ -166,9 +166,9 @@ class ResultsAdapter extends BaseAdapter {
     // Check minimum input length
     const minimumLength = this.options.get("searchMinimumLength") || 0;
     if (minimumLength > 0 && term.length < minimumLength) {
-      // Clear results and show hint message — do NOT fire AJAX request.
-      // This also blocks the initial open() call when term is "" (empty).
-      this.results.update([]);
+      // Clear results WITHOUT rendering "no results", then show hint message.
+      // Using clear() avoids stacking "Nenhum resultado" + hint together.
+      this.results.clear();
       this._hideInputTooShortMessage();
       this._showInputTooShortMessage(minimumLength);
       return;
@@ -717,7 +717,10 @@ class ResultsAdapter extends BaseAdapter {
         : `Please enter ${minimum} or more characters`;
 
     const messageEl = document.createElement("div");
-    messageEl.className = "vs-results__input-too-short";
+    // Reuse the same class as "no results" so the hint
+    // appears centered with identical styling.
+    messageEl.className = "vs-results--no-results";
+    messageEl.dataset.vsTooShort = "true";
     messageEl.setAttribute("role", "status");
     messageEl.setAttribute("aria-live", "polite");
     messageEl.textContent = message;
@@ -734,7 +737,7 @@ class ResultsAdapter extends BaseAdapter {
     if (!resultsContainer) return;
 
     const existing = resultsContainer.querySelector(
-      ".vs-results__input-too-short",
+      "[data-vs-too-short='true']",
     );
     if (existing) {
       existing.remove();
