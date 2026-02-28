@@ -28,7 +28,7 @@ class Selection {
       "aria-haspopup": "listbox",
     });
 
-    // Render placeholder initially
+    // Render placeholder initially (which also appends the arrow)
     this.renderPlaceholder();
 
     return this.container;
@@ -55,6 +55,8 @@ class Selection {
       );
       this.container.appendChild(placeholderEl);
     }
+      // Always add dropdown indicator
+      this._appendDropdownArrow();
   }
 
   /**
@@ -118,6 +120,8 @@ class Selection {
 
       this.container.appendChild(clearBtn);
     }
+      // Always add dropdown indicator
+      this._appendDropdownArrow();
   }
 
   /**
@@ -138,8 +142,31 @@ class Selection {
     });
 
     this.container.appendChild(choicesContainer);
+      // Always add dropdown indicator
+      this._appendDropdownArrow();
   }
 
+    /**
+     * Append dropdown indicator arrow to the selection container
+     */
+    _appendDropdownArrow() {
+      // Remove any existing arrow (avoid duplicates)
+      const prev = this.container.querySelector('.vs-selection__arrow');
+      if (prev) prev.remove();
+      // SVG arrow (chevron-down)
+      const arrow = createElement('span', {
+        className: 'vs-selection__arrow',
+        'aria-hidden': 'true',
+        tabindex: '-1',
+      });
+      // Inline SVG for crisp rendering
+      arrow.innerHTML = `
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4.5 7.5L9 12L13.5 7.5" stroke="#888" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      `;
+      this.container.appendChild(arrow);
+    }
   /**
    * Render a single choice (tag) in multiple select
    * @param {Object} item - Item to render
