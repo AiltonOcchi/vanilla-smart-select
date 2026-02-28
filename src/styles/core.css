@@ -66,6 +66,24 @@ select[data-vs-initializing] {
   display: block;
 }
 
+/* Dropdown indicator arrow */
+.vs-selection__arrow {
+  position: absolute;
+  top: 50%;
+  right: 0.15em;
+  transform: translateY(-50%);
+  line-height: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+.vs-selection__arrow svg {
+  display: block;
+  width: 1.1em;
+  height: 1.1em;
+}
+
+
+
 /* Results container */
 .vs-results {
   overflow-y: auto;
