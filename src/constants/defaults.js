@@ -37,7 +37,6 @@ export const DEFAULTS = {
   // Dropdown options
   dropdownParent: null,
   dropdownAutoWidth: false,
-  dropdownCssClass: "",
 
   // AJAX options (Phase 2)
   ajax: null,

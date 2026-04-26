@@ -846,11 +846,18 @@ export const diacritics = {
 };
 
 /**
- * Removes diacritics from a string for normalized searching
+ * Removes diacritics from a string for normalized searching.
+ *
+ * The regex range below is an intentional cheap pre-filter that skips basic
+ * ASCII; the diacritics map then handles known accented chars, and unmapped
+ * non-ASCII (emojis, non-Latin scripts) passes through unchanged via the
+ * `|| char` fallback.
+ *
  * @param {string} str - String to normalize
  * @returns {string} Normalized string without diacritics
  */
 export function removeDiacritics(str) {
+  // eslint-disable-next-line no-control-regex
   return str.replace(/[^\u0000-\u007E]/g, (char) => diacritics[char] || char);
 }
 

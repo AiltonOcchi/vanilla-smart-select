@@ -125,7 +125,7 @@ class ResultsList {
     // Use custom template if provided, otherwise use default
     // Uses cached template function for better performance
     applyTemplate(this._cachedTemplateResult, item, result, {
-      defaultText: item._isTag ? item.text : item.text,
+      defaultText: item.text,
       useTextContent: false, // Use createElement wrapper for consistency
     });
 

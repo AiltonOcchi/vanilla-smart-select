@@ -3,7 +3,7 @@
  * Handles search input rendering and events
  */
 
-import { createElement, emptyElement } from "../utils/dom.js";
+import { createElement } from "../utils/dom.js";
 
 class SearchBox {
   constructor(options) {

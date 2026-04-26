@@ -86,7 +86,6 @@ class ResultsAdapter extends BaseAdapter {
       const resultEl = e.target.closest(".vs-result");
       if (!resultEl) return;
 
-      const index = parseInt(resultEl.dataset.index, 10);
       const id = resultEl.dataset.id;
 
       // Don't select disabled items
@@ -749,6 +748,8 @@ class ResultsAdapter extends BaseAdapter {
    * @param {Error} error - Error object
    */
   showError(error) {
+    console.error("AJAX error:", error);
+
     const resultsContainer = this.results.getContainer();
     if (!resultsContainer) return;
 
