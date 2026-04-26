@@ -24,7 +24,7 @@
     "dev": "rollup -c -w",
     "test": "jest",
     "test:watch": "jest --watch",
-    "lint": "eslint src",
+    "lint": "eslint src __tests__",
     "format": "prettier --write \"src/**/*.js\"",
     "serve": "http-server -p 8080",
     "prepublishOnly": "npm run build"
