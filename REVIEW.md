@@ -64,7 +64,7 @@ Também há um `value || option.text` redundante e divergente da lógica em `_no
 
 ---
 
-### 4. `loadMore()` esconde o spinner por timer fixo de 500 ms, independente da resposta AJAX
+### 4. ✅ `loadMore()` esconde o spinner por timer fixo de 500 ms, independente da resposta AJAX
 
 [src/adapters/ResultsAdapter.js:347-372](src/adapters/ResultsAdapter.js#L347-L372):
 
@@ -84,6 +84,8 @@ O spinner é escondido em 500 ms fixos. Se a API responde em 200 ms, o usuário 
 **Impacto:** Resultados duplicados ou pulados em scroll infinito sob latência maior que 500 ms; flicker visual em latências baixas.
 
 **Sugestão:** Resetar `isLoadingMore` e esconder o spinner no `.then()`/`.catch()` de `_updateWithAjax` (passando uma flag/promise back), não em `setTimeout`. Tratar token + estado de loading na mesma estrutura.
+
+**Resolvido** no commit `fix(results): tie loadMore lifecycle to promise instead of fixed 500ms timer`. `_updateWithAjax` agora retorna a chain; `loadMore` faz `.finally()` na promise para liberar gate e esconder spinner em sucesso, erro **e** descarte por token. `_loadMoreTimeout` virou dead code e foi removido (constructor + destroy). Side effect (também no commit body): `.catch` em modo `append` deixou de wipar UI, preservando páginas anteriores em erro transiente. Testes em [__tests__/loadmore-race.test.js](__tests__/loadmore-race.test.js): (a) gate não destrava por tempo, (b) erro destrava por evento, (c) descarte por token destrava por evento. Nota do antigo item 14 (race do `currentSearchToken` interagindo com o timer fixo) foi absorvida nesta resolução.
 
 ---
 

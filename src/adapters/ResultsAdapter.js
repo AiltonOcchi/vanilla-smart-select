@@ -25,7 +25,6 @@ class ResultsAdapter extends BaseAdapter {
     this.currentSearchToken = null; // Token to prevent race conditions
 
     // Store timeout references for proper cleanup
-    this._loadMoreTimeout = null;
     this._limitMessageTimeout = null;
     this._errorMessageTimeout = null;
 
@@ -263,8 +262,10 @@ class ResultsAdapter extends BaseAdapter {
     const searchToken = Symbol("search");
     this.currentSearchToken = searchToken;
 
-    // Query AJAX adapter (returns a promise)
-    this.ajaxAdapter
+    // Query AJAX adapter (returns a promise). Return the chain so callers
+    // (e.g. loadMore) can attach `.finally()` and tie lifecycle hooks to
+    // the actual end of the request — not to a fixed timer.
+    return this.ajaxAdapter
       .query({ term, page: this.currentPage })
       .then((response) => {
         // Check if this search is still valid (not superseded by a newer search)
@@ -313,9 +314,13 @@ class ResultsAdapter extends BaseAdapter {
         }
 
         console.error("AJAX query error:", error);
-        // On error, show empty results
-        this.results.update([]);
-        this.instance.emit(EVENTS.RESULTS, { results: [] });
+        // In append mode (loadMore page > 1), preserve the previously
+        // loaded pages — wiping them on a transient error is hostile.
+        // Replace mode keeps the legacy "show empty" behavior.
+        if (!append) {
+          this.results.update([]);
+          this.instance.emit(EVENTS.RESULTS, { results: [] });
+        }
       });
   }
 
@@ -354,20 +359,15 @@ class ResultsAdapter extends BaseAdapter {
     // Show loading more indicator
     this.showLoadingMore();
 
-    // Update with append=true to add to existing results
-    this._updateWithAjax(this.currentSearchTerm, true);
-
-    // Clear any existing timeout
-    if (this._loadMoreTimeout) {
-      clearTimeout(this._loadMoreTimeout);
-    }
-
-    // Hide loading more indicator when done
-    this._loadMoreTimeout = setTimeout(() => {
+    // Tie the gate and the spinner to the actual end of the request.
+    // .finally() runs on success, error, AND when the page is discarded
+    // by a token mismatch — the previous setTimeout(500) released the
+    // gate by time alone, allowing duplicate requests on slow APIs and
+    // stranding the gate when responses arrived after the timer fired.
+    this._updateWithAjax(this.currentSearchTerm, true).finally(() => {
       this.hideLoadingMore();
       this.isLoadingMore = false;
-      this._loadMoreTimeout = null;
-    }, 500);
+    });
   }
 
   /**
@@ -791,11 +791,6 @@ class ResultsAdapter extends BaseAdapter {
    */
   destroy() {
     // Clear all pending timeouts to prevent memory leaks and errors
-    if (this._loadMoreTimeout) {
-      clearTimeout(this._loadMoreTimeout);
-      this._loadMoreTimeout = null;
-    }
-
     if (this._limitMessageTimeout) {
       clearTimeout(this._limitMessageTimeout);
       this._limitMessageTimeout = null;
