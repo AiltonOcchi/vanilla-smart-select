@@ -1,6 +1,6 @@
 {
   "name": "vanilla-smart-select",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Modern JavaScript dropdown enhancement library without jQuery dependencies",
   "type": "module",
   "main": "dist/vanilla-smart-select.cjs.js",
@@ -17,7 +17,8 @@
     "./style.css": "./dist/vanilla-smart-select.css"
   },
   "files": [
-    "dist"
+    "dist",
+    "CHANGELOG.md"
   ],
   "scripts": {
     "build": "rollup -c",

@@ -1,5 +1,5 @@
 /*!
- * VanillaSmartSelect v1.0.4
+ * VanillaSmartSelect v1.0.5
  * (c) 2026 Ailton Occhi <ailton.occhi@hotmail.com>
  * Released under the MIT License.
  */
@@ -422,7 +422,6 @@
     // Dropdown options
     dropdownParent: null,
     dropdownAutoWidth: false,
-    dropdownCssClass: "",
     // AJAX options (Phase 2)
     ajax: null,
     /*
@@ -1280,10 +1279,15 @@
      */
     _updateElement() {
       const options = this.$element.querySelectorAll("option");
-      const selectedIds = this.selection.map(item => item.id);
+      // Coerce both sides to string: option.value is always a string, but
+      // selection ids may be numbers (e.g. when data is provided as
+      // [{id: 1, ...}]). The previous `option.value || option.text` fallback
+      // was dead code: HTMLOptionElement.value already falls back to the text
+      // per the HTML spec, and explicit value="" options are filtered out as
+      // placeholders by _normalizeOption before reaching the selection.
+      const selectedIds = this.selection.map(item => String(item.id));
       options.forEach(option => {
-        const value = option.value || option.text;
-        option.selected = selectedIds.includes(value);
+        option.selected = selectedIds.includes(option.value);
       });
 
       // Trigger native change event
@@ -1553,12 +1557,17 @@
    * @param {Object} options - Rendering options
    * @param {string} options.defaultText - Default text to use if template fails (defaults to item.text)
    * @param {boolean} options.useTextContent - Use textContent instead of createElement for fallback (defaults to false)
+   * @param {Function} options.escapeMarkup - Function applied to the string result of templateFn before
+   *   innerHTML assignment. The default in DEFAULTS is identity (v1.x compat: templates that return HTML
+   *   are injected as-is). v2.0 will switch the default to a real HTML-escape function. Ignored when the
+   *   template returns an HTMLElement (appendChild path).
    * @returns {boolean} True if template was applied successfully, false if fallback was used
    */
   function applyTemplate(templateFn, item, targetElement, options = {}) {
     const {
       defaultText = item.text,
-      useTextContent = false
+      useTextContent = false,
+      escapeMarkup
     } = options;
 
     // If no template function provided, use default rendering
@@ -1570,7 +1579,7 @@
       // Call template function
       const customContent = templateFn(item);
 
-      // Handle HTMLElement return
+      // Handle HTMLElement return — escapeMarkup intentionally bypassed here.
       if (customContent instanceof HTMLElement) {
         targetElement.appendChild(customContent);
         return true;
@@ -1578,9 +1587,12 @@
 
       // Handle string return (HTML)
       if (typeof customContent === "string") {
-        // Note: Using innerHTML here - developers are responsible for sanitizing
-        // user-generated content to prevent XSS attacks
-        targetElement.innerHTML = customContent;
+        // Pass through escapeMarkup when provided. With the v1.x default
+        // (identity), this is a no-op and the string is injected as HTML
+        // — preserving legacy behavior. Integrators can opt-in to real
+        // escaping by supplying a sanitizing function via the option.
+        const safeContent = typeof escapeMarkup === "function" ? escapeMarkup(customContent) : customContent;
+        targetElement.innerHTML = safeContent;
         return true;
       }
 
@@ -1624,6 +1636,7 @@
 
       // Cache template function for performance (avoids repeated options.get calls)
       this._cachedTemplateSelection = options.get("templateSelection");
+      this._cachedEscapeMarkup = options.get("escapeMarkup");
     }
 
     /**
@@ -1698,7 +1711,9 @@
       // Uses cached template function for better performance
       applyTemplate(this._cachedTemplateSelection, item, rendered, {
         defaultText: item.text,
-        useTextContent: true // Use textContent directly for better performance
+        useTextContent: true,
+        // Use textContent directly for better performance
+        escapeMarkup: this._cachedEscapeMarkup
       });
       this.container.appendChild(rendered);
 
@@ -1778,7 +1793,9 @@
       // Uses cached template function for better performance
       applyTemplate(this._cachedTemplateSelection, item, text, {
         defaultText: item.text,
-        useTextContent: true // Use textContent directly for better performance
+        useTextContent: true,
+        // Use textContent directly for better performance
+        escapeMarkup: this._cachedEscapeMarkup
       });
       const language = this.options.get("language");
       const removeLabel = typeof language.removeItem === "function" ? language.removeItem({
@@ -1897,7 +1914,7 @@
       this._removeClickHandler = e => {
         if (e.target.classList.contains("vs-selection__choice__remove")) {
           const id = e.target.dataset.id;
-          const item = this.dataAdapter.current().find(item => item.id === id);
+          const item = this.dataAdapter.current().find(item => String(item.id) === String(id));
           if (item) {
             this.dataAdapter.unselect(item);
             this.update();
@@ -2583,6 +2600,7 @@
 
       // Cache template function for performance (avoids repeated options.get calls)
       this._cachedTemplateResult = options.get("templateResult");
+      this._cachedEscapeMarkup = options.get("escapeMarkup");
     }
 
     /**
@@ -2682,8 +2700,10 @@
       // Use custom template if provided, otherwise use default
       // Uses cached template function for better performance
       applyTemplate(this._cachedTemplateResult, item, result, {
-        defaultText: item._isTag ? item.text : item.text,
-        useTextContent: false // Use createElement wrapper for consistency
+        defaultText: item.text,
+        useTextContent: false,
+        // Use createElement wrapper for consistency
+        escapeMarkup: this._cachedEscapeMarkup
       });
       return result;
     }
@@ -2752,17 +2772,6 @@
         return this.flatResults[this.highlightedIndex];
       }
       return null;
-    }
-
-    /**
-     * Clear the results
-     */
-    clear() {
-      if (this.container) {
-        emptyElement(this.container);
-      }
-      this.results = [];
-      this.highlightedIndex = -1;
     }
 
     /**
@@ -3633,11 +3642,18 @@
   };
 
   /**
-   * Removes diacritics from a string for normalized searching
+   * Removes diacritics from a string for normalized searching.
+   *
+   * The regex range below is an intentional cheap pre-filter that skips basic
+   * ASCII; the diacritics map then handles known accented chars, and unmapped
+   * non-ASCII (emojis, non-Latin scripts) passes through unchanged via the
+   * `|| char` fallback.
+   *
    * @param {string} str - String to normalize
    * @returns {string} Normalized string without diacritics
    */
   function removeDiacritics(str) {
+    // eslint-disable-next-line no-control-regex
     return str.replace(/[^\u0000-\u007E]/g, char => diacritics[char] || char);
   }
 
@@ -3787,7 +3803,6 @@
       this.currentSearchToken = null; // Token to prevent race conditions
 
       // Store timeout references for proper cleanup
-      this._loadMoreTimeout = null;
       this._limitMessageTimeout = null;
       this._errorMessageTimeout = null;
 
@@ -3845,7 +3860,6 @@
       this._clickHandler = e => {
         const resultEl = e.target.closest(".vs-result");
         if (!resultEl) return;
-        parseInt(resultEl.dataset.index, 10);
         const id = resultEl.dataset.id;
 
         // Don't select disabled items
@@ -4021,8 +4035,10 @@
       const searchToken = Symbol("search");
       this.currentSearchToken = searchToken;
 
-      // Query AJAX adapter (returns a promise)
-      this.ajaxAdapter.query({
+      // Query AJAX adapter (returns a promise). Return the chain so callers
+      // (e.g. loadMore) can attach `.finally()` and tie lifecycle hooks to
+      // the actual end of the request — not to a fixed timer.
+      return this.ajaxAdapter.query({
         term,
         page: this.currentPage
       }).then(response => {
@@ -4068,11 +4084,15 @@
           return;
         }
         console.error("AJAX query error:", error);
-        // On error, show empty results
-        this.results.update([]);
-        this.instance.emit(EVENTS.RESULTS, {
-          results: []
-        });
+        // In append mode (loadMore page > 1), preserve the previously
+        // loaded pages — wiping them on a transient error is hostile.
+        // Replace mode keeps the legacy "show empty" behavior.
+        if (!append) {
+          this.results.update([]);
+          this.instance.emit(EVENTS.RESULTS, {
+            results: []
+          });
+        }
       });
     }
 
@@ -4109,20 +4129,15 @@
       // Show loading more indicator
       this.showLoadingMore();
 
-      // Update with append=true to add to existing results
-      this._updateWithAjax(this.currentSearchTerm, true);
-
-      // Clear any existing timeout
-      if (this._loadMoreTimeout) {
-        clearTimeout(this._loadMoreTimeout);
-      }
-
-      // Hide loading more indicator when done
-      this._loadMoreTimeout = setTimeout(() => {
+      // Tie the gate and the spinner to the actual end of the request.
+      // .finally() runs on success, error, AND when the page is discarded
+      // by a token mismatch — the previous setTimeout(500) released the
+      // gate by time alone, allowing duplicate requests on slow APIs and
+      // stranding the gate when responses arrived after the timer fired.
+      this._updateWithAjax(this.currentSearchTerm, true).finally(() => {
         this.hideLoadingMore();
         this.isLoadingMore = false;
-        this._loadMoreTimeout = null;
-      }, 500);
+      });
     }
 
     /**
@@ -4475,6 +4490,7 @@
      * @param {Error} error - Error object
      */
     showError(error) {
+      console.error("AJAX error:", error);
       const resultsContainer = this.results.getContainer();
       if (!resultsContainer) return;
 
@@ -4513,10 +4529,6 @@
      */
     destroy() {
       // Clear all pending timeouts to prevent memory leaks and errors
-      if (this._loadMoreTimeout) {
-        clearTimeout(this._loadMoreTimeout);
-        this._loadMoreTimeout = null;
-      }
       if (this._limitMessageTimeout) {
         clearTimeout(this._limitMessageTimeout);
         this._limitMessageTimeout = null;
@@ -5296,10 +5308,14 @@
         }
       });
 
-      // HTML5 Validation events
-      this.element.addEventListener("invalid", e => {
+      // HTML5 Validation events. Store the handler reference so destroy()
+      // can remove it — otherwise repeated init/destroy cycles on the same
+      // <select> stack listeners (the element survives destroy, so any
+      // handler attached to it leaks across cycles).
+      this._invalidHandler = e => {
         this._onInvalid(e);
-      });
+      };
+      this.element.addEventListener("invalid", this._invalidHandler);
 
       // Update validation state on change
       this.on(EVENTS.CHANGE, () => {
@@ -5627,7 +5643,7 @@
 
       // Find item in current selection
       const current = this.dataAdapter.current();
-      const item = current.find(i => i.id === id);
+      const item = current.find(i => String(i.id) === String(id));
       if (item) {
         this.dataAdapter.unselect(item);
       }
@@ -5741,8 +5757,9 @@
      */
     _removeItemById(items, id) {
       return items.filter(item => {
-        // Remove if matches ID
-        if (item.id == id) {
+        // Remove if matches ID. Coerce both sides to string for consistency
+        // with _findItemById and to avoid loose-equality edge cases.
+        if (String(item.id) === String(id)) {
           return false;
         }
 
@@ -5868,6 +5885,12 @@
       // Remove container
       if (this.container && this.container.parentNode) {
         this.container.parentNode.removeChild(this.container);
+      }
+
+      // Detach DOM listeners we attached to the (surviving) original select.
+      if (this._invalidHandler) {
+        this.element.removeEventListener("invalid", this._invalidHandler);
+        this._invalidHandler = null;
       }
 
       // Show original select
@@ -6091,7 +6114,7 @@
    * Vanilla-Smart-Select
    * Modern JavaScript dropdown enhancement library without jQuery dependencies
    *
-   * @version 1.0.4
+   * @version 1.0.5
    * @author Ailton Occhi <ailton.occhi@hotmail.com>
    * @license MIT
    */
