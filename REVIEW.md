@@ -89,13 +89,15 @@ O spinner é escondido em 500 ms fixos. Se a API responde em 200 ms, o usuário 
 
 ---
 
-### 5. Listener `invalid` no `<select>` original nunca é removido em `destroy`
+### 5. ✅ Listener `invalid` no `<select>` original nunca é removido em `destroy`
 
 [src/core/VanillaSmartSelect.js:257-259](src/core/VanillaSmartSelect.js#L257-L259) registra `this.element.addEventListener("invalid", ...)` mas o handler não é guardado nem removido no [destroy](src/core/VanillaSmartSelect.js#L820-L876). Como `destroy()` mantém o `<select>` original no DOM (só remove o container customizado), múltiplos ciclos `init → destroy → init` (ex.: SPAs que reaproveitam markup) acumulam handlers e estado obsoleto continua respondendo.
 
 **Impacto:** Memory leak silencioso em SPAs; comportamento errático ao re-instanciar.
 
 **Sugestão:** Salvar a referência do handler em propriedade e fazer `removeEventListener` em `destroy()`.
+
+**Resolvido** no commit `fix(core): remove invalid listener from <select> on destroy`. Handler armazenado em `this._invalidHandler` no `_bindEvents`, removido via `removeEventListener` em `destroy()` antes de restaurar `display`. Teste em [__tests__/invalid-listener-cleanup.test.js](__tests__/invalid-listener-cleanup.test.js): 3 ciclos init/destroy/init no mesmo `<select>`, dispatch único de `invalid` → `_onInvalid` chamado 1 vez (antes do fix: 3).
 
 ---
 

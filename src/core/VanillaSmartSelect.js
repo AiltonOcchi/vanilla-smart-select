@@ -253,10 +253,14 @@ class VanillaSmartSelect extends EventEmitter {
       }
     });
 
-    // HTML5 Validation events
-    this.element.addEventListener("invalid", (e) => {
+    // HTML5 Validation events. Store the handler reference so destroy()
+    // can remove it — otherwise repeated init/destroy cycles on the same
+    // <select> stack listeners (the element survives destroy, so any
+    // handler attached to it leaks across cycles).
+    this._invalidHandler = (e) => {
       this._onInvalid(e);
-    });
+    };
+    this.element.addEventListener("invalid", this._invalidHandler);
 
     // Update validation state on change
     this.on(EVENTS.CHANGE, () => {
@@ -860,6 +864,12 @@ class VanillaSmartSelect extends EventEmitter {
     // Remove container
     if (this.container && this.container.parentNode) {
       this.container.parentNode.removeChild(this.container);
+    }
+
+    // Detach DOM listeners we attached to the (surviving) original select.
+    if (this._invalidHandler) {
+      this.element.removeEventListener("invalid", this._invalidHandler);
+      this._invalidHandler = null;
     }
 
     // Show original select
