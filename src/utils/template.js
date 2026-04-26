@@ -13,10 +13,18 @@ import { createElement } from "./dom.js";
  * @param {Object} options - Rendering options
  * @param {string} options.defaultText - Default text to use if template fails (defaults to item.text)
  * @param {boolean} options.useTextContent - Use textContent instead of createElement for fallback (defaults to false)
+ * @param {Function} options.escapeMarkup - Function applied to the string result of templateFn before
+ *   innerHTML assignment. The default in DEFAULTS is identity (v1.x compat: templates that return HTML
+ *   are injected as-is). v2.0 will switch the default to a real HTML-escape function. Ignored when the
+ *   template returns an HTMLElement (appendChild path).
  * @returns {boolean} True if template was applied successfully, false if fallback was used
  */
 export function applyTemplate(templateFn, item, targetElement, options = {}) {
-  const { defaultText = item.text, useTextContent = false } = options;
+  const {
+    defaultText = item.text,
+    useTextContent = false,
+    escapeMarkup
+  } = options;
 
   // If no template function provided, use default rendering
   if (!templateFn || typeof templateFn !== "function") {
@@ -28,7 +36,7 @@ export function applyTemplate(templateFn, item, targetElement, options = {}) {
     // Call template function
     const customContent = templateFn(item);
 
-    // Handle HTMLElement return
+    // Handle HTMLElement return — escapeMarkup intentionally bypassed here.
     if (customContent instanceof HTMLElement) {
       targetElement.appendChild(customContent);
       return true;
@@ -36,9 +44,15 @@ export function applyTemplate(templateFn, item, targetElement, options = {}) {
 
     // Handle string return (HTML)
     if (typeof customContent === "string") {
-      // Note: Using innerHTML here - developers are responsible for sanitizing
-      // user-generated content to prevent XSS attacks
-      targetElement.innerHTML = customContent;
+      // Pass through escapeMarkup when provided. With the v1.x default
+      // (identity), this is a no-op and the string is injected as HTML
+      // — preserving legacy behavior. Integrators can opt-in to real
+      // escaping by supplying a sanitizing function via the option.
+      const safeContent =
+        typeof escapeMarkup === "function"
+          ? escapeMarkup(customContent)
+          : customContent;
+      targetElement.innerHTML = safeContent;
       return true;
     }
 

@@ -119,7 +119,7 @@ Some-se a isso que a mesma rotina mistura DOM event cancelável (`trigger(... OP
 
 ---
 
-### 7. `escapeMarkup` declarado no defaults mas nunca consumido — templates com string vão direto para `innerHTML`
+### 7. ✅ `escapeMarkup` declarado no defaults mas nunca consumido — templates com string vão direto para `innerHTML`
 
 [utils/template.js:41](src/utils/template.js#L41) seta `targetElement.innerHTML = customContent` com comentário "developers are responsible for sanitizing". A opção `escapeMarkup` ([defaults.js:35](src/constants/defaults.js#L35)) está nas defaults mas **não é consumida em lugar algum** do código. O usuário que confia no nome da opção espera escape automático e não recebe.
 
@@ -138,6 +138,8 @@ Critérios de implementação:
 **Resultado prático:**
 - v1.x: comportamento inalterado por default, mas integradores conscientes podem passar `escapeMarkup: (s) => s.replace(/[&<>"']/g, ...)` e ficar seguros.
 - v2.0: trocar default para escape real (breaking change, com bump major previsto).
+
+**Resolvido (compat-first)** no commit `feat(template): consume escapeMarkup option for string templates`. `applyTemplate` agora aplica `escapeMarkup(customContent)` antes do `innerHTML` quando a função é fornecida via `options.escapeMarkup`. Default em `defaults.js` permanece identidade. Componentes (`Selection`, `ResultsList`) cacheiam `escapeMarkup` no construtor junto com os templates e propagam a cada `applyTemplate`. Nota adicionada em CLAUDE.md → seção "Convenções". README/API.md não tocados (registrado em "Pendências para v2.0"). Testes em [__tests__/escape-markup.test.js](__tests__/escape-markup.test.js): (a) compat default identidade, (b) escape custom aplicado, (c) caminho HTMLElement bypass.
 
 ---
 

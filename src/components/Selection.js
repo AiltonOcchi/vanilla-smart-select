@@ -13,6 +13,7 @@ class Selection {
 
     // Cache template function for performance (avoids repeated options.get calls)
     this._cachedTemplateSelection = options.get("templateSelection");
+    this._cachedEscapeMarkup = options.get("escapeMarkup");
   }
 
   /**
@@ -97,6 +98,7 @@ class Selection {
     applyTemplate(this._cachedTemplateSelection, item, rendered, {
       defaultText: item.text,
       useTextContent: true, // Use textContent directly for better performance
+      escapeMarkup: this._cachedEscapeMarkup,
     });
 
     this.container.appendChild(rendered);
@@ -188,6 +190,7 @@ class Selection {
     applyTemplate(this._cachedTemplateSelection, item, text, {
       defaultText: item.text,
       useTextContent: true, // Use textContent directly for better performance
+      escapeMarkup: this._cachedEscapeMarkup,
     });
 
     const language = this.options.get("language");

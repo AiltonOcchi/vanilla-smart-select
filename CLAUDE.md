@@ -61,6 +61,7 @@ examples/, examples-bootstrap/   # Demos HTML estáticos servidos via `npm run s
 - Todas as constantes vêm de `src/constants/` — não hardcode nomes de eventos, atributos ARIA, key codes ou valores default de opções inline.
 - Criação/consulta de DOM passa por `utils/dom.js` (`createElement`, `querySelector`, etc.) em vez de chamadas diretas a `document.*`.
 - Strings exibidas ao usuário passam pela camada de i18n; novas chaves devem ser adicionadas a **todos** os locales em `src/i18n/`.
+- Templates (`templateResult`, `templateSelection`) que retornam string passam por `escapeMarkup` antes do `innerHTML`. O default em [src/constants/defaults.js](src/constants/defaults.js) é identidade (`(markup) => markup`) por compatibilidade com v1.x — integradores que precisam de escape real precisam fornecer a função explicitamente. **v2.0 vai trocar o default para uma função de escape de verdade** (registrado em REVIEW.md → "Pendências para v2.0"). Templates que retornam `HTMLElement` não passam por `escapeMarkup` (caminho `appendChild`).
 
 ## Notas de arquitetura
 

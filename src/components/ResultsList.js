@@ -15,6 +15,7 @@ class ResultsList {
 
     // Cache template function for performance (avoids repeated options.get calls)
     this._cachedTemplateResult = options.get("templateResult");
+    this._cachedEscapeMarkup = options.get("escapeMarkup");
   }
 
   /**
@@ -127,6 +128,7 @@ class ResultsList {
     applyTemplate(this._cachedTemplateResult, item, result, {
       defaultText: item.text,
       useTextContent: false, // Use createElement wrapper for consistency
+      escapeMarkup: this._cachedEscapeMarkup,
     });
 
     return result;
