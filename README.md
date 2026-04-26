@@ -91,10 +91,10 @@ yarn add vanilla-smart-select
 ### CDN
 ```html
 <!-- CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanilla-smart-select@1.0.4/dist/vanilla-smart-select.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanilla-smart-select@1.0.5/dist/vanilla-smart-select.min.css">
 
 <!-- JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/vanilla-smart-select@1.0.4/dist/vanilla-smart-select.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanilla-smart-select@1.0.5/dist/vanilla-smart-select.min.js"></script>
 ```
 
 ### ES Modules
@@ -759,7 +759,7 @@ Complete list of all available options:
   // ===== Template Options =====
   templateResult: null,         // Function: (item) => HTMLElement | string
   templateSelection: null,      // Function: (item) => HTMLElement | string
-  escapeMarkup: (markup) => markup, // Function to sanitize HTML
+  escapeMarkup: (markup) => markup, // Sanitizer applied to string templates before innerHTML. Default is identity (v1.x compat); v2.0 will switch to a real HTML-escape function. Provide your own to opt in now.
 
   // ===== Dropdown Options =====
   dropdownParent: null,         // Parent element for dropdown

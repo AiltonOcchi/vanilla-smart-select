@@ -15,7 +15,7 @@
           <div class="sidebar-logo-icon">VS</div>
           <div class="sidebar-logo-text">
             <div class="sidebar-logo-title">Vanilla Smart Select</div>
-            <div class="sidebar-logo-subtitle">v1.0.4</div>
+            <div class="sidebar-logo-subtitle">v1.0.5</div>
           </div>
         </a>
       </div>
@@ -33,6 +33,7 @@
             <li><a href="api-reference.html" class="nav-link">API Reference</a></li>
             <li><a href="configuration.html" class="nav-link">Configuration</a></li>
             <li><a href="events.html" class="nav-link">Events</a></li>
+            <li><a href="https://github.com/AiltonOcchi/vanilla-smart-select/blob/main/CHANGELOG.md" class="nav-link" target="_blank" rel="noopener noreferrer">Changelog</a></li>
           </ul>
         </div>
         <div class="nav-section">
@@ -239,7 +240,7 @@
                 <td><code>escapeMarkup</code></td>
                 <td>Function</td>
                 <td><code>(markup) => markup</code></td>
-                <td>Function to escape HTML (return string or null)</td>
+                <td>Sanitizer applied to the string returned by <code>templateResult</code> / <code>templateSelection</code> before it is assigned to <code>innerHTML</code>. The default is identity for backward compatibility — supply your own function (e.g. an HTML-escape) when templates render data that may come from untrusted sources. Templates that return an <code>HTMLElement</code> bypass this option. <strong>Note:</strong> v2.0 will switch the default to a real HTML-escape function.</td>
               </tr>
             </tbody>
           </table>
