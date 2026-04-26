@@ -83,7 +83,9 @@ class SelectionAdapter extends BaseAdapter {
     this._removeClickHandler = (e) => {
       if (e.target.classList.contains("vs-selection__choice__remove")) {
         const id = e.target.dataset.id;
-        const item = this.dataAdapter.current().find((item) => item.id === id);
+        const item = this.dataAdapter
+          .current()
+          .find((item) => String(item.id) === String(id));
 
         if (item) {
           this.dataAdapter.unselect(item);

@@ -297,11 +297,16 @@ class DataAdapter extends BaseAdapter {
    */
   _updateElement() {
     const options = this.$element.querySelectorAll("option");
-    const selectedIds = this.selection.map((item) => item.id);
+    // Coerce both sides to string: option.value is always a string, but
+    // selection ids may be numbers (e.g. when data is provided as
+    // [{id: 1, ...}]). The previous `option.value || option.text` fallback
+    // was dead code: HTMLOptionElement.value already falls back to the text
+    // per the HTML spec, and explicit value="" options are filtered out as
+    // placeholders by _normalizeOption before reaching the selection.
+    const selectedIds = this.selection.map((item) => String(item.id));
 
     options.forEach((option) => {
-      const value = option.value || option.text;
-      option.selected = selectedIds.includes(value);
+      option.selected = selectedIds.includes(option.value);
     });
 
     // Trigger native change event

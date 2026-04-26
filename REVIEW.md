@@ -20,7 +20,7 @@ A biblioteca tem arquitetura clara (core + adapters + components + managers) e u
 
 ---
 
-### 2. Remoção de tag em multi-select falha para IDs numéricos
+### 2. ✅ Remoção de tag em multi-select falha para IDs numéricos
 
 Em [src/adapters/SelectionAdapter.js:86](src/adapters/SelectionAdapter.js#L86):
 
@@ -36,9 +36,11 @@ Os outros pontos do código que comparam id pelo dataset usam `String(item.id) =
 
 **Sugestão:** Padronizar comparação por `String(item.id) === String(id)` aqui também.
 
+**Resolvido** no commit `fix: coerce ids to string when crossing dataset/option.value boundaries`. Teste de regressão em [__tests__/numeric-ids.test.js](__tests__/numeric-ids.test.js) caso (a).
+
 ---
 
-### 3. `DataAdapter._updateElement` desselecciona opções com IDs numéricos
+### 3. ✅ `DataAdapter._updateElement` desselecciona opções com IDs numéricos
 
 Em [src/adapters/DataAdapter.js:298-310](src/adapters/DataAdapter.js#L298-L310):
 
@@ -57,6 +59,8 @@ options.forEach((option) => {
 Também há um `value || option.text` redundante e divergente da lógica em `_normalizeOption`.
 
 **Sugestão:** Coagir para string nos dois lados (`selectedIds.map(String).includes(option.value)`) e remover o fallback divergente.
+
+**Resolvido** no commit `fix: coerce ids to string when crossing dataset/option.value boundaries`. O fallback `|| option.text` foi removido junto: investigação confirmou que era dead code (HTMLOptionElement.value já cai no text por spec, e options com `value=""` são filtradas como placeholder antes de chegar na seleção). Teste de regressão em [__tests__/numeric-ids.test.js](__tests__/numeric-ids.test.js) caso (d).
 
 ---
 
@@ -304,7 +308,10 @@ Várias chaves do language pack são strings em alguns locales e funções em ou
 - **Prettier vs ESLint — formatação delegada ao Prettier** (Lote 1): a config legada do ESLint declarava 9 regras de formatação que conflitavam com a saída do Prettier (`indent`, `quotes`, `semi`, `comma-dangle`, `linebreak-style`, `array-bracket-spacing`, `object-curly-spacing`, `space-before-function-paren`, `arrow-spacing`). `npm run lint` nunca passou limpo nesse estado. Removidas no flat config; ESLint agora cuida só de qualidade. **Pendência:** garantir `prettier --check` em CI ou pre-commit hook para evitar drift de formatação. Considerar `eslint-config-prettier` como devDep numa próxima rodada.
 - ✅ **Chave `dropdownCssClass` duplicada em `defaults.js`** (Lote 1): linhas 13 e 40 declaravam o mesmo default (string vazia). JS pegava só a última. Resolvido removendo a duplicata (linha 40).
 - **`showError(error)` engolia o erro AJAX silenciosamente** (Lote 1): parâmetro recebido mas nunca logado. `_updateWithAjax` catch nunca pega o erro original porque `AjaxAdapter` resolve com `{results: [], pagination}` mesmo em falha — então o único caminho com o erro real era `showError`. Resolvido com `console.error("AJAX error:", error)` no início da função.
-- **Regex `[^ -~]` em `removeDiacritics`** (Lote 1): `no-control-regex` reclamava do ` ` no range. Comportamento intencional (filtro pre-mapping; emojis e scripts não-latinos passam intactos via `|| char`). Resolvido com `eslint-disable-next-line` + comentário explicativo no JSDoc.
+- **Regex em `removeDiacritics` dispara `no-control-regex`** (Lote 1): a range usada como pre-filter inclui o caractere NUL (codepoint 0) por design — é um filtro barato pra pular ASCII básico antes de consultar o map de diacríticos. Comportamento intencional (emojis e scripts não-latinos passam intactos via `|| char`). Resolvido com `eslint-disable-next-line` + comentário explicativo no JSDoc.
+- **`scrollIntoView` não implementado em jsdom** (Lote 1B): qualquer teste que toque `ResultsList.highlight` (e por consequência `KeyboardManager._navigate`, auto-highlight em `update`, etc.) precisa do stub adicionado em [__tests__/setup.js](__tests__/setup.js). Não é bug da lib (browsers reais implementam) — nota operacional para escrever testes futuros.
+- ✅ **`unselect(id)` público falha em IDs com tipo divergente** (Lote 2): [VanillaSmartSelect.js:606](src/core/VanillaSmartSelect.js#L606) usava `i.id === id`. Mesmo padrão do REVIEW item 2 mas em outra entrada da API pública (chamar `unselect("1")` com `data:[{id:1, ...}]` não removia). Resolvido junto com item 2 no commit `fix: coerce ids to string when crossing dataset/option.value boundaries`. Regressão em [__tests__/numeric-ids.test.js](__tests__/numeric-ids.test.js) caso (b).
+- ✅ **`_removeItemById` usa `==` (loose equality)** (Lote 2): [VanillaSmartSelect.js:725](src/core/VanillaSmartSelect.js#L725). Funciona para IDs típicos mas destoa do padrão `String(...) === String(...)` usado no resto do mesmo arquivo, e abre brecha para edge cases de coerção (ex.: `0 == ""`). Resolvido junto. Cobertura (sem regressão estrita, já passa com `==`) em [__tests__/numeric-ids.test.js](__tests__/numeric-ids.test.js) caso (c).
 
 ---
 

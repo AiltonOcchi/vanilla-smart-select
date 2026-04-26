@@ -603,7 +603,7 @@ class VanillaSmartSelect extends EventEmitter {
 
     // Find item in current selection
     const current = this.dataAdapter.current();
-    const item = current.find((i) => i.id === id);
+    const item = current.find((i) => String(i.id) === String(id));
 
     if (item) {
       this.dataAdapter.unselect(item);
@@ -721,8 +721,9 @@ class VanillaSmartSelect extends EventEmitter {
    */
   _removeItemById(items, id) {
     return items.filter((item) => {
-      // Remove if matches ID
-      if (item.id == id) {
+      // Remove if matches ID. Coerce both sides to string for consistency
+      // with _findItemById and to avoid loose-equality edge cases.
+      if (String(item.id) === String(id)) {
         return false;
       }
 
