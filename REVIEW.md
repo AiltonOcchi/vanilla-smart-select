@@ -8,13 +8,15 @@ A biblioteca tem arquitetura clara (core + adapters + components + managers) e u
 
 ## 🔴 Crítico
 
-### 1. `ResultsList.clear()` está definido duas vezes — a segunda definição vence
+### 1. ✅ `ResultsList.clear()` está definido duas vezes — a segunda definição vence
 
 [src/components/ResultsList.js:158-165](src/components/ResultsList.js#L158-L165) define um `clear()` que zera `this.results`, `this.flatResults` e `this.highlightedIndex`. Logo abaixo, [src/components/ResultsList.js:213-220](src/components/ResultsList.js#L213-L220) redefine `clear()` sem zerar `flatResults`. Como JS deixa a última declaração vencer, a primeira é morta.
 
 **Impacto:** Após `clear()`, `flatResults` ainda referencia os itens anteriores. `getHighlighted()` ([L199-L208](src/components/ResultsList.js#L199-L208)) pode retornar item "fantasma" e `KeyboardManager._navigate` pode operar sobre estado incorreto. Também invalida o uso explícito feito em [ResultsAdapter.update()](src/adapters/ResultsAdapter.js#L171) para o caminho de "input too short".
 
 **Sugestão:** Remover a segunda definição e manter apenas a versão completa (que zera `flatResults`).
+
+**Resolvido** no commit `fix: remove duplicate ResultsList.clear() definition (REVIEW item 1)`. O lint (`no-dupe-class-members`) flagrou o bug durante a migração do ESLint (Lote 1) e o fix foi adiantado. Lote 3 do plano de execução fica **absorvido pelo Lote 1**; numeração dos lotes seguintes é mantida.
 
 ---
 

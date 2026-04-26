@@ -209,17 +209,6 @@ class ResultsList {
   }
 
   /**
-   * Clear the results
-   */
-  clear() {
-    if (this.container) {
-      emptyElement(this.container);
-    }
-    this.results = [];
-    this.highlightedIndex = -1;
-  }
-
-  /**
    * Get the container element
    * @returns {HTMLElement} Container
    */
