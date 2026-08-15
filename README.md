@@ -563,6 +563,9 @@ select.open();
 // Close dropdown
 select.close();
 
+// Close without returning focus to the select
+select.close({ focus: false });
+
 // Toggle dropdown
 select.toggle();
 
