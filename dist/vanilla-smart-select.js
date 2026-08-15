@@ -4729,9 +4729,11 @@
           this._navigate(1);
           break;
         case KEYS.TAB:
-          // Prevent Tab from leaving dropdown when open
-          // User must explicitly close with Enter (select) or ESC (cancel)
-          e.preventDefault();
+          // Tab leaves the component without committing (Enter selects,
+          // ESC cancels) — WAI-ARIA combobox pattern. close() refocuses the
+          // selection element, so the browser's default Tab action continues
+          // from there to the next form field instead of a hidden input.
+          this.instance.close();
           break;
         case KEYS.HOME:
           // First item
