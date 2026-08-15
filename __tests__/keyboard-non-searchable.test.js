@@ -188,16 +188,26 @@ describe('issue #8 — Tab must close the dropdown without stealing focus (searc
     expect(document.activeElement).toBe(selection);
   });
 
-  test('regression: Tab inside the search input stays trapped (searchable: true)', async () => {
-    const { selection } = setup({ options: { searchable: true } });
+  test('Tab in the search input closes the dropdown without selecting (searchable: true)', async () => {
+    const { select, selection, getChangeCount } = setup({
+      options: { searchable: true }
+    });
 
     selection.focus();
     pressKey(selection, KEY.ENTER); // open, focus moves to search input
     await wait(30);
-    const tabEvent = pressKey(document.activeElement, KEY.TAB);
+    const search = document.activeElement;
+    pressKey(search, KEY.DOWN); // highlight moves to v1
+    const tabEvent = pressKey(search, KEY.TAB);
 
-    expect(tabEvent.defaultPrevented).toBe(true);
-    expect(instance.isOpen()).toBe(true);
+    expect(instance.isOpen()).toBe(false);
+    // Tab must not commit the highlighted item — Enter is the commit key.
+    expect(select.value).toBe('v0');
+    expect(getChangeCount()).toBe(0);
+    // Focus returns to the selection element so the browser's default Tab
+    // action continues from there to the next form field (not swallowed).
+    expect(tabEvent.defaultPrevented).toBe(false);
+    expect(document.activeElement).toBe(selection);
   });
 });
 
