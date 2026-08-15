@@ -19,6 +19,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - `close()` accepts an optional `{ focus: false }` to close the dropdown without returning focus to the selection element (used internally by the Tab fix; useful for integrators moving focus programmatically).
 
+### Changed
+
+- With `searchable: true`, pressing <kbd>Tab</kbd> in the search input no longer traps focus inside the dropdown. Tab now closes the dropdown and lets focus move on to the next form field, matching the WAI-ARIA combobox pattern and the native `<select>`. Tab does **not** commit the highlighted item — <kbd>Enter</kbd> remains the commit key and <kbd>Esc</kbd> the cancel key, consistent with the non-searchable behavior.
+
 ## [1.0.5] - 2026-04-26
 
 ### Fixed
