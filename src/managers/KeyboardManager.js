@@ -76,9 +76,17 @@ class KeyboardManager {
     switch (key) {
       case KEYS.ENTER:
       case KEYS.SPACE:
-        // Open dropdown
         e.preventDefault();
-        this.instance.toggle();
+        if (this.instance.isOpen()) {
+          // With no search box, focus stays here while the dropdown is
+          // open, so Enter/Space confirm the highlighted item (WAI-ARIA
+          // select-only combobox). With nothing highlighted, just close.
+          if (!this._selectHighlighted()) {
+            this.instance.close();
+          }
+        } else {
+          this.instance.open();
+        }
         break;
 
       case KEYS.ESC:
@@ -99,9 +107,12 @@ class KeyboardManager {
         break;
 
       case KEYS.TAB:
-        // Allow Tab to work normally on selection element
-        // (It will only trigger when dropdown is closed)
-        // When dropdown is open, focus is in search input, not here
+        // With no search box, focus stays here while the dropdown is open,
+        // so Tab really is leaving the component — close without refocusing
+        // the selection so the browser can move focus to the next field.
+        if (this.instance.isOpen()) {
+          this.instance.close({ focus: false });
+        }
         break;
     }
   }
@@ -142,9 +153,11 @@ class KeyboardManager {
         break;
 
       case KEYS.TAB:
-        // Prevent Tab from leaving dropdown when open
-        // User must explicitly close with Enter (select) or ESC (cancel)
-        e.preventDefault();
+        // Tab leaves the component without committing (Enter selects,
+        // ESC cancels) — WAI-ARIA combobox pattern. close() refocuses the
+        // selection element, so the browser's default Tab action continues
+        // from there to the next form field instead of a hidden input.
+        this.instance.close();
         break;
 
       case KEYS.HOME:
@@ -304,15 +317,18 @@ class KeyboardManager {
 
   /**
    * Select currently highlighted item
+   * @returns {boolean} Whether an item was selected
    * @private
    */
   _selectHighlighted() {
-    if (!this.resultsAdapter) return;
+    if (!this.resultsAdapter) return false;
 
     const highlighted = this.resultsAdapter.results.getHighlighted();
     if (highlighted) {
       this.resultsAdapter.selectItem(highlighted);
+      return true;
     }
+    return false;
   }
 
   /**

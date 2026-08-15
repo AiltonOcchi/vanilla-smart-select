@@ -429,8 +429,12 @@ class VanillaSmartSelect extends EventEmitter {
 
   /**
    * Close the dropdown
+   * @param {Object} [options] - Close options
+   * @param {boolean} [options.focus=true] - Whether to return focus to the
+   *   selection element. Pass false when focus is intentionally moving
+   *   elsewhere (e.g. Tab navigation), so the close doesn't steal it back.
    */
-  close() {
+  close(options = {}) {
     if (!this.isOpen()) {
       return;
     }
@@ -446,7 +450,7 @@ class VanillaSmartSelect extends EventEmitter {
       return;
     }
 
-    this.emit(EVENTS.CLOSING);
+    this.emit(EVENTS.CLOSING, { focus: options.focus !== false });
 
     // Emit closed event
     this.emit(EVENTS.CLOSE);

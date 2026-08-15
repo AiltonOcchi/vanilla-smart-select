@@ -10,8 +10,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 - **Linguagem:** JavaScript vanilla ES2021+ (sem TypeScript). `"type": "module"`.
 - **Bundler:** Rollup 4 ([rollup.config.js](rollup.config.js)) com Babel (`@babel/preset-env`), `node-resolve`, `commonjs`, `terser` e `rollup-plugin-postcss` (com autoprefixer).
-- **Testes:** Jest 29 + `jest-environment-jsdom`. Atenção: não há arquivo de configuração do Jest nem arquivos de teste no repositório — `npm test` reporta "no tests found".
-- **Lint/format:** ESLint 9 ([.eslintrc.js](.eslintrc.js), formato legado — estende `eslint:recommended`) e Prettier 3.
+- **Testes:** Jest 29 + `jest-environment-jsdom`. Config em [jest.config.js](jest.config.js); testes em `__tests__/` (o [setup.js](__tests__/setup.js) faz stub de `scrollIntoView`, que o jsdom não implementa). Novos bugfixes/features devem vir com teste (TDD).
+- **Lint/format:** ESLint 9 flat config ([eslint.config.js](eslint.config.js) — `js.configs.recommended` + globals de browser/node/jest) e Prettier 3.
 - **Gerenciador de pacotes:** npm (lockfile commitado). Node `>=18`.
 
 ## Estrutura de pastas
@@ -28,6 +28,7 @@ src/
   i18n/                 # en.js, es.js, pt-BR.js, index.js (com auto-detecção)
   utils/                # dom, debounce, decorators, diacritics, template, validation
   styles/               # core.css, themes/, vanilla-smart-select.css (entry)
+__tests__/              # Testes Jest (jsdom) + setup.js
 dist/                   # GERADO pelo Rollup — não editar
 docs/                   # Documentação do projeto
 examples/, examples-bootstrap/   # Demos HTML estáticos servidos via `npm run serve`
@@ -46,9 +47,9 @@ examples/, examples-bootstrap/   # Demos HTML estáticos servidos via `npm run s
 |--------------------|--------------------------------------------------------------------------|
 | `npm run build`    | Build Rollup → `dist/` (UMD, UMD min, ESM, CJS, mais CSS e CSS min).     |
 | `npm run dev`      | Rollup em modo watch.                                                    |
-| `npm test`         | Jest (env jsdom). Sem testes ainda — veja Perguntas em aberto.           |
+| `npm test`         | Jest (env jsdom) sobre `__tests__/`.                                     |
 | `npm run test:watch` | Jest em modo watch.                                                    |
-| `npm run lint`     | ESLint sobre `src/**/*.js`.                                              |
+| `npm run lint`     | ESLint sobre `src/` e `__tests__/`.                                      |
 | `npm run format`   | Prettier write sobre `src/**/*.js`.                                      |
 | `npm run serve`    | `http-server` na porta 8080 — usado para abrir `examples/` no navegador. |
 | `npm run prepublishOnly` | Roda `build` automaticamente antes do `npm publish`.               |
@@ -75,10 +76,8 @@ examples/, examples-bootstrap/   # Demos HTML estáticos servidos via `npm run s
 - **Zero dependências de runtime é restrição rígida** — nunca adicione nada em `dependencies` ou `peerDependencies`. Novos `devDependencies` são ok.
 - Mantenha o bundle pequeno (o README anuncia ~15 KB gzipped). Prefira estender módulos existentes a puxar helpers externos.
 - Existem dois entry points por um motivo: só `index.browser.js` deve importar CSS. Não adicione import de CSS no `index.js` nem em nada alcançável a partir dele — consumidores via bundler importam `./style.css` separadamente pelo mapa `exports`.
-- A config do ESLint está no formato legado `.eslintrc.js` enquanto o ESLint 9 já usa flat config por padrão — `npm run lint` pode precisar de `ESLINT_USE_FLAT_CONFIG=false` ou migração. Se o lint quebrar de cara, é por isso.
 - Os targets de browser são definidos pelo campo `browserslist` — não use sintaxe que o Babel + essa lista não consigam transpilar.
 
-## Perguntas em aberto
+## Fluxo de release
 
-- **Testes:** `npm test` está apontando para Jest com jsdom mas não há arquivos de teste nem config do Jest. Os testes estão deliberadamente adiados, ou novos trabalhos devem incluir um diretório `__tests__/` e um `jest.config.*`?
-- **Fluxo de release:** não existem scripts `version`/`release` nem CHANGELOG. A publicação é feita manualmente via `npm version` + `npm publish`?
+Manual, sem scripts `version`/`release`: bump de `version` no `package.json` + entrada no [CHANGELOG.md](CHANGELOG.md) (formato Keep a Changelog) + `npm run build` num commit `chore: release x.y.z`, seguido de `npm publish`. O `dist/` é versionado no git, então o rebuild entra no commit de release.

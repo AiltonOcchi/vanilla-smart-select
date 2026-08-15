@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.6] - 2026-08-15
+
+### Fixed
+
+- With `searchable: false`, pressing <kbd>Enter</kbd> or <kbd>Space</kbd> on the open dropdown now selects the highlighted item (closing the dropdown and firing `change`), instead of just closing without selecting. Keyboard-only selection on non-searchable selects was previously impossible. (#9)
+- With `searchable: false`, pressing <kbd>Tab</kbd> while the dropdown is open now closes it before focus moves to the next field. Previously the dropdown stayed open, so tabbing through a form left multiple dropdown panels floating over the page. (#8)
+- Destroying an instance right after an interaction no longer throws a `TypeError` from a pending screen reader announcement — the announcement timer is now cancelled on `destroy()`.
+
+### Added
+
+- `close()` accepts an optional `{ focus: false }` to close the dropdown without returning focus to the selection element (used internally by the Tab fix; useful for integrators moving focus programmatically).
+
+### Changed
+
+- With `searchable: true`, pressing <kbd>Tab</kbd> in the search input no longer traps focus inside the dropdown. Tab now closes the dropdown and lets focus move on to the next form field, matching the WAI-ARIA combobox pattern and the native `<select>`. Tab does **not** commit the highlighted item — <kbd>Enter</kbd> remains the commit key and <kbd>Esc</kbd> the cancel key, consistent with the non-searchable behavior.
+
 ## [1.0.5] - 2026-04-26
 
 ### Fixed
@@ -26,5 +42,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - The `escapeMarkup` option is now actually consumed when a `templateResult` or `templateSelection` returns a string. The default remains identity (`(markup) => markup`) for v1.x compatibility, so existing code is unaffected; integrators that need real HTML escaping can now supply their own function and have it applied before `innerHTML`. Templates that return an `HTMLElement` continue to bypass `escapeMarkup` (the `appendChild` path is untouched). Note: **v2.0 will switch the default to a real HTML-escape function** — a planned breaking change.
 - Internal cleanup: removed dead code paths surfaced by the new lint setup and by the recent fixes (notably an `option.value || option.text` fallback in the underlying-select sync that became unreachable per HTML spec, and an internal pagination timer obsoleted by the `loadMore` rewrite). No behavior change for consumers.
 
-[Unreleased]: https://github.com/AiltonOcchi/vanilla-smart-select/compare/v1.0.5...HEAD
+[Unreleased]: https://github.com/AiltonOcchi/vanilla-smart-select/compare/v1.0.6...HEAD
+[1.0.6]: https://github.com/AiltonOcchi/vanilla-smart-select/compare/v1.0.5...v1.0.6
 [1.0.5]: https://github.com/AiltonOcchi/vanilla-smart-select/compare/v1.0.4...v1.0.5

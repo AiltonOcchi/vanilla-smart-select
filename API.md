@@ -363,9 +363,14 @@ Open the dropdown.
 select.open();
 ```
 
-#### `close()`
+#### `close(options?)`
 
 Close the dropdown.
+
+**Parameters:**
+
+- `options` (Object, optional):
+  - `focus` (boolean, default `true`) - Whether to return focus to the selection element after closing. Pass `false` when focus is intentionally moving elsewhere (e.g. Tab navigation), so closing doesn't steal it back.
 
 **Returns:** void
 
@@ -373,6 +378,9 @@ Close the dropdown.
 
 ```javascript
 select.close();
+
+// Close without pulling focus back to the select
+select.close({ focus: false });
 ```
 
 #### `toggle()`

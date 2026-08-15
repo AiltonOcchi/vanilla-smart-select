@@ -8,6 +8,7 @@ class AccessibilityManager {
     this.instance = instance;
     this.options = options;
     this.liveRegion = null;
+    this._announceTimeout = null;
   }
 
   /**
@@ -85,9 +86,15 @@ class AccessibilityManager {
     // Clear previous message
     this.liveRegion.textContent = "";
 
-    // Set new message with a small delay to ensure screen reader picks it up
-    setTimeout(() => {
-      this.liveRegion.textContent = message;
+    // Set new message with a small delay to ensure screen reader picks it up.
+    // Track the timeout so destroy() can cancel it — otherwise the callback
+    // fires against the nulled liveRegion after the instance is destroyed.
+    clearTimeout(this._announceTimeout);
+    this._announceTimeout = setTimeout(() => {
+      this._announceTimeout = null;
+      if (this.liveRegion) {
+        this.liveRegion.textContent = message;
+      }
     }, 100);
   }
 
@@ -176,6 +183,9 @@ class AccessibilityManager {
    * Destroy the manager
    */
   destroy() {
+    clearTimeout(this._announceTimeout);
+    this._announceTimeout = null;
+
     if (this.liveRegion && this.liveRegion.parentNode) {
       this.liveRegion.parentNode.removeChild(this.liveRegion);
     }

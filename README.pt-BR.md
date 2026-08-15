@@ -91,10 +91,10 @@ yarn add vanilla-smart-select
 ### CDN
 ```html
 <!-- CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanilla-smart-select@1.0.5/dist/vanilla-smart-select.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanilla-smart-select@1.0.6/dist/vanilla-smart-select.min.css">
 
 <!-- JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/vanilla-smart-select@1.0.5/dist/vanilla-smart-select.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanilla-smart-select@1.0.6/dist/vanilla-smart-select.min.js"></script>
 ```
 
 ### ES Modules
@@ -562,6 +562,9 @@ select.open();
 
 // Fechar dropdown
 select.close();
+
+// Fechar sem devolver o foco ao select
+select.close({ focus: false });
 
 // Alternar dropdown
 select.toggle();
