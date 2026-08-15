@@ -1,5 +1,5 @@
 /*!
- * VanillaSmartSelect v1.0.5
+ * VanillaSmartSelect v1.0.6
  * (c) 2026 Ailton Occhi <ailton.occhi@hotmail.com>
  * Released under the MIT License.
  */
@@ -2391,8 +2391,8 @@
       this.instance.on(EVENTS.OPENING, () => {
         this.open();
       });
-      this.instance.on(EVENTS.CLOSING, () => {
-        this.close();
+      this.instance.on(EVENTS.CLOSING, data => {
+        this.close(data);
       });
 
       // SearchBox events
@@ -2503,8 +2503,11 @@
 
     /**
      * Close the dropdown
+     * @param {Object} [options] - Close options
+     * @param {boolean} [options.focus=true] - Whether to return focus to the
+     *   selection element
      */
-    close() {
+    close(options = {}) {
       // Close dropdown
       this.dropdown.close();
 
@@ -2521,10 +2524,12 @@
       if (this.anchorElement) {
         this.anchorElement.setAttribute("aria-expanded", "false");
 
-        // Always return focus to selection element when dropdown closes
-        // This ensures consistent behavior between mouse and keyboard interactions
-        // and allows Tab key to navigate to the next form field correctly
-        this.anchorElement.focus();
+        // Return focus to the selection element so mouse and keyboard
+        // interactions behave consistently — unless the close was triggered
+        // by focus intentionally leaving (e.g. Tab), signalled via focus: false.
+        if (options.focus !== false) {
+          this.anchorElement.focus();
+        }
       }
     }
 
@@ -4654,9 +4659,17 @@
       switch (key) {
         case KEYS.ENTER:
         case KEYS.SPACE:
-          // Open dropdown
           e.preventDefault();
-          this.instance.toggle();
+          if (this.instance.isOpen()) {
+            // With no search box, focus stays here while the dropdown is
+            // open, so Enter/Space confirm the highlighted item (WAI-ARIA
+            // select-only combobox). With nothing highlighted, just close.
+            if (!this._selectHighlighted()) {
+              this.instance.close();
+            }
+          } else {
+            this.instance.open();
+          }
           break;
         case KEYS.ESC:
           // Close dropdown
@@ -4674,9 +4687,14 @@
           }
           break;
         case KEYS.TAB:
-          // Allow Tab to work normally on selection element
-          // (It will only trigger when dropdown is closed)
-          // When dropdown is open, focus is in search input, not here
+          // With no search box, focus stays here while the dropdown is open,
+          // so Tab really is leaving the component — close without refocusing
+          // the selection so the browser can move focus to the next field.
+          if (this.instance.isOpen()) {
+            this.instance.close({
+              focus: false
+            });
+          }
           break;
       }
     }
@@ -4863,14 +4881,17 @@
 
     /**
      * Select currently highlighted item
+     * @returns {boolean} Whether an item was selected
      * @private
      */
     _selectHighlighted() {
-      if (!this.resultsAdapter) return;
+      if (!this.resultsAdapter) return false;
       const highlighted = this.resultsAdapter.results.getHighlighted();
       if (highlighted) {
         this.resultsAdapter.selectItem(highlighted);
+        return true;
       }
+      return false;
     }
 
     /**
@@ -4920,6 +4941,7 @@
       this.instance = instance;
       this.options = options;
       this.liveRegion = null;
+      this._announceTimeout = null;
     }
 
     /**
@@ -4993,9 +5015,15 @@
       // Clear previous message
       this.liveRegion.textContent = "";
 
-      // Set new message with a small delay to ensure screen reader picks it up
-      setTimeout(() => {
-        this.liveRegion.textContent = message;
+      // Set new message with a small delay to ensure screen reader picks it up.
+      // Track the timeout so destroy() can cancel it — otherwise the callback
+      // fires against the nulled liveRegion after the instance is destroyed.
+      clearTimeout(this._announceTimeout);
+      this._announceTimeout = setTimeout(() => {
+        this._announceTimeout = null;
+        if (this.liveRegion) {
+          this.liveRegion.textContent = message;
+        }
       }, 100);
     }
 
@@ -5073,6 +5101,8 @@
      * Destroy the manager
      */
     destroy() {
+      clearTimeout(this._announceTimeout);
+      this._announceTimeout = null;
       if (this.liveRegion && this.liveRegion.parentNode) {
         this.liveRegion.parentNode.removeChild(this.liveRegion);
       }
@@ -5480,8 +5510,12 @@
 
     /**
      * Close the dropdown
+     * @param {Object} [options] - Close options
+     * @param {boolean} [options.focus=true] - Whether to return focus to the
+     *   selection element. Pass false when focus is intentionally moving
+     *   elsewhere (e.g. Tab navigation), so the close doesn't steal it back.
      */
-    close() {
+    close(options = {}) {
       if (!this.isOpen()) {
         return;
       }
@@ -5493,7 +5527,9 @@
       if (!closingAllowed) {
         return;
       }
-      this.emit(EVENTS.CLOSING);
+      this.emit(EVENTS.CLOSING, {
+        focus: options.focus !== false
+      });
 
       // Emit closed event
       this.emit(EVENTS.CLOSE);
