@@ -107,9 +107,12 @@ class KeyboardManager {
         break;
 
       case KEYS.TAB:
-        // Allow Tab to work normally on selection element
-        // (It will only trigger when dropdown is closed)
-        // When dropdown is open, focus is in search input, not here
+        // With no search box, focus stays here while the dropdown is open,
+        // so Tab really is leaving the component — close without refocusing
+        // the selection so the browser can move focus to the next field.
+        if (this.instance.isOpen()) {
+          this.instance.close({ focus: false });
+        }
         break;
     }
   }

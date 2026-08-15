@@ -103,8 +103,8 @@ class DropdownAdapter extends BaseAdapter {
       this.open();
     });
 
-    this.instance.on(EVENTS.CLOSING, () => {
-      this.close();
+    this.instance.on(EVENTS.CLOSING, (data) => {
+      this.close(data);
     });
 
     // SearchBox events
@@ -219,8 +219,11 @@ class DropdownAdapter extends BaseAdapter {
 
   /**
    * Close the dropdown
+   * @param {Object} [options] - Close options
+   * @param {boolean} [options.focus=true] - Whether to return focus to the
+   *   selection element
    */
-  close() {
+  close(options = {}) {
     // Close dropdown
     this.dropdown.close();
 
@@ -235,10 +238,12 @@ class DropdownAdapter extends BaseAdapter {
     if (this.anchorElement) {
       this.anchorElement.setAttribute("aria-expanded", "false");
 
-      // Always return focus to selection element when dropdown closes
-      // This ensures consistent behavior between mouse and keyboard interactions
-      // and allows Tab key to navigate to the next form field correctly
-      this.anchorElement.focus();
+      // Return focus to the selection element so mouse and keyboard
+      // interactions behave consistently — unless the close was triggered
+      // by focus intentionally leaving (e.g. Tab), signalled via focus: false.
+      if (options.focus !== false) {
+        this.anchorElement.focus();
+      }
     }
   }
 

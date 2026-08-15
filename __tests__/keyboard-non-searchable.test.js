@@ -150,3 +150,54 @@ describe('issue #9 — Enter/Space must select the highlighted item (searchable:
   });
 });
 
+describe('issue #8 — Tab must close the dropdown without stealing focus (searchable: false)', () => {
+  test('Tab closes the open dropdown and is not swallowed', async () => {
+    const { selection } = setup({ options: { searchable: false } });
+
+    selection.focus();
+    pressKey(selection, KEY.ENTER); // open
+    await wait(30);
+    const tabEvent = pressKey(selection, KEY.TAB);
+
+    expect(instance.isOpen()).toBe(false);
+    // The browser default must run so focus moves to the next field.
+    expect(tabEvent.defaultPrevented).toBe(false);
+  });
+
+  test('close({ focus: false }) does not pull focus back to the selection', async () => {
+    const { next } = setup({ options: { searchable: false } });
+
+    instance.open();
+    await wait(30);
+    next.focus(); // simulates the browser moving focus on Tab
+    instance.close({ focus: false });
+
+    expect(instance.isOpen()).toBe(false);
+    expect(document.activeElement).toBe(next);
+  });
+
+  test('regression: plain close() still refocuses the selection element', async () => {
+    const { next, selection } = setup({ options: { searchable: false } });
+
+    instance.open();
+    await wait(30);
+    next.focus();
+    instance.close();
+
+    expect(instance.isOpen()).toBe(false);
+    expect(document.activeElement).toBe(selection);
+  });
+
+  test('regression: Tab inside the search input stays trapped (searchable: true)', async () => {
+    const { selection } = setup({ options: { searchable: true } });
+
+    selection.focus();
+    pressKey(selection, KEY.ENTER); // open, focus moves to search input
+    await wait(30);
+    const tabEvent = pressKey(document.activeElement, KEY.TAB);
+
+    expect(tabEvent.defaultPrevented).toBe(true);
+    expect(instance.isOpen()).toBe(true);
+  });
+});
+
