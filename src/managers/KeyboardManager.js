@@ -76,9 +76,17 @@ class KeyboardManager {
     switch (key) {
       case KEYS.ENTER:
       case KEYS.SPACE:
-        // Open dropdown
         e.preventDefault();
-        this.instance.toggle();
+        if (this.instance.isOpen()) {
+          // With no search box, focus stays here while the dropdown is
+          // open, so Enter/Space confirm the highlighted item (WAI-ARIA
+          // select-only combobox). With nothing highlighted, just close.
+          if (!this._selectHighlighted()) {
+            this.instance.close();
+          }
+        } else {
+          this.instance.open();
+        }
         break;
 
       case KEYS.ESC:
@@ -304,15 +312,18 @@ class KeyboardManager {
 
   /**
    * Select currently highlighted item
+   * @returns {boolean} Whether an item was selected
    * @private
    */
   _selectHighlighted() {
-    if (!this.resultsAdapter) return;
+    if (!this.resultsAdapter) return false;
 
     const highlighted = this.resultsAdapter.results.getHighlighted();
     if (highlighted) {
       this.resultsAdapter.selectItem(highlighted);
+      return true;
     }
+    return false;
   }
 
   /**
